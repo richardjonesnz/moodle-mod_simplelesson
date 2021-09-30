@@ -55,7 +55,10 @@ class lesson {
         $result = $DB->get_records('simplelesson_pages', ['simplelessonid' => $this->id], 'sequence', '*');
         return $result;
     }
-
+    /**
+     * Count the number of pages in this lesson..
+     * @return int Page count.
+     */
     public function count_pages() {
         return count($this->pages);
     }
@@ -72,6 +75,18 @@ class lesson {
             }
         }
         return null;
+    }
+    /**
+     * Retrieve page titles.
+     * @return array of page titles.
+     */
+    public function get_page_titles() {
+        $pagetitles = array();
+        $pagetitles[0] = get_string('nolink', 'mod_simplelesson');
+        foreach($this->pages as $page) {
+            $pagetitles[] = $page->pagetitle;
+        }
+        return $pagetitles;
     }
 
 }

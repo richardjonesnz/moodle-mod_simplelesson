@@ -15,88 +15,80 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Add a page at the end of the sequence
+ * Edit a page
  *
  * @package   mod_simplelesson
  * @copyright 2018 Richard Jones https://richardnz.net
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \mod_simplelesson\local\lesson;
-use \mod_simplelesson\utility\utility;
-use \mod_simplelesson\forms\edit_page_form;
-use \mod_simplelesson\event\page_created;
-use \core\output\notification;
 
-//use \mod_simplelesson\event\page_created;
+use \mod_simplelesson\local\lesson;
+use \mod_simplelesson\forms\edit_page_form;
+use \mod_simplelesson\utility\utility;
+use \core\output\notification;
 require_once('../../config.php');
 global $DB;
 
 // Fetch URL parameters.
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
+$sequence = required_param('sequence', PARAM_INT);
 
 // Set course related variables.
-$course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
-$cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid, false, MUST_EXIST);
-$simplelesson = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('simplelesson',
+        array('id' => $simplelessonid), '*', MUST_EXIST);
+$course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+$cm = get_coursemodule_from_instance('simplelesson', $simplelessonid,
+        $courseid, false, MUST_EXIST);
 
-// Set up the page page.
-$PAGE->set_url('/mod/simplelesson/add_page.php', ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]);
+// Set up the page.
+$PAGE->set_url('/mod/simplelesson/edit_page.php',
+        array('courseid' => $courseid,
+              'simplelessonid' => $simplelessonid,
+              'sequence' => $sequence));
 
 require_login($course, true, $cm);
 require_sesskey();
-
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
 $PAGE->set_pagelayout('course');
 
-// For use with the re-direct.
-$returnview = new moodle_url('/mod/simplelesson/view.php',
-        array('simplelessonid' => $simplelessonid));
+$returnpage = new moodle_url('/mod/simplelesson/showpage.php',
+    ['courseid' => $courseid,
+     'simplelessonid' => $simplelessonid,
+     'sequence' => $sequence,
+     'sesskey' => sesskey()]);
 
-// Set up the lesson object.
+// Page link data for this page.
 $lesson = new lesson($simplelessonid);
+$pagetitles = $lesson->get_page_titles();
+$page = $lesson->get_page_record($sequence);
 
-// Page data for link dropdown.
-$pagetitles =$lesson->get_page_titles();
-
-// Get the page editing form.
 $mform = new edit_page_form(null,
         ['courseid' => $courseid,
          'simplelessonid' => $simplelessonid,
-         'sequence' => 0,
+         'sequence' => $sequence,
          'context' => $modulecontext,
          'pagetitles' => $pagetitles]);
 
 // If the cancel button was pressed.
 if ($mform->is_cancelled()) {
-    redirect($returnview, get_string('cancelled'), 2);
+    redirect($returnpage, get_string('cancelled'), 2);
 }
-/*
- * If we have data, then our job here is to save it and return.
- * We will always add pages at the end, moving pages is handled
- * elsewhere.
- */
+
+$options = utility::get_editor_options($modulecontext);
+
+// If we have data, save it and return.
 if ($data = $mform->get_data()) {
-
-    $lastpage = $lesson->count_pages();
-    $data->sequence = $lastpage + 1;
+    $data->sequence = $sequence;
     $data->simplelessonid = $simplelessonid;
-    $data->qid = 0;
-    $options = utility::get_editor_options($modulecontext);
-
-    // Insert a dummy record and get the id.
-    $data->timecreated = time();
+    $data->nextpageid = (int) $data->nextpageid;
+    $data->prevpageid = (int) $data->prevpageid;
+    $data->id = $page->id;
     $data->timemodified = time();
-    $data->pagecontents = ' ';
-    $data->pagecontentsformat = FORMAT_HTML;
-    $dataid = $DB->insert_record('simplelesson_pages', $data);
 
-    $data->id = $dataid;
-
-    // Massage the data into a form for saving.
     $data = file_postupdate_standard_editor(
             $data,
             'pagecontents',
@@ -105,24 +97,26 @@ if ($data = $mform->get_data()) {
             'mod_simplelesson',
             'pagecontents',
             $data->id);
-    // Update the record with full editor data.
+
     $DB->update_record('simplelesson_pages', $data);
 
-    // Trigger the page created event.
-    $eventparams = array('context' => $modulecontext, 'objectid' => $data->id);
-    $event = page_created::create($eventparams);
-    $event->add_record_snapshot('course', $PAGE->course);
-    $event->add_record_snapshot($PAGE->cm->modname, $simplelesson);
-    $event->trigger();
-
-    redirect($returnview, get_string('page_saved', 'mod_simplelesson'), 2, notification::NOTIFY_SUCCESS);
+    // Back to showpage.
+    redirect($returnpage, get_string('page_updated', 'mod_simplelesson'), 2, notification::NOTIFY_SUCCESS);
 }
 
+// Assign page data to the form.
+$page = file_prepare_standard_editor(
+        $page,
+        'pagecontents',
+        $options,
+        $modulecontext,
+        'mod_simplelesson',
+        'pagecontents',
+        $page->id);
+
+$mform->set_data($page);
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('page_adding', 'mod_simplelesson'), 2);
-
-// Show the form.
+echo $OUTPUT->heading(get_string('edit_page', 'mod_simplelesson'), 2);
+echo get_string('edit_page_form', 'mod_simplelesson');
 $mform->display();
-
-// Finish the page.
 echo $OUTPUT->footer();

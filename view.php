@@ -66,7 +66,7 @@ $event->add_record_snapshot($cm->modname, $simplelesson);
 $event->trigger();
 
 // Set completion.
-// if we got this far, we can consider the activity "viewed".
+// if we got this far, we can consequenceer the activity "viewed".
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
@@ -84,6 +84,7 @@ if ($canmanage) {
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
+    $options->edit = false;
 }
 
 // Are there any pages yet?
@@ -97,7 +98,7 @@ if ($options->pages === 0) {
     $nextlink = new \moodle_url('/mod/simplelesson/showpage.php',
             ['courseid' => $course->id,
              'simplelessonid' => $simplelesson->id,
-             'sid' => 1,
+             'sequence' => 1,
              'mode' => 'preview']);
     $options->nexturl = $nextlink->out(false);
 }

@@ -31,7 +31,7 @@ require_once('../../config.php');
 
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid  = required_param('simplelessonid', PARAM_INT);
-$sid = required_param('sid', PARAM_INT);
+$sequence = required_param('sequence', PARAM_INT);
 $mode = optional_param('mode', 'preview', PARAM_TEXT);
 
 global $USER;
@@ -44,7 +44,7 @@ $moduleinstance  = $DB->get_record('simplelesson', array('id' => $simplelessonid
 $PAGE->set_url('/mod/simplelesson/showpage.php',
         ['courseid' => $courseid,
          'simplelessonid' => $simplelessonid,
-         'sid' => $sid]);
+         'sequence' => $sequence]);
 
 require_login($course, true, $cm);
 $coursecontext = context_course::instance($courseid);
@@ -60,7 +60,7 @@ $returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => 
 
 // Now get this record.
 $lesson = new lesson($simplelessonid);
-$page = $lesson->get_page_record($sid);
+$page = $lesson->get_page_record($sequence);
 
 if (!$page) {
     // page record was not found.
@@ -83,7 +83,7 @@ $page->pagecontents = format_text($page->pagecontents, FORMAT_HTML, $formatoptio
 
 // Log the page viewed event.
 $event = page_viewed::create([
-        'objectid' => $sid,
+        'objectid' => $sequence,
         'context' => $modulecontext,
     ]);
 $event->add_record_snapshot('course', $course);
@@ -95,8 +95,8 @@ $options = new \stdClass();
 
 // Check first or last pages reached.
 $pages = $lesson->count_pages();
-$options->next = ($sid < $pages);
-$options->prev = ($sid > 1);
+$options->next = ($sequence < $pages);
+$options->prev = ($sequence > 1);
 $baseurl = new \moodle_url('/mod/simplelesson/showpage.php', ['courseid' => $cm->course,
         'simplelessonid' => $simplelessonid, 'mode' => $mode]);
 
@@ -106,10 +106,10 @@ $options->homeurl = $returnview;
 
 // Set next and previous page url's.
 if ($options->next) {
-    $options->nexturl = $baseurl->out(false, ['sid' => ($sid + 1)]);
+    $options->nexturl = $baseurl->out(false, ['sequence' => ($sequence + 1)]);
 }
 if ($options->prev) {
-    $options->prevurl = $baseurl->out(false, ['sid' => ($sid - 1)]);
+    $options->prevurl = $baseurl->out(false, ['sequence' => ($sequence - 1)]);
 }
 // Check for manage capability.
 $options->canmanage = has_capability('mod/simplelesson:manage', $modulecontext);
@@ -121,6 +121,13 @@ if ($options->canmanage) {
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
+    $editpageurl = new \moodle_url('/mod/simplelesson/edit_page.php',
+            ['courseid' => $course->id,
+            'simplelessonid' => $simplelesson->id,
+            'sequence' => $sequence,
+            'sesskey' => sesskey()]);
+    $options->editpage = $editpageurl->out(false);
+    $options->edit = true;
 }
 // Output.
 echo $OUTPUT->header();
