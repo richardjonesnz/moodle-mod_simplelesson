@@ -96,6 +96,7 @@ $string['pagetitle'] = 'Page title';
 $string['pagecontents'] = 'Page content';
 $string['nextpage'] = 'Next page';
 $string['prevpage'] = 'Previous page';
+$string['home'] = 'Home';
 $string['actions'] = 'Actions';
 $string['move_up'] = 'Move up';
 $string['move_down'] = 'Move down';

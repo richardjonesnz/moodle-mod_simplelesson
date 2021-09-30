@@ -25,6 +25,10 @@
         }
 }}
 <div class="container ml-2 mb-2">
+  {{#home}}
+    <a href="{{homeurl}}"button type="button" class="btn btn-primary">
+        {{#str}}home, simplelesson{{/str}}</a>
+  {{/home}}
   {{#prev}}
     <a href="{{{prevurl}}}"button type="button" class="btn btn-primary">
         {{#str}}prevpage, simplelesson{{/str}}</a>

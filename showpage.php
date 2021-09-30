@@ -56,8 +56,7 @@ $PAGE->set_pagelayout('course');
 $PAGE->set_heading(format_string($course->fullname));
 
 // For use with the re-direct.
-$returnview = new moodle_url('/mod/simplelesson/view.php',
-        array('simplelessonid' => $simplelessonid));
+$returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
 
 // Now get this record.
 $lesson = new lesson($simplelessonid);
@@ -100,6 +99,11 @@ $options->next = ($sid < $pages);
 $options->prev = ($sid > 1);
 $baseurl = new \moodle_url('/mod/simplelesson/showpage.php', ['courseid' => $cm->course,
         'simplelessonid' => $simplelessonid, 'mode' => $mode]);
+
+// Set home button url
+$options->home = true;
+$options->homeurl = $returnview;
+
 // Set next and previous page url's.
 if ($options->next) {
     $options->nexturl = $baseurl->out(false, ['sid' => ($sid + 1)]);
