@@ -36,10 +36,10 @@ $mode = optional_param('mode', 'preview', PARAM_TEXT);
 
 global $USER;
 
-$course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
 $cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid, false, MUST_EXIST);
 $simplelesson = $DB->get_record('simplelesson', ['id' => $cm->instance], '*', MUST_EXIST);
-$moduleinstance  = $DB->get_record('simplelesson', array('id' => $simplelessonid), '*', MUST_EXIST);
+$moduleinstance  = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', MUST_EXIST);
 
 $PAGE->set_url('/mod/simplelesson/showpage.php',
         ['courseid' => $courseid,

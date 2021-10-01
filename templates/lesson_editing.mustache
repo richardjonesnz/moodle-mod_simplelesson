@@ -23,23 +23,26 @@
     * none
 
     Context variables required for this template:
-    * addpage String of formatted html representing a url
+    * pages object a set of pages to render
 
     Example context (json):
         {
-            "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
+            "pages": ""
         }
 }}
-<div class="card mt-2">
-  <div class="card-body">
-    <p class="text-info font-weight-bold">{{#str}}managing, simplelesson{{/str}}</p>
-    <a href="{{{addpage}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}add_page, simplelesson{{/str}}</a>
-    {{#edit}}
-      <a href="{{{editpage}}}"button type="button" class="btn btn-primary btn-sm">
-           {{#str}}edit_page, simplelesson{{/str}}</a>
-    {{/edit}}
-    <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}manage_pages, simplelesson{{/str}}</a>
-  </div>
+<div>
+  <p>{{caption}}</p>
+  <div class="table-responsive">
+  <table class="table table-striped table-sm">
+      <thead>
+        {{#tableheaders}}
+           <th>{{.}}</th>
+        {{/tableheaders}}
+      </thead>
+      <tbody>
+        {{#tabledata}}
+          {{> mod_simplelesson/page_row}}
+        {{/tabledata}}
+      </tbody>
+  </table>
 </div>

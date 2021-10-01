@@ -88,5 +88,4 @@ class lesson {
         }
         return $pagetitles;
     }
-
 }

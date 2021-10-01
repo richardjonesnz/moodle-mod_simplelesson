@@ -84,7 +84,13 @@ if ($canmanage) {
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
+    // No edit on title page.  Use activity settings instead.
     $options->edit = false;
+    $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
+            ['courseid' => $course->id,
+             'simplelessonid' => $simplelesson->id,
+             'sesskey' => sesskey()]);
+             $options->editlesson = $editlessonurl->out(false);
 }
 
 // Are there any pages yet?

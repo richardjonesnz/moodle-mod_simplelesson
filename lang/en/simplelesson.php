@@ -91,11 +91,11 @@ $string['simplelesson:importpages'] = 'Export report pages';
 // Page management.
 $string['simplelesson_editing'] = 'Editing Simple lesson';
 $string['manage_pages'] = 'Manage pages';
-$string['sequence'] = 'Sequence';
-$string['pagetitle'] = 'Page title';
+$string['sequence'] = 'Seq';
+$string['pagetitle'] = 'Title';
 $string['pagecontents'] = 'Page content';
-$string['nextpage'] = 'Next page';
-$string['prevpage'] = 'Previous page';
+$string['nextpage'] = 'Next';
+$string['prevpage'] = 'Previous';
 $string['home'] = 'Home';
 $string['actions'] = 'Actions';
 $string['move_up'] = 'Move up';
@@ -103,7 +103,7 @@ $string['move_down'] = 'Move down';
 $string['showpage'] = 'Preview page';
 $string['autosequencelink'] = 'Auto-sequence pages';
 $string['sequence_updated'] = 'Page sequences updated';
-$string['hasquestion'] = 'Has question';
+$string['hasquestion'] = 'Question';
 $string['exportpagelink'] = 'Export pages';
 $string['importpagelink'] = 'Import pages';
 $string['editing'] = 'Manage lesson:';
@@ -130,7 +130,7 @@ $string['edit_question_page'] = 'Click the Allocate link in the last column to a
 
 // Page editing.
 $string['edit_page'] = 'Edit page';
-$string['page_editing'] = 'Use this page to organize your Simple lesson.  You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the sequence numbers into a logical order. ';
+$string['page_editing'] = 'Use this page to organize your Simple lesson.  You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. ';
 $string['edit_page_form'] = 'Edit the page contents';
 $string['add_page'] = 'Add page';
 $string['delete_page'] = 'Delete page';

@@ -82,6 +82,7 @@ $options = utility::get_editor_options($modulecontext);
 
 // If we have data, save it and return.
 if ($data = $mform->get_data()) {
+
     $data->sequence = $sequence;
     $data->simplelessonid = $simplelessonid;
     $data->nextpageid = (int) $data->nextpageid;
