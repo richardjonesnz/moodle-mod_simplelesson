@@ -28,14 +28,19 @@ use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
+use moodle_url;
 
 class lesson_editing implements renderable, templatable {
 
+    private $courseid;
+    private $simplelessonid;
     private $pages;
     private $cm;
 
-    public function __construct($pages, $cm) {
+    public function __construct($courseid, $simplelessonid, $pages, $cm) {
 
+        $this->courseid = $courseid;
+        $this->simplelessonid = $simplelessonid;
         $this->pages = $pages;
         $this->cm = $cm;
     }
@@ -51,6 +56,13 @@ class lesson_editing implements renderable, templatable {
 
         $table = new \stdClass();
         $table->caption = get_string('page_editing', 'mod_simplelesson');
+        $table->home = true; // Show the home button.
+        $table->homeurl = new moodle_url('/mod/simplelesson/view.php',
+                ['simplelessonid' => $this->simplelessonid]);
+        $table->auto = true; // Show the auto-sequence button
+        $table->autourl = new moodle_url('/mod/simplelesson/autosequence.php',
+                ['courseid' => $this->courseid,
+                 'simplelessonid' => $this->simplelessonid]);
 
         // Set up table headers.
         $headerdata = array();
@@ -91,7 +103,7 @@ class lesson_editing implements renderable, templatable {
             $icon = ['icon' => 't/preview', 'component' => 'core', 'alt'=>
                 get_string('showpage', 'mod_simplelesson')];
             $actions['preview'] = ['link' => $link->out(false,
-                                  ['pageid' => $page->id]),
+                                  ['sequence' => $page->sequence]),
                                    'icon' => $icon];
 
             // Delete page.

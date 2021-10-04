@@ -61,6 +61,7 @@ $returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => 
 // Now get this record.
 $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);
+$pages = $lesson->get_pages();
 
 if (!$page) {
     // page record was not found.
@@ -94,8 +95,8 @@ $event->trigger();
 $options = new \stdClass();
 
 // Check first or last pages reached.
-$pages = $lesson->count_pages();
-$options->next = ($sequence < $pages);
+$pagecount = count($pages);
+$options->next = ($sequence < $pagecount);
 $options->prev = ($sequence > 1);
 $baseurl = new \moodle_url('/mod/simplelesson/showpage.php', ['courseid' => $cm->course,
         'simplelessonid' => $simplelessonid, 'mode' => $mode]);
@@ -121,13 +122,28 @@ if ($options->canmanage) {
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
+
+    $deletepageurl = new \moodle_url('/mod/simplelesson/delete_page.php',
+            ['courseid' => $course->id,
+             'simplelessonid' => $simplelesson->id,
+             'sequence' => $page->sequence,
+             'returnto' => 'view',
+             'sesskey' => sesskey()]);
+    $options->deletepage = $deletepageurl->out(false);
+    $options->delete = true;
+
     $editpageurl = new \moodle_url('/mod/simplelesson/edit_page.php',
             ['courseid' => $course->id,
             'simplelessonid' => $simplelesson->id,
-            'sequence' => $sequence,
             'sesskey' => sesskey()]);
     $options->editpage = $editpageurl->out(false);
     $options->edit = true;
+
+    $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
+            ['courseid' => $course->id,
+             'simplelessonid' => $simplelesson->id,
+             'sesskey' => sesskey()]);
+    $options->editlesson = $editlessonurl->out(false);
 }
 // Output.
 echo $OUTPUT->header();

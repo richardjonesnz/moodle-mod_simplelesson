@@ -26,6 +26,7 @@
  use mod_simplelesson\output\lesson_editing;
 
 require_once('../../config.php');
+
 global $DB;
 
 // Fetch URL parameters.
@@ -60,9 +61,15 @@ $returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
         'simplelessonid' => $simplelessonid,
         'sesskey' => sesskey()]);
 
+$returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
+
 $lesson = new lesson($simplelessonid);
 $pages =  $lesson->get_pages();
 
+// Need at least 2 pages.
+If (count($pages) < 2) {
+        redirect($returnview, get_string('lackpages', 'mod_simplelesson'), 2);
+}
 /*
  * Check the action:
  * The up and down arrows are only shown for the relevant
@@ -107,5 +114,5 @@ if ( ($sequence != 0) && ($action != 'none') ) {
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('simplelesson_editing', 'mod_simplelesson'), 2);
-echo $OUTPUT->render(new lesson_editing($pages, $cm));
+echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm));
 echo $OUTPUT->footer();

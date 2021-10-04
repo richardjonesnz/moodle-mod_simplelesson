@@ -33,12 +33,18 @@
 <div class="card mt-2">
   <div class="card-body">
     <p class="text-info font-weight-bold">{{#str}}managing, simplelesson{{/str}}</p>
+    <!-- Managing pages -->
     <a href="{{{addpage}}}"button type="button" class="btn btn-primary btn-sm">
          {{#str}}add_page, simplelesson{{/str}}</a>
     {{#edit}}
       <a href="{{{editpage}}}"button type="button" class="btn btn-primary btn-sm">
            {{#str}}edit_page, simplelesson{{/str}}</a>
     {{/edit}}
+    {{#delete}}
+    <a href="{{{deletepage}}}"button type="button" class="btn btn-primary btn-sm">
+         {{#str}}delete_page, simplelesson{{/str}}</a>
+    {{/delete}}
+    <!-- Manage the lesson -->
     <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
          {{#str}}manage_pages, simplelesson{{/str}}</a>
   </div>

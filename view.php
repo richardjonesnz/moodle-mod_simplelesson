@@ -66,12 +66,9 @@ $event->add_record_snapshot($cm->modname, $simplelesson);
 $event->trigger();
 
 // Set completion.
-// if we got this far, we can consequenceer the activity "viewed".
+// if we got this far, we can consider the activity "viewed".
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
-
-// Set up the lesson object.
-$lesson = new lesson($simplelesson->id);
 
 // Set up first page options.
 $options = new \stdClass();
@@ -84,17 +81,17 @@ if ($canmanage) {
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
-    // No edit on title page.  Use activity settings instead.
-    $options->edit = false;
+
     $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
             ['courseid' => $course->id,
              'simplelessonid' => $simplelesson->id,
              'sesskey' => sesskey()]);
-             $options->editlesson = $editlessonurl->out(false);
+    $options->editlesson = $editlessonurl->out(false);
 }
 
 // Are there any pages yet?
-$options->pages = $lesson->count_pages();
+$lesson = new lesson($simplelesson->id);
+$options->pages = count($lesson->get_pages());
 
 if ($options->pages === 0) {
     $options->next = false;

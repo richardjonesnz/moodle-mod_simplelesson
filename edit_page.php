@@ -27,6 +27,7 @@ use \mod_simplelesson\forms\edit_page_form;
 use \mod_simplelesson\utility\utility;
 use \core\output\notification;
 require_once('../../config.php');
+
 global $DB;
 
 // Fetch URL parameters.
