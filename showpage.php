@@ -139,6 +139,16 @@ if ($options->canmanage) {
     $options->editpage = $editpageurl->out(false);
     $options->edit = true;
 
+    // Add question.
+    $addquestionurl = new \moodle_url('/mod/simplelesson/add_question.php',
+            ['courseid' => $course->id,
+             'simplelessonid' => $simplelesson->id,
+             'sequence' => $sequence,
+             'returnto' => 'show',
+             'sesskey' => sesskey()]);
+    $options->addquestion = $addquestionurl->out(false);
+    $options->addq = true;
+
     $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
             ['courseid' => $course->id,
              'simplelessonid' => $simplelesson->id,

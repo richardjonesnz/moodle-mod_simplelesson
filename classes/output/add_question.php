@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prepares the view page of the mod instance.
+ * Sets up the question data for radios.
  *
  * @package    mod_simplelesson
- * @copyright  2021 Richard Jones <richardnz@outlook.com>
+ * @copyright  2021 Richard Jones richardnz@outlook.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,27 +29,13 @@ use renderer_base;
 use templatable;
 use stdClass;
 
-/**
- * Create a new view page renderable object
- *
- * @param object simplesson - current instance.
- * @param int cmid - course module id.
- * @copyright  2021 Richard Jones <richardnz@outlook.com>
- */
+class add_question implements renderable, templatable {
 
-class view implements renderable, templatable {
+    private $questions;
 
-    private $simplelesson;
-    private $cmid;
-    private $options;
-    private $mform;
+    public function __construct($questions) {
 
-    public function __construct($simplelesson, $cmid, $options, $mform) {
-
-        $this->simplelesson = $simplelesson;
-        $this->cmid = $cmid;
-        $this->options = $options;
-        $this->mform = $mform;
+        $this->questions = $questions;
     }
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -60,18 +46,11 @@ class view implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
 
         $data = new stdClass();
-        $data = $this->options;
+        $data->names = array();
 
-        $data->title = $this->simplelesson->title;
-
-        // Moodle handles processing of std intro field.
-        $data->body = format_module_intro('simplelesson', $this->simplelesson, $this->cmid);
-        $data->message = get_string('welcome', 'mod_simplelesson');
-
-        $data->mform = $this->mform->render();
-
-        $data->qlinkurl = new \moodle_url('/question/edit.php', ['courseid' => $this->simplelesson->course]);
-
+        foreach($this->questions as $question) {
+            $data->names[] = ' ' . $question->name . ' [' . $question->qtype . ']';
+        }
         return $data;
     }
 }

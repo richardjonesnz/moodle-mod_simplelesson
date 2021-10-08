@@ -110,6 +110,7 @@ function simplelesson_update_instance(stdClass $simplelesson, mod_simplelesson_m
     return $result;
 }
 
+
 /**
  * This standard function will check all instances of this module
  * and make sure there are up-to-date events created for each of them.

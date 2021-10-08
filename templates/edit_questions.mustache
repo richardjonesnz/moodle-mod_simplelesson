@@ -13,8 +13,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/management
-    Renders the simplelesson editing.management buttons
+    @template mod_simplelesson/managemelesson
+    Renders the simplelesson lesson management buttons
 
     Classes required for JS:
     * none
@@ -30,22 +30,24 @@
             "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
         }
 }}
-<div class="card mt-2">
-  <div class="card-body">
-    <p class="text-info font-weight-bold">{{#str}}managing, simplelesson{{/str}}</p>
-    <!-- Managing pages -->
-    <a href="{{{addpage}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}add_page, simplelesson{{/str}}</a>
-    {{#edit}}
-      <a href="{{{editpage}}}"button type="button" class="btn btn-primary btn-sm">
-           {{#str}}edit_page, simplelesson{{/str}}</a>
-    {{/edit}}
-    {{#delete}}
-    <a href="{{{deletepage}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}delete_page, simplelesson{{/str}}</a>
-    {{/delete}}
-    <!-- Manage the lesson -->
-    <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}manage_pages, simplelesson{{/str}}</a>
+<!-- Bootstrap Modal W3 schools -->
+<div id="simplelesson_edit_questions_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      <h4 class="modal-title">{{#str}}select_category, simplelesson{{/str}}</a></h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        {{#str}}question_adding, simplelesson{{/str}}<br>
+        {{{mform}}}
+        <p class="text-left"><a href="{{qlinkurl}}">{{#str}}qlinkheader, simplelesson{{/str}}</a></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>

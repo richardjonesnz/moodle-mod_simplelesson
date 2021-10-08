@@ -65,9 +65,9 @@ class mod_simplelesson_mod_form extends moodleform_mod {
         $this->standard_intro_elements();
 
         // Add a specific mod_simplelesson field - title.
-        $mform->addElement('text', 'title',
-                get_string('title', 'mod_simplelesson'));
-        $mform->setType('title', PARAM_TEXT);
+        $mform->addElement('text', 'pagetitle',
+                get_string('pagetitle', 'mod_simplelesson'));
+        $mform->setType('pagetitle', PARAM_TEXT);
 
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();

@@ -74,9 +74,10 @@ $string['behaviour'] = 'Question behaviour';
 $string['behaviour_help'] = 'With Adaptive feedback the user has multiple tries at each question - a penalty can be applied unless adaptive no penalty is used.  This can only be set on a lesson basis, not per question. Immediate feedback has one attempt available. For Deferred feedback the answer must be explicitly saved but multiple saves are permitted, the student only sees the score when reviewing the lesson.';
 $string['category_select'] = 'Select category';
 $string['categoryid'] = 'Category';
-$string['categoryid_help'] = 'Choose one category for the questions that can be added to this simplelesson.  You can return here later and add other categories from module settings.';
+$string['categoryid_help'] = 'Choose a category for the questions that can be added to this simplelesson.  You can use the Find in bank link to manipulate the question bank for this course/activity.';
 $string['nocategory'] = 'none';
 $string['unlimited'] = 'Unlimited';
+$string['managelesson'] = 'Manage Lesson: ';
 
 // Capabilities.
 $string['simplelesson:manage'] = 'Manage Simple lesson';
@@ -108,7 +109,6 @@ $string['exportpagelink'] = 'Export pages';
 $string['importpagelink'] = 'Import pages';
 $string['editing'] = 'Manage lesson:';
 $string['navigation'] = 'Navigation:';
-$string['managing'] = 'Manage pages: ';
 $string['lackpages'] = 'Need at least 2 pages to manage';
 $string['pagenotfound'] = 'Need at least 2 pages to manage';
 
@@ -122,11 +122,15 @@ $string['question_name'] = 'Question name';
 $string['question_text'] = 'Question text';
 $string['setpage'] = 'Allocate';
 $string['add_question'] = 'Add question';
+$string['noquestions'] = 'There are no questions, select a category from Manage Pages on the Home screen.';
 $string['question_adding'] = 'Adding questions to Simple lesson';
+$string['select_category'] = 'Select category';
+$string['select_question'] = 'Select question';
 $string['questions_added'] = 'Added questions';
 $string['add_question_page'] = 'Check the boxes to add selected questions to this Simple lesson.  You can change the category in settings to add questions from multiple categories. HINT: Name your questions sensibly when creating them, it will make life easier.';
 $string['selecting_page'] = 'Select the page for question: ';
 $string['question_exists'] = 'That page has a question already';
+$string['one_question_only'] = 'You can only add one question to a page';
 $string['questionscore'] = "Score";
 $string['edit_question_page'] = 'Click the Allocate link in the last column to allocate questions to pages (only one question per page is permitted).  You can also set the score for a question.  The Find in bank link will take you to the question bank.';
 

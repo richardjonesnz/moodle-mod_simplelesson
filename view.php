@@ -27,6 +27,7 @@
 use mod_simplelesson\event\course_module_viewed;
 use mod_simplelesson\output\view;
 use mod_simplelesson\local\lesson;
+use mod_simplelesson\forms\edit_questions_form;
 
 require_once('../../config.php');
 require_once(dirname(__FILE__).'/lib.php');
@@ -87,11 +88,19 @@ if ($canmanage) {
              'simplelessonid' => $simplelesson->id,
              'sesskey' => sesskey()]);
     $options->editlesson = $editlessonurl->out(false);
+
+    $editquestionsurl = new \moodle_url('/mod/simplelesson/edit_questions.php',
+            ['courseid' => $course->id,
+             'simplelessonid' => $simplelesson->id,
+             'sesskey' => sesskey()]);
+    $options->editquestions = $editquestionsurl->out(false);
 }
 
 // Are there any pages yet?
 $lesson = new lesson($simplelesson->id);
 $options->pages = count($lesson->get_pages());
+
+$options->addq = false; // can't add a question from here.
 
 if ($options->pages === 0) {
     $options->next = false;
@@ -108,11 +117,14 @@ if ($options->pages === 0) {
 $options->prev = false; // This the first page.
 $options->canmanage = $canmanage;
 
+// This form allows selection of category and behaviour within a modal.
+$mform = new edit_questions_form(null, ['id' => $id, 'simplelessonid' => $simplelesson->id]);
+if ($data = $mform->get_data()) {
+     $simplelesson->categoryid = $data->categoryid;
+     $simplelesson->behaviour = $data->behaviour;
+     $DB->update_record('simplelesson', $simplelesson);
+}
 // Start output to browser.
 echo $OUTPUT->header();
-
-// Output view page.
-echo $OUTPUT->render(new view($simplelesson, $cm->id, $options));
-
-// Finish the page.
+echo $OUTPUT->render(new view($simplelesson, $id, $options, $mform));
 echo $OUTPUT->footer();

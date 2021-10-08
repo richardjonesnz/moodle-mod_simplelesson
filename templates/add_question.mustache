@@ -13,8 +13,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/showpage
-    Moodle renders a page
+    @template mod_simplelesson/add_question
+    Allows the user to select one of a group of questions.
 
     Classes required for JS:
     * none
@@ -23,22 +23,22 @@
     * none
 
     Context variables required for this template:
-    * title String a page title.
-    * content String of html code the formatted module intro.
+    * addpage String of formatted html representing a url
 
     Example context (json):
         {
-         "name": "My heading",
-         "content": "<p>My html content</p>"
+            "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
         }
 }}
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">{{title}}</h2>
-        {{{content}}}
-    </div>
-    {{> mod_simplelesson/navigation}}
+<!-- Bootstrap radios -->
+<div class="container">
+  <h2>{{#str}} select_question, mod_simplelesson {{/str}} </h2>
+  <form action="add_question.php">
+      <div class="radio">
+        {{#names}}
+          <label><input type="radio" name="optradio">{{.}}</label><br>
+        {{/names}}
+      </div>
+      <button type="submit" class="btn btn-primary">{{#str}}submit, core{{/str}}</button>
+  </form>
 </div>
-{{#canmanage}}
-    {{> mod_simplelesson/managepage}}
-{{/canmanage}}

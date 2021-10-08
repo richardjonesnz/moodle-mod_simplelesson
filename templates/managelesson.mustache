@@ -13,8 +13,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/showpage
-    Moodle renders a page
+    @template mod_simplelesson/managemelesson
+    Renders the simplelesson lesson management buttons
 
     Classes required for JS:
     * none
@@ -23,22 +23,21 @@
     * none
 
     Context variables required for this template:
-    * title String a page title.
-    * content String of html code the formatted module intro.
+    * addpage String of formatted html representing a url
 
     Example context (json):
         {
-         "name": "My heading",
-         "content": "<p>My html content</p>"
+            "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
         }
 }}
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">{{title}}</h2>
-        {{{content}}}
-    </div>
-    {{> mod_simplelesson/navigation}}
-</div>
-{{#canmanage}}
-    {{> mod_simplelesson/managepage}}
-{{/canmanage}}
+<div class="card mt-2">
+  <div class="card-body">
+    <p class="text-info font-weight-bold">{{#str}}managelesson, simplelesson{{/str}}</p>
+    <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
+         {{#str}}manage_pages, simplelesson{{/str}}</a>
+    <a href="{{{editquestions}}}"button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+            data-target="#simplelesson_edit_questions_modal">{{#str}}manage_questions, simplelesson{{/str}}</button>
+         </a>
+  </div>
+</div
+{{> simplelesson/edit_questions}}
