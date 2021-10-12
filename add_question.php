@@ -82,16 +82,26 @@ if ($mform->is_cancelled()) {
 
 // Save the question data
 if ($data = $mform->get_data()) {
-    $data->sequence = $sequence;
-    $data->simplelessonid = $simplelessonid;
-    $data->nextpageid = (int) $data->nextpageid;
-    $data->prevpageid = (int) $data->prevpageid;
-    $data->id = $pageid;
-    pages::update_page_record($data, $modulecontext);
 
-    // Back to showpage.
-    redirect($returnpage,
-            get_string('question_added', 'mod_simplelesson'), 2, notification::NOTIFY_SUCCESS);
+    $qdata = new stdClass;
+    $i = $data->optradio;
+    $qdata->qid = $i;
+    $qdata->pageid = $page->id;
+    $qdata->simplelessonid = $simplelessonid;
+    $qdata->slot = 0;
+    $qdata->score = $data->score;
+    // Only add the question to this if it doesn't exist.
+    // Ie prevent duplicate questions for same lesson id.
+    if (!$DB->get_record('simplelesson_questions', ['qid' => $qdata->qid,
+            'simplelessonid' => $simplelessonid], IGNORE_MISSING)) {
+        $DB->insert_record('simplelesson_questions', $qdata);
+        // Back to showpage.
+        redirect($returnpage, get_string('question_added', 'mod_simplelesson'), 2,
+                notification::NOTIFY_SUCCESS);
+    } else {
+        redirect($returnpage, get_string('duplicate_question', 'mod_simplelesson'), 2,
+                notification::NOTIFY_WARNING);
+    }
 }
 
 echo $OUTPUT->header();

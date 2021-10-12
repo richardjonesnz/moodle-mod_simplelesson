@@ -126,5 +126,5 @@ if ($data = $mform->get_data()) {
 }
 // Start output to browser.
 echo $OUTPUT->header();
-echo $OUTPUT->render(new view($simplelesson, $id, $options, $mform));
+echo $OUTPUT->render(new view($simplelesson, $cm->id, $options, $mform));
 echo $OUTPUT->footer();

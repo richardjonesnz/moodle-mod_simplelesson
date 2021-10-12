@@ -39,14 +39,16 @@ class add_question_form extends \moodleform {
         // Get questions.
         $questions = $this->_customdata['questions'];
 
-        $n = 0;
         $radios = array();
         foreach ($questions as $question) {
-            $n++;
-            $checkname = 'q' . $question->id . ' ' . $question->name . '<br>';
-            $radios[] = $mform->createElement('radio', 'optradio', '', $checkname, 1);
+            $checkname = $question->id . ' ' . $question->name . '<br>';
+            $radios[] = $mform->createElement('radio', 'optradio', '', $checkname, $question->id);
         }
-        $mform->addGroup($radios, 'options', '' , [''], false);
+        $mform->addGroup($radios, 'options', '' , '<br />', false);
+
+        $mform->addElement('text', 'score', get_string('questionscore', 'mod_simplelesson'));
+        $mform->setDefault('score', 1);
+        $mform->setType('score', PARAM_INT);
 
         // Hidden fields.
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
