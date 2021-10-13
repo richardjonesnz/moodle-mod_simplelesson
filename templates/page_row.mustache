@@ -34,7 +34,7 @@
          "title": "column name",
          "previous": "1",
          "next": "1",
-         "question": ["icon", "component", "alt"],
+         "question": "1"],
          "actions": ["edit", ["icon", "component", "core"]]
         }
 }}
@@ -43,11 +43,7 @@
   <td>{{pagetitle}}</td>
   <td>{{previous}}</td>
   <td>{{next}}</td>
-  <td>
-    {{# pix}}
-      {{question.icon}}, {{question.component}}, {{question.alt}}
-    {{/ pix}}
-  </td>
+  <td>{{#question}}<a href="{{{questionurl}}}">{{questionlink}}</a>{{/question}}</td>
   <td>
     {{# actions.edit}}
       {{> mod_simplelesson/page_actions}}

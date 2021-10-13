@@ -13,8 +13,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/managemelesson
-    Renders the simplelesson lesson management buttons
+    @template mod_simplelesson/question_form
+    Moodle renders a page
 
     Classes required for JS:
     * none
@@ -23,21 +23,27 @@
     * none
 
     Context variables required for this template:
-    * addpage String of formatted html representing a url
+    * title String a page title.
+    * content String of html code the formatted module intro.
 
     Example context (json):
         {
-            "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
+         "name": "My heading",
+         "content": "<p>My html content</p>"
         }
 }}
-<div class="card mt-2">
-  <div class="card-body">
-    <p class="text-info font-weight-bold">{{#str}}managelesson, simplelesson{{/str}}</p>
-    <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}manage_pages, simplelesson{{/str}}</a>
-    <a href="{{{editquestions}}}"button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-            data-target="#simplelesson_edit_questions_modal">{{#str}}manage_questions, simplelesson{{/str}}</button>
-         </a>
-  </div>
-</div
-{{> simplelesson/edit_questions}}
+<div class="mod_simplelesson_question">
+{{headtags}}
+  <form method="post" action="{{{actionurl}}}" enctype="multipart/form-data" accept-charset="utf-8" id="response-form">
+    <div>
+      <input type="hidden" name="sesskey" value="{{sesskey}}">
+      <input type="hidden" name="slots" value="{{sllot}}">
+      <input type="hidden" name="starttime" value="{{starttime}}">
+    </div>
+    {{{qhtml}}}
+    {{#essay}}
+      <a href="{{{essayurl}}}"button type="button" class="btn btn-info btn-sm">
+        {{#str}}save, core{{/str}}</a>
+    {{/essay}}
+  </form>
+</div>

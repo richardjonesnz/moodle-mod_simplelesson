@@ -53,7 +53,7 @@ class add_question_form extends \moodleform {
         // Hidden fields.
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
         $mform->addElement('hidden', 'simplelessonid', $this->_customdata['simplelessonid']);
-        $mform->addElement('hidden', 'sequence', $this->_customdata['courseid']);
+        $mform->addElement('hidden', 'sequence', $this->_customdata['sequence']);
         $mform->addElement('hidden', 'sesskey', $this->_customdata['sesskey']);
 
         $mform->setType('courseid', PARAM_INT);

@@ -114,5 +114,5 @@ if ( ($sequence != 0) && ($action != 'none') ) {
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('simplelesson_editing', 'mod_simplelesson'), 2);
-echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm));
+echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm, $PAGE->url));
 echo $OUTPUT->footer();

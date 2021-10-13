@@ -36,13 +36,15 @@ class lesson_editing implements renderable, templatable {
     private $simplelessonid;
     private $pages;
     private $cm;
+    private $pageurl;
 
-    public function __construct($courseid, $simplelessonid, $pages, $cm) {
+    public function __construct($courseid, $simplelessonid, $pages, $cm, $pageurl) {
 
         $this->courseid = $courseid;
         $this->simplelessonid = $simplelessonid;
         $this->pages = $pages;
         $this->cm = $cm;
+        $this->pageurl = $pageurl;
     }
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -51,6 +53,7 @@ class lesson_editing implements renderable, templatable {
      * @return stdClass
      */
     public function export_for_template(renderer_base $output) {
+        global $DB;
 
         $lastpage = count($this->pages);
 
@@ -85,7 +88,23 @@ class lesson_editing implements renderable, templatable {
             $data['pagetitle'] = $page->pagetitle;
             $data['previous'] = $page->prevpageid;
             $data['next'] = $page->nextpageid;
-            $data['question'] = ['icon' => 'i/invalid', 'component' => 'core', 'alt'=> 'x'];
+            $data[ 'question'] = false;
+
+            // Is there a question on the page?
+            $result = $DB->get_record('simplelesson_questions',
+                    ['simplelessonid' => $this->cm->instance,
+                    'pageid' => $page->id],
+                    'qid',
+                    IGNORE_MISSING);
+
+            // Add a link to the preview question page.
+            if ($result) {
+                $data['questionurl'] = new \moodle_url('/question/bank/previewquestion/preview.php',
+                        ['id' => $result->qid,
+                         'returnurl' => $this->pageurl]);
+                $data['questionlink'] = $result->qid;
+                $data['question'] = true;
+            }
 
             $actions = array();
 
@@ -130,7 +149,7 @@ class lesson_editing implements renderable, templatable {
 
             // Move down.
             if (($page->sequence != $lastpage)) {
-                $link = new \moodle_url('edit_lesson.php', $baseparams);
+                $link = new \moodle_url('edit_lesson.php', $baseparams);;
                 $icon = ['icon' => 't/down', 'component' => 'core',
                         'alt' => get_string('move_down', 'mod_simplelesson')];
                 $actions['movedown'] = ['link' => $link->out(false,

@@ -15,14 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Add a question to a page
+ * Remove a question from a page
  *
  * @package   mod_simplelesson
  * @copyright 2021 Richard Jones https://richardnz.net
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 use \mod_simplelesson\local\lesson;
-use \mod_simplelesson\forms\add_question_form;
 use \core\output\notification;
 
 require_once('../../config.php');
@@ -59,52 +58,17 @@ $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
     'simplelessonid' => $simplelessonid,
     'sequence' => $sequence));
 
-$questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
+$result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
+        'pageid' => $page->id]);
 
-if (count($questions) == 0) {
-
+if ($result >= 1)  {
+    $DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
+            'pageid' => $page->id]);
     // Back to showpage.
-    redirect($returnpage, get_string('noquestions', 'mod_simplelesson'), 2,
+    redirect($returnpage, get_string('question_deleted', 'mod_simplelesson'), 2,
+            notification::NOTIFY_SUCCESS);
+} else {
+
+    redirect($returnpage, get_string('no_question', 'mod_simplelesson'), 2,
             notification::NOTIFY_WARNING);
 }
-
-$mform = new add_question_form(null,
-        array('courseid' => $courseid,
-              'simplelessonid' => $simplelessonid,
-              'sequence' => $sequence,
-              'questions' => $questions,
-              'sesskey' => sesskey()));
-
-// If the cancel button was pressed.
-if ($mform->is_cancelled()) {
-    redirect($returnpage, get_string('cancelled'), 2);
-}
-
-// Save the question data
-if ($data = $mform->get_data()) {
-
-    $qdata = new stdClass;
-    $i = $data->optradio;
-    $qdata->qid = $i;
-    $qdata->pageid = $page->id;
-    $qdata->simplelessonid = $simplelessonid;
-    $qdata->slot = 0;
-    $qdata->score = $data->score;
-
-    // Only add the question if it doesn't already exist in this simplelesson.
-    $records = $DB->count_records('simplelesson_questions', ['qid' => $qdata->qid,
-            'simplelessonid' => $simplelessonid]);
-    if ($records == 0) {
-        $DB->insert_record('simplelesson_questions', $qdata);
-        // Back to showpage.
-        redirect($returnpage, get_string('question_added', 'mod_simplelesson'), 2,
-                notification::NOTIFY_SUCCESS);
-    } else {
-        redirect($returnpage, get_string('duplicate_question', 'mod_simplelesson'), 2,
-                notification::NOTIFY_WARNING);
-    }
-}
-
-echo $OUTPUT->header();
-$mform->display();
-echo $OUTPUT->footer();

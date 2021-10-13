@@ -36,12 +36,6 @@
 
     <a href="{{{addpage}}}"button type="button" class="btn btn-primary btn-sm">
          {{#str}}add_page, simplelesson{{/str}}</a>
-
-    {{#addq}}
-    <a href="{{{addquestion}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}add_question, simplelesson{{/str}}</a>
-    {{/addq}}
-
     {{#edit}}
       <a href="{{{editpage}}}"button type="button" class="btn btn-primary btn-sm">
            {{#str}}edit_page, simplelesson{{/str}}</a>
@@ -50,5 +44,15 @@
     <a href="{{{deletepage}}}"button type="button" class="btn btn-primary btn-sm">
          {{#str}}delete_page, simplelesson{{/str}}</a>
     {{/delete}}
+
+    {{#addq}}
+    <a href="{{{addquestion}}}"button type="button" class="btn btn-success btn-sm">
+         {{#str}}add_question, simplelesson{{/str}}</a>
+    {{/addq}}
+    {{#deleteq}}
+    <a href="{{{deletequestion}}}"button type="button" class="btn btn-success btn-sm">
+         {{#str}}delete_question, simplelesson{{/str}}</a>
+    {{/deleteq}}
+
   </div>
 </div>

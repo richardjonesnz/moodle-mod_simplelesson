@@ -46,6 +46,8 @@ $string['welcome'] = 'Welcome user!';
 $string['deleteallsubmissions'] = 'Delete all submissions';
 $string['removealluseroverrides'] = 'Remove user overrides';
 $string['removeallgroupoverrides'] = 'Remove group overrides';
+$string['unlimited'] = 'Unlimited';
+$string['managelesson'] = 'Manage Lesson: ';
 
 // Events.
 $string['simplelessonviewed'] = 'Simple lesson viewed';
@@ -65,6 +67,8 @@ $string['allowreview_help'] = 'At the end of the attempt, students can review th
 $string['allowincomplete'] = 'Do not allow incomplete attempts';
 $string['allowincomplete_help'] = 'Check to force students to respond to a question before navigation links are shown.';
 $string['completequestion'] = 'Please attempt this question to continue';
+
+// The category modal popup.
 $string['immediatefeedback'] = 'Immediate feedback';
 $string['immediatecbm'] = 'Immediate feedback with CBM';
 $string['adaptive'] = 'Adaptive feedback';
@@ -76,8 +80,6 @@ $string['category_select'] = 'Select category';
 $string['categoryid'] = 'Category';
 $string['categoryid_help'] = 'Choose a category for the questions that can be added to this simplelesson.  You can use the Find in bank link to manipulate the question bank for this course/activity.';
 $string['nocategory'] = 'none';
-$string['unlimited'] = 'Unlimited';
-$string['managelesson'] = 'Manage Lesson: ';
 
 // Capabilities.
 $string['simplelesson:manage'] = 'Manage Simple lesson';
@@ -86,8 +88,8 @@ $string['simplelesson:addinstance'] = 'Add a new Simple lesson';
 $string['simplelesson:viewreportstab'] = 'View the reports tab';
 $string['simplelesson:view'] = 'View Simple lesson';
 $string['simplelesson:exportreportpages'] = 'Export report pages';
-$string['simplelesson:exportpages'] = 'Export report pages';
-$string['simplelesson:importpages'] = 'Export report pages';
+$string['simplelesson:exportpages'] = 'Export pages';
+$string['simplelesson:importpages'] = 'Import pages';
 
 // Page management.
 $string['simplelesson_editing'] = 'Editing Simple lesson';
@@ -122,6 +124,9 @@ $string['question_name'] = 'Question name';
 $string['question_text'] = 'Question text';
 $string['setpage'] = 'Allocate';
 $string['add_question'] = 'Add question';
+$string['delete_question'] = 'Delete question';
+$string['preview_question'] = 'Preview question';
+$string['no_question'] = 'No question found';
 $string['noquestions'] = 'There are no questions, select a category from Manage Pages on the Home screen.';
 $string['duplicate_question'] = 'Duplicate question, not added';
 $string['question_adding'] = 'Adding questions to Simple lesson';
@@ -129,6 +134,8 @@ $string['select_category'] = 'Select category';
 $string['select_question'] = 'Select question';
 $string['questions_added'] = 'Added questions';
 $string['question_added'] = 'Added question';
+$string['question_deleted'] = 'Deleted question';
+$string['question_placeholder'] = '[[There is a question on this page]]';
 $string['add_question_page'] = 'Check the boxes to add selected questions to this Simple lesson.  You can change the category in settings to add questions from multiple categories. HINT: Name your questions sensibly when creating them, it will make life easier.';
 $string['selecting_page'] = 'Select the page for question: ';
 $string['question_exists'] = 'That page has a question already';
@@ -138,7 +145,7 @@ $string['edit_question_page'] = 'Click the Allocate link in the last column to a
 
 // Page editing.
 $string['edit_page'] = 'Edit page';
-$string['page_editing'] = 'Use this page to organize your Simple lesson.  You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. ';
+$string['page_editing'] = 'Use this page to organize your Simple lesson.  You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. Click the Question number to preview the question.';
 $string['edit_page_form'] = 'Edit the page contents';
 $string['add_page'] = 'Add page';
 $string['delete_page'] = 'Delete page';

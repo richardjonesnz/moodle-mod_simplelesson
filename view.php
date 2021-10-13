@@ -106,13 +106,21 @@ if ($options->pages === 0) {
     $options->next = false;
 } else {
     // Setup the first page.
-    $options->next = true;
+    $options->preview = true;
     $nextlink = new \moodle_url('/mod/simplelesson/showpage.php',
             ['courseid' => $course->id,
              'simplelessonid' => $simplelesson->id,
              'sequence' => 1,
              'mode' => 'preview']);
-    $options->nexturl = $nextlink->out(false);
+    $options->previewurl = $nextlink->out(false);
+
+    // Start attempt button.
+    $options->attempt = true;
+    $nextlink = new \moodle_url('/mod/simplelesson/start_attempt.php',
+            ['courseid' => $course->id,
+             'simplelessonid' => $simplelesson->id,
+             'sequence' => 1]);
+    $options->attempturl = $nextlink->out(false);
 }
 $options->prev = false; // This the first page.
 $options->canmanage = $canmanage;
