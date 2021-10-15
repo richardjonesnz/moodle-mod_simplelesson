@@ -1,20 +1,25 @@
 {{!
     This file is part of Moodle - http://moodle.org/
+
     Moodle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
+
     Moodle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
+
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 
 {{!
-    @template mod_simplelesson/question_form
-    Moodle renders a page
+    @template mod_simplelesson/summary_row
+    Moodle table rendering template for attempt summary table.
+
+    This template renders an html table of attempt data.
 
     Classes required for JS:
     * none
@@ -22,16 +27,22 @@
     Data attributes required for JS:
     * none
 
-    Context variables required for this template:
-    * title String a page title.
-    * content String of html code the formatted module intro.
-
-    Example context (json):
+    Example data (json):
         {
-         "name": "My heading",
-         "content": "<p>My html content</p>"
+         "sequence": "1",
+         "title": "column name",
+         "previous": "1",
+         "next": "1",
+         "question": "1"],
+         "actions": ["edit", ["icon", "component", "core"]]
         }
 }}
-<div class="mod_simplelesson_question">
-    {{{qform}}}
-</div>
+<tr class="danger">
+  <td>{{question}}</td>
+  <td>{{pagetitle}}</td>
+  <td>{{right_answer}}</td>
+  <td>{{your_answer}}</td>
+  <td>{{mark}}</td>
+  <td>{{maxmark}}</td>
+  <td>{{timetaken}}</td>
+</tr>

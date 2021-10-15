@@ -1,0 +1,20 @@
+/** CSS styles for mod_simplelesson */
+.mod_simplelesson_question {
+    padding-bottom:1px;
+}
+.mod_simplelesson_question .grade,
+.mod_simplelesson_question .questionflag {
+    display:none;
+}
+
+.mod_simplelesson_save_button {
+    padding-left:140px;
+}
+.mod_simplelesson_grading_header {
+    padding-left:100px;
+}
+.mod_simplelesson_essay_text {
+    margin:0 100px 20px 100px;
+    padding: 10px;
+    border: 1px solid #999;
+}

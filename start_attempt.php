@@ -108,3 +108,6 @@ $returnshowpage = new moodle_url('/mod/simplelesson/showpage.php',
     'attemptid' => $attemptid]);
 
 redirect($returnshowpage, get_string('starting_attempt', 'mod_simplelesson'), 2);
+echo $OUTPUT->header();
+echo 'put the cancel form in here';
+echo $OUTPUT->footer();

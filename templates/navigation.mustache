@@ -29,6 +29,10 @@
     <a href="{{{homeurl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}home, simplelesson{{/str}}</a>
   {{/home}}
+  {{#review}}
+    <a href="{{{homeurl}}}"button type="button" class="btn btn-info btn-sm">
+        {{#str}}finishreview, simplelesson{{/str}}</a>
+  {{/review}}
   {{#auto}}
     <a href="{{{autourl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}autosequencelink, simplelesson{{/str}}</a>
@@ -41,6 +45,12 @@
     <a href="{{{nexturl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}nextpage, simplelesson{{/str}}</a>
   {{/next}}
+
+  {{#summary}}
+    <a href="{{{summaryurl}}}"button type="button" class="btn btn-info btn-sm">
+        {{#str}}end_lesson, simplelesson{{/str}}</a>
+  {{/summary}}
+
 
   {{#preview}}
     <a href="{{{previewurl}}}"button type="button" class="btn btn-info btn-sm">

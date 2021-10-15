@@ -29,24 +29,21 @@ require_once($CFG->libdir . '/questionlib.php');
 /**
  * Control question display options
  */
-class display_options extends \question_display_options{
+class display_options {
     /**
      * Set the display options for a question
      * @param string $feedback feedback set in instance config
      * @return array $options the display options
      */
-    public function set_options($feedback) {
+    public static function get_options() {
+
+        $options = new \question_display_options();
         $options->marks = \question_display_options::MAX_ONLY;
         $options->markdp = 2; // Mark display.
-        $options->feedback = $feedback;
+        $options->feedback = \question_display_options::VISIBLE;
         $options->generalfeedback = \question_display_options::HIDDEN;
         $options->variant = 100;
-    }
-    /**
-     * Get the display options for a question
-     * @return array $options the display options
-     */
-    public function get_options() {
-        return $this;
+
+        return $options;
     }
 }

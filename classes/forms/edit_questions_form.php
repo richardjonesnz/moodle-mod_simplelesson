@@ -65,6 +65,10 @@ class edit_questions_form extends \moodleform {
         $mform->setType('behaviour', PARAM_TEXT);
         $mform->addHelpButton('behaviour', 'behaviour', 'mod_simplelesson');
 
+        // Question usage field.
+        $mform->addElement('hidden', 'qubaid', 0);
+        $mform->setType('qubaid', PARAM_INT);
+
         $mform->addElement('hidden', 'id',
                 $this->_customdata['id']);
         $mform->addElement('hidden', 'simplelessonid',

@@ -20,12 +20,11 @@
  * @copyright  Richard Jones https://richardnz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \mod_simplelesson\local\pages;
-use \mod_simplelesson\local\questions;
-use \mod_simplelesson\local\reporting;
-use \mod_simplelesson\local\display_options;
-use \mod_simplelesson\local\constants;
 namespace mod_simplelesson\local;
+use \mod_simplelesson\utility\constants;
+
+
+
 defined('MOODLE_INTERNAL') || die;
 require_once($CFG->libdir . '/questionlib.php');
 
@@ -169,25 +168,23 @@ class attempts  {
     public static function get_lesson_answer_data($attemptid) {
         global $DB;
 
-        $answerdata = $DB->get_records('simplelesson_answers',
-                array('attemptid' => $attemptid));
+        $answerdata = $DB->get_records('simplelesson_answers', ['attemptid' => $attemptid]);
 
         // Add the data for the summary table.
         foreach ($answerdata as $data) {
+
             // Add the page title.
-            $data->pagename = pages::get_page_title($data->pageid);
+            $data->pagename = $DB->get_field('simplelesson_pages', 'pagetitle',  ['id' => $data->pageid]);
 
             // Get the required question data.
-            $data->qid = questions::get_questionid(
-                    $data->simplelessonid, $data->pageid);
-            $data->question = questions::fetch_question_name(
-                    $data->qid);
-            $data->qtype = questions::fetch_question_type(
-                    $data->qid);
+            $data->qid = $DB->get_field('simplelesson_questions', 'qid',
+                    ['simplelessonid' => $data->simplelessonid, 'pageid' => $data->pageid]);
+            $questiondata = $DB->get_record('question', ['id' => $data->qid], 'name, qtype');
+            $data->question = $questiondata->name;
+            $data->qtype = $questiondata->qtype;
 
             // Record this data in the table.
-            $DB->update_record('simplelesson_answers',
-                    $data);
+            $DB->update_record('simplelesson_answers', $data);
         }
         return $answerdata;
     }
@@ -434,5 +431,36 @@ class attempts  {
             $maxscore += $entry->score;
         }
         return $maxscore;
+    }
+    /**
+     * Given a question id find the score assigned
+     *
+     * @param int $qid - the question id
+     * @return int $score the score allocated by the teacher
+     */
+    public static function fetch_question_score($simplelessonid,
+            $pageid) {
+        global $DB;
+        $data = $DB->get_record('simplelesson_questions',
+                  array('simplelessonid' => $simplelessonid,
+                  'pageid' => $pageid),
+                  'score', MUST_EXIST);
+        return $data->score;
+    }
+    /**
+     * Given a simplelessonid and pageid
+     * return the slot number
+     *
+     * @param int $simplelesson the module instance
+     * @param int $pageid the page
+     * @return int a slot number from the table
+     */
+    public static function get_slot($simplelessonid,
+            $pageid) {
+        global $DB;
+        return $DB->get_field('simplelesson_questions',
+                'slot', array(
+                'simplelessonid' => $simplelessonid,
+                'pageid' => $pageid));
     }
 }

@@ -57,7 +57,8 @@ $page = $lesson->get_page_record($sequence);
 $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
     array('courseid' => $courseid,
     'simplelessonid' => $simplelessonid,
-    'sequence' => $sequence));
+    'sequence' => $sequence,
+    'mode' => 'preview'));
 
 $questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
 

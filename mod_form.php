@@ -25,7 +25,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @see https://github.com/moodlehq/moodle-mod_simplelesson
  * @see https://github.com/justinhunt/moodle-mod_simplelesson */
-
+use mod_simplelesson\utility\constants;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
@@ -64,10 +64,53 @@ class mod_simplelesson_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields.
         $this->standard_intro_elements();
 
-        // Add a specific mod_simplelesson field - title.
-        $mform->addElement('text', 'pagetitle',
-                get_string('pagetitle', 'mod_simplelesson'));
-        $mform->setType('pagetitle', PARAM_TEXT);
+        // Additional settings for the module.
+        $mform->addElement('header', 'label', get_string('simplelesson_settings', 'mod_simplelesson'));
+
+        $mform->addElement('text', 'title', get_string('simplelesson_title', 'mod_simplelesson'));
+        $mform->setType('title', PARAM_TEXT);
+
+        // Allow the page index.
+        //$mform->addElement('advcheckbox', 'showindex',
+        //        get_string('showindex', 'mod_simplelesson'));
+        //$mform->setDefault('showindex', 1);
+        //$mform->addHelpButton('showindex', 'showindex',
+        //        'simplelesson');
+
+        // Allow student review.
+        $mform->addElement('advcheckbox', 'allowreview',
+                get_string('allowreview', 'mod_simplelesson'));
+        $mform->setDefault('allowreview', 1);
+        $mform->addHelpButton('allowreview', 'allowreview',
+                'simplelesson');
+
+        // Allow incomplete attempts.
+        $mform->addElement('advcheckbox', 'allowincomplete',
+                get_string('allowincomplete', 'mod_simplelesson'));
+        $mform->setDefault('allowincomplete', 1);
+        $mform->addHelpButton('allowincomplete', 'allowincomplete',
+                'simplelesson');
+
+        // Attempts.
+        $attemptoptions = array(0 => get_string('unlimited', 'mod_simplelesson'),
+            1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5');
+        $mform->addElement('select', 'maxattempts', get_string('maxattempts', 'mod_simplelesson'), $attemptoptions);
+        $mform->setType('maxattempts', PARAM_INT);
+
+        // Grade Method.
+        $gradeoptions = array(
+                constants::MOD_SIMPLELESSON_GRADE_HIGHEST =>
+                get_string('gradehighest', 'mod_simplelesson'),
+                constants::MOD_SIMPLELESSON_GRADE_AVERAGE =>
+                get_string('gradeaverage', 'mod_simplelesson'),
+                constants::MOD_SIMPLELESSON_GRADE_LAST =>
+                get_string('gradelast', 'mod_simplelesson'));
+        $mform->addElement('select', 'grademethod',
+                get_string('grademethod', 'mod_simplelesson'),
+                $gradeoptions);
+        $mform->addHelpButton('grademethod', 'grademethod', 'scorm');
+        $mform->setType('grademethod', PARAM_INT);
+        $mform->setDefault('grademethod', 'highest');
 
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();

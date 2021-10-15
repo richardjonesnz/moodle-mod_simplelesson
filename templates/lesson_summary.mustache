@@ -13,8 +13,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/question_form
-    Moodle renders a page
+    @template mod_simplelesson/lesson_summary
+    Provides template for lesson summary data.
 
     Classes required for JS:
     * none
@@ -23,15 +23,33 @@
     * none
 
     Context variables required for this template:
-    * title String a page title.
-    * content String of html code the formatted module intro.
+    * pages object a set of pages to render
 
     Example context (json):
         {
-         "name": "My heading",
-         "content": "<p>My html content</p>"
+            "pages": ""
         }
 }}
-<div class="mod_simplelesson_question">
-    {{{qform}}}
+<div>
+  <div>
+    <h3>{{#str}}summary_header, mod_simplelesson{{/str}}</h3>
+    <p>{{name}}</p>
+    <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        {{#head}}
+          <th>{{.}}</th>
+        {{/head}}
+      </thead>
+      <tbody>
+        {{#data}}
+          {{> mod_simplelesson/summary_row}}
+            {{/data}}
+      </tbody>
+    </table>
+    <p>{{#str}}summary_score, mod_simplelesson{{/str}}{{score}}
+    ({{#str}}outof, mod_simplelesson{{/str}} {{maxscore}}) |
+        {{#str}}summary_time, mod_simplelesson, {{totaltime}}{{/str}} </p>
+  </div>
+  {{> mod_simplelesson/navigation}}
 </div>

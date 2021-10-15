@@ -731,7 +731,7 @@ function simplelesson_pluginfile($course, $cm, $context, $filearea, array $args,
  * @return bool false if file not found, does not return if found - justsend the file
  */
 
-function mod_simplelesson_question_pluginfile($course, $context, $component,
+function simplelesson_question_pluginfile($course, $context, $component,
          $filearea, $qubaid, $slot, $args,
          $forcedownload, array $options = array()) {
 
