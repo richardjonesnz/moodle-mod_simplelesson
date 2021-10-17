@@ -66,6 +66,12 @@ class lesson_editing implements renderable, templatable {
         $table->autourl = new moodle_url('/mod/simplelesson/autosequence.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid]);
+        $table->addq = true; // Show the addpage button
+        $table->addurl = new moodle_url('/mod/simplelesson/add_page.php',
+                ['courseid' => $this->courseid,
+                 'simplelessonid' => $this->simplelessonid,
+                 'returnto' => 'manage',
+                 'sesskey' => sesskey()]);
 
         // Set up table headers.
         $headerdata = array();
@@ -104,6 +110,14 @@ class lesson_editing implements renderable, templatable {
                          'returnurl' => $this->pageurl]);
                 $data['questionlink'] = $result->qid;
                 $data['question'] = true;
+            } else {
+                $link = new \moodle_url('/mod/simplelesson/add_question.php',
+                        ['courseid' => $this->courseid,
+                         'simplelessonid' => $this->simplelessonid,
+                         'sequence' => $page->sequence,
+                         'sesskey' => sesskey()]);
+                $data['questionlink'] = get_string('add', 'mod_simplelesson');
+                $data['questionurl'] = $link->out(false);
             }
 
             $actions = array();
@@ -114,6 +128,7 @@ class lesson_editing implements renderable, templatable {
                     get_string('gotoeditpage', 'mod_simplelesson')];
             $actions['edit'] = ['link' => $link->out(false,
                                ['sequence' => $page->sequence,
+                                'returnto' => 'manage',
                                 'sesskey' => sesskey()]),
                                 'icon' => $icon];
 
@@ -131,7 +146,7 @@ class lesson_editing implements renderable, templatable {
                     get_string('gotodeletepage', 'mod_simplelesson')];
             $actions['delete'] = ['link' => $link->out(false,
                                  ['sequence' => $page->sequence,
-                                  'returnto' => 'edit',
+                                  'returnto' => 'manage',
                                   'sesskey' => sesskey()]),
                                   'icon' => $icon];
 

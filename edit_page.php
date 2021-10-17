@@ -34,6 +34,7 @@ global $DB;
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 $sequence = required_param('sequence', PARAM_INT);
+$returnto = optional_param('returnto', 'show', PARAM_TEXT);
 
 // Set course related variables.
 $moduleinstance = $DB->get_record('simplelesson',
@@ -62,6 +63,12 @@ $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
      'sequence' => $sequence,
      'sesskey' => sesskey()]);
 
+$returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
+    ['courseid' => $courseid,
+     'simplelessonid' => $simplelessonid,
+     'sequence' => $sequence,
+     'sesskey' => sesskey()]);
+
 // Page link data for this page.
 $lesson = new lesson($simplelessonid);
 $pagetitles = $lesson->get_page_titles();
@@ -70,12 +77,16 @@ $page = $lesson->get_page_record($sequence);
 $mform = new edit_page_form(null,
         ['courseid' => $courseid,
          'simplelessonid' => $simplelessonid,
+         'returnto' => $returnto,
          'sequence' => $sequence,
          'context' => $modulecontext,
          'pagetitles' => $pagetitles]);
 
 // If the cancel button was pressed.
 if ($mform->is_cancelled()) {
+    if ($returnto == 'manage') {
+        redirect($returnmanage, get_string('cancelled'), 2);
+    }
     redirect($returnpage, get_string('cancelled'), 2);
 }
 
@@ -102,8 +113,13 @@ if ($data = $mform->get_data()) {
 
     $DB->update_record('simplelesson_pages', $data);
 
-    // Back to showpage.
-    redirect($returnpage, get_string('page_updated', 'mod_simplelesson'), 2, notification::NOTIFY_SUCCESS);
+    // Back to where we came from.
+    if ($returnto == 'manage') {
+        redirect($returnmanage, get_string('page_updated', 'mod_simplelesson'), 2,
+                notification::NOTIFY_SUCCESS);
+    }
+    redirect($returnpage, get_string('page_updated', 'mod_simplelesson'), 2,
+            notification::NOTIFY_SUCCESS);
 }
 
 // Assign page data to the form.

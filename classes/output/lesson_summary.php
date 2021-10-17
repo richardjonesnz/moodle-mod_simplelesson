@@ -83,14 +83,15 @@ class lesson_summary implements renderable, templatable {
             $data = array();
             $data['question'] = $answer->question;
             $data['pagetitle'] = $answer->pagename;
-            $data['right_answer'] = $answer->rightanswer;
-            $data['your_answer'] = $answer->youranswer;
             $mark = round($answer->mark, $this->markdp);
-            if ($mark < 0) {
-                // Question not yet graded (eg essay).
+            if ($answer->qtype == 'essay') {
                 $data['mark'] = get_string('ungraded', 'mod_simplelesson');
+                $data['your_answer'] = format_text($answer->youranswer); // User input if essay question.
+                $data['right_answer'] = get_string('essay', 'mod_simplelesson');
             } else {
                 $data['mark'] = $mark;
+                $data['your_answer'] = $answer->youranswer;
+                $data['right_answer'] = $answer->rightanswer;
             }
             $data['timetaken'] = $answer->timetaken;
             $table->data[] = $data;

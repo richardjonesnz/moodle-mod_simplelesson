@@ -61,7 +61,7 @@ $maxattempts = $simplelesson->maxattempts;
 $displayoptions = display_options::get_options();
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
+//$PAGE->set_pagelayout('course');
 $PAGE->set_heading(format_string($course->fullname));
 
 // For use with the re-direct.
@@ -321,20 +321,20 @@ if ($answered) {
         // If not a question or incomplete attempts are allowed can navigate.
         $options->next = ($sequence < count($pages));
         $options->prev = ($sequence > 1);
-
-        if ($pagecount == $sequence) {
-
-            // Special case of last page.
-            $url = new \moodle_url('/mod/simplelesson/summary.php',
-                    ['courseid' => $cm->course,
-                     'simplelessonid' => $cm->instance,
-                     'mode' => $mode,
-                     'sequence' => $sequence,
-                     'attemptid' => $attemptid]);
-            $options->summaryurl = $url->out(false);
-            $options->summary = true;
-        }
     }
+}
+
+if ($pagecount == $sequence) {
+
+    // Special case of last page.
+    $url = new \moodle_url('/mod/simplelesson/summary.php',
+            ['courseid' => $cm->course,
+             'simplelessonid' => $cm->instance,
+             'mode' => $mode,
+             'sequence' => $sequence,
+             'attemptid' => $attemptid]);
+    $options->summaryurl = $url->out(false);
+    $options->summary = true;
 }
 
 echo $OUTPUT->render(new showpage($page, $options));

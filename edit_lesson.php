@@ -61,7 +61,9 @@ $returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
         'simplelessonid' => $simplelessonid,
         'sesskey' => sesskey()]);
 
-$returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
+$returnview = new moodle_url('/mod/simplelesson/view.php',
+        ['simplelessonid' => $simplelessonid,
+         'sesskey' => sesskey()]);
 
 $lesson = new lesson($simplelessonid);
 $pages =  $lesson->get_pages();
@@ -114,5 +116,6 @@ if ( ($sequence != 0) && ($action != 'none') ) {
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('simplelesson_editing', 'mod_simplelesson'), 2);
-echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm, $PAGE->url));
+echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm,
+        $PAGE->url));
 echo $OUTPUT->footer();

@@ -13,38 +13,19 @@
 }}
 
 {{!
-    @template mod_simplelesson/lesson_editing
-    Renders a summary of the pages in the lesson and editing functions.
-
+    @template mod_simplelesson/reportsmenu
+    Renders the simplelesson reports links
     Classes required for JS:
     * none
-
     Data attributes required for JS:
     * none
-
     Context variables required for this template:
-    * pages object a set of pages to render
-
     Example context (json):
         {
-            "pages": ""
         }
 }}
-<div>
-  <p>{{caption}}</p>
-  <div class="table-responsive">
-  <table class="table table-striped table-sm">
-      <thead>
-        {{#tableheaders}}
-           <th>{{.}}</th>
-        {{/tableheaders}}
-      </thead>
-      <tbody>
-        {{#tabledata}}
-          {{> mod_simplelesson/page_row}}
-        {{/tabledata}}
-      </tbody>
-  </table>
-  {{> mod_simplelesson/navigation}}
-  <div>
+<div class="container ml-2 mb-2 mt-2">
+    <a href="{{{answersurl}}}" class="pr-5">{{#str}}answer_report, simplelesson{{/str}}</a>
+    <a href="{{{attemptsurl}}}" class="pr-5">{{#str}}attempt_report, simplelesson{{/str}}</a>
+    <a href="{{{gradingurl}}}" class="pr-5">{{#str}}manual_grade, simplelesson{{/str}}</a>
 </div>

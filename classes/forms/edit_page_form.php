@@ -71,10 +71,13 @@ class edit_page_form extends \moodleform {
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
         $mform->addElement('hidden', 'simplelessonid',
                 $this->_customdata['simplelessonid']);
+        $mform->addElement('hidden', 'returnto', $this->_customdata['returnto']);
         $mform->addElement('hidden', 'sequence', $this->_customdata['sequence']);
+        $mform->addElement('hidden', 'sesskey', sesskey());
 
         $mform->setType('courseid', PARAM_INT);
         $mform->setType('simplelessonid', PARAM_INT);
+        $mform->setType('returnto', PARAM_TEXT);
         $mform->setType('sequence', PARAM_INT);
 
         // Add the action buttons.

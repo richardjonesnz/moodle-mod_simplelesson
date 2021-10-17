@@ -132,6 +132,22 @@ if ($data = $mform->get_data()) {
      $simplelesson->behaviour = $data->behaviour;
      $DB->update_record('simplelesson', $simplelesson);
 }
+
+// Reports tab, if permitted in admin settings.
+$config = get_config('mod_simplelesson');
+if ($config->enablereports) {
+    $options->reports = true;
+    if (has_capability('mod/simplelesson:viewreportstab', $modulecontext)) {
+        $reportslink = new \moodle_url('/mod/simplelesson/reports.php',
+                ['courseid' => $course->id, 'simplelessonid' => $simplelesson->id]);
+        $options->reportsurl = $reportslink->out(false);
+
+        $viewlink = new \moodle_url('/mod/simplelesson/view.php',
+                ['simplelessonid' => $simplelesson->id]);
+        $options->viewsurl = $viewlink->out(false);
+    }
+}
+
 // Start output to browser.
 echo $OUTPUT->header();
 echo $OUTPUT->render(new view($simplelesson, $cm->id, $options, $mform));

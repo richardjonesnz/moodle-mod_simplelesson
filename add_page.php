@@ -34,6 +34,7 @@ global $DB;
 // Fetch URL parameters.
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
+$returnto = optional_param('returnto', 'view', PARAM_TEXT);
 
 // Set course related variables.
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
@@ -54,7 +55,12 @@ $PAGE->set_pagelayout('course');
 
 // For use with the re-direct.
 $returnview = new moodle_url('/mod/simplelesson/view.php',
-        array('simplelessonid' => $simplelessonid));
+        ['simplelessonid' => $simplelessonid,
+         'sesskey' => sesskey()]);
+$returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'sesskey' => sesskey()]);
 
 // Set up the lesson object.
 $lesson = new lesson($simplelessonid);
@@ -66,12 +72,16 @@ $pagetitles =$lesson->get_page_titles();
 $mform = new edit_page_form(null,
         ['courseid' => $courseid,
          'simplelessonid' => $simplelessonid,
+         'returnto' => $returnto,
          'sequence' => 0,
          'context' => $modulecontext,
          'pagetitles' => $pagetitles]);
 
 // If the cancel button was pressed.
 if ($mform->is_cancelled()) {
+    if ($returnto == 'manage') {
+        redirect($returnmanage, get_string('cancelled'), 2);
+    }
     redirect($returnview, get_string('cancelled'), 2);
 }
 /*
@@ -115,6 +125,10 @@ if ($data = $mform->get_data()) {
     $event->add_record_snapshot($PAGE->cm->modname, $simplelesson);
     $event->trigger();
 
+    if ($returnto == 'manage') {
+        redirect($returnmanage, get_string('page_saved', 'mod_simplelesson'), 2,
+                notification::NOTIFY_SUCCESS);
+    }
     redirect($returnview, get_string('page_saved', 'mod_simplelesson'), 2, notification::NOTIFY_SUCCESS);
 }
 
