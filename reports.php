@@ -52,6 +52,7 @@ $PAGE->set_heading(format_string($course->fullname));
 $options = new stdClass();
 $options->answersurl = $PAGE->url->out(false, ['report' => 'answers']);
 $options->attemptsurl = $PAGE->url->out(false, ['report' => 'attempts']);
+$options->gradingurl = $PAGE->url->out(false, ['report' => 'manualgrade']);
 $viewlink = new \moodle_url('/mod/simplelesson/view.php',
         ['simplelessonid' => $simplelesson->id]);
 $options->viewurl = $viewlink->out(false);
@@ -65,48 +66,28 @@ $options->exporturl = new moodle_url('/mod/simplelesson/export.php',
          'simplelessonid' => $simplelessonid,
          'type' => $report]);
 
-if ($report == 'answers') {
-    $options->answers = true;
-    $options->records = reporting::fetch_answer_data($simplelessonid);
-    $options->headers = reporting::fetch_answer_report_headers();
-    $options->export = true;
-    $options->exportlink = get_string('userreportdownload', 'mod_simplelesson');
-}
-if ($report == 'attempts') {
-    $options->attempts = true;
-    $options->records = reporting::fetch_attempt_data($simplelessonid);
-    $options->headers = reporting::fetch_attempt_report_headers();
-    $options->export = true;
-    $options->exportlink = get_string('userreportdownload', 'mod_simplelesson');
-}
-/*
 switch ($report) {
 
-    case 'menu':
-        $report = $OUTPUT->render_from_template('mod_simplelesson/reportsmenu');
-        break;
     case 'answers':
-        echo $OUTPUT->header();
-        echo reporting::show_reports_tab($courseid, $simplelessonid);
-        $data = reporting::fetch_answer_data($simplelessonid);
-        echo reporting::show_answer_report($data);
-        echo html_writer::link($exporturl,
-                get_string('userreportdownload', 'mod_simplelesson'));
+        $options->answers = true;
+        $options->records = reporting::fetch_answer_data($simplelessonid);
+        $options->headers = reporting::fetch_answer_report_headers();
+        $options->export = true;
+        $options->exportlink = get_string('userreportdownload', 'mod_simplelesson');
         break;
-    case 'attempts':
-        echo $OUTPUT->header();
-        echo reporting::show_reports_tab($courseid, $simplelessonid);
-        $data = reporting::fetch_attempt_data($simplelessonid);
-        echo $OUTPUT->heading($cm->name, 2);
-        echo reporting::show_attempt_report($data);
-        echo html_writer::link($exporturl,
-                get_string('userreportdownload', 'mod_simplelesson'));
+
+    case 'attempts' :
+        $options->attempts = true;
+        $options->records = reporting::fetch_attempt_data($simplelessonid);
+        $options->headers = reporting::fetch_attempt_report_headers();
+        $options->export = true;
+        $options->exportlink = get_string('userreportdownload', 'mod_simplelesson');
         break;
+
     case 'manualgrade':
         // Show records requiring manual grading.
         $data = reporting::fetch_essay_answer_data($simplelessonid);
-        $records = reporting::get_essay_report_data($simplelessonid,
-                $data);
+        $records = reporting::get_essay_report_data($simplelessonid, $data);
         if (empty($records)) {
             // Nothing to grade.
             redirect(new moodle_url('/mod/simplelesson/reports.php',
@@ -116,17 +97,16 @@ switch ($report) {
                     get_string('no_manual_grades',
                     'mod_simplelesson'), 2);
         }
-        echo $OUTPUT->header();
-        echo reporting::show_reports_tab($courseid, $simplelessonid);
-        echo $OUTPUT->heading($cm->name, 2);
-        echo reporting::show_essay_answer_report($records);
+        $options->manualgrade = true;
+        $options->records = $records;
+        $options->headers = reporting::fetch_essay_answer_report_headers();
         break;
     default:
         // Developer debugging called.
         debugging('Internal error: missing or invalid report type',
                 DEBUG_DEVELOPER);
 }
-*/
+
 echo $OUTPUT->header();
 echo $OUTPUT->render(new reports($options));
 echo $OUTPUT->footer();

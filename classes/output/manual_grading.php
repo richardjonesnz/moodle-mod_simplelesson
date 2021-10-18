@@ -15,13 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prints different kinds of Simplelesson report.
+ * Prints a particular page.
  *
  * @package    mod_simplelesson
- * @copyright  2021 Richard Jones <richardnz@outlook.com>
+ * @copyright  2021 Richard Jones richardnz@outlook.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace mod_simplelesson\output;
 
 use renderable;
@@ -29,21 +28,13 @@ use renderer_base;
 use templatable;
 use stdClass;
 
-/**
- * Create a new view page renderable object
- *
- * @param object simplesson - current instance.
- * @param int cmid - course module id.
- * @copyright  2021 Richard Jones <richardnz@outlook.com>
- */
+class manual_grading implements renderable, templatable {
 
-class reports implements renderable, templatable {
+    private $answerdata;
 
-    private $options;
+    public function __construct($answerdata) {
 
-    public function __construct($options) {
-
-        $this->options = $options;
+        $this->answerdata = $answerdata;
     }
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -54,8 +45,12 @@ class reports implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
 
         $data = new stdClass();
-        $data = $this->options;
-        $data->headers = $this->options->headers;
+
+        $data = $this->answerdata;
+        $data->mark = round($this->answerdata->mark,2);
+        $data->date = $this->answerdata->timecompleted;
+        $data->essay_text = $this->answerdata->youranswer;
+
         return $data;
     }
 }

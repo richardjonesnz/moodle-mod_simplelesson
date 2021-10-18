@@ -127,8 +127,7 @@ class reporting  {
             $data->id = $record->id;
             $data->firstname = $record->firstname;
             $data->lastname = $record->lastname;
-            $data->datetaken = date("Y-m-d H:i:s",
-                    $record->timecompleted);
+            $data->datetaken = $record->timecompleted;
             $data->mark = round($record->mark, $options->markdp);
             if ($data->mark < 0 ) {
                 $data->status = get_string('requires_grading',
@@ -186,19 +185,14 @@ class reporting  {
      * @return array of column names
      */
     public static function fetch_essay_answer_report_headers() {
-        $fields = array(
-                'firstname' =>
-                get_string('firstname', 'mod_simplelesson'),
-                'lastname' =>
-                get_string('lastname', 'mod_simplelesson'),
-                'date' =>
-                get_string('date', 'mod_simplelesson'),
-                'mark' =>
-                get_string('mark', 'mod_simplelesson'),
-                'status' =>
-                get_string('status', 'mod_simplelesson'),
-                'gradelink' =>
-                get_string('gradelinkheader', 'mod_simplelesson'));
+        $fields = array();
+
+        $fields[] = get_string('firstname', 'mod_simplelesson');
+        $fields[] = get_string('lastname', 'mod_simplelesson');
+        $fields[] = get_string('date', 'mod_simplelesson');
+        $fields[] = get_string('mark', 'mod_simplelesson');
+        $fields[] = get_string('status', 'mod_simplelesson');
+        $fields[] = get_string('gradelinkheader', 'mod_simplelesson');
 
         return $fields;
     }
@@ -212,7 +206,7 @@ class reporting  {
         global $DB;
 
         $sql = "SELECT a.id, a.youranswer, a.maxmark, a.mark,
-                       a.youranswer, a.timecompleted, t.userid,
+                       a.timecompleted, t.userid,
                        u.firstname, u.lastname, u.deleted
                   FROM {simplelesson_answers} a
                   JOIN {simplelesson_attempts} t
@@ -222,8 +216,7 @@ class reporting  {
                  WHERE a.id = :aid
                    AND u.deleted <> 1";
 
-        return $DB->get_record_sql($sql,
-                array('aid' => $answerid), MUST_EXIST);
+        return $DB->get_record_sql($sql, ['aid' => $answerid], MUST_EXIST);
     }
     /**
      * User Report - get the user attempt records for a lesson
