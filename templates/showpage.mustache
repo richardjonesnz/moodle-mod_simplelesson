@@ -14,7 +14,7 @@
 
 {{!
     @template mod_simplelesson/showpage
-    Moodle renders a page
+    Moodle renders a simplelesson page
 
     Classes required for JS:
     * none
@@ -25,11 +25,17 @@
     Context variables required for this template:
     * title String a page title.
     * content String of html code the formatted module intro.
+    * ispreview boolean true if this is a preview
+    * isattempt boolean true if this is an attempt
+    * canmanage true if user has the capability to manage the lesson
 
     Example context (json):
         {
          "name": "My heading",
          "content": "<p>My html content</p>"
+         "ispreview": "true",
+         "isattempt": "true",
+         "canmanage": "true"
         }
 }}
 <div class="card">

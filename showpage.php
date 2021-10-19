@@ -61,7 +61,6 @@ $maxattempts = $simplelesson->maxattempts;
 $displayoptions = display_options::get_options();
 
 $PAGE->set_context($modulecontext);
-//$PAGE->set_pagelayout('course');
 $PAGE->set_heading(format_string($course->fullname));
 
 // For use with the re-direct.
@@ -199,44 +198,42 @@ $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('simplelesson_pages', $page);
 $event->trigger();
 
-// Prepare data for output class.
-$options = new \stdClass();
-
-// isattempt and ispreview determine how to display any questions.
-$options->isattempt = false;
-
-// Check first or last pages reached.
+// Get lesson data.
 $lesson = new lesson($simplelessonid);
 $pages = $lesson->get_pages();
 $pagecount = count($pages);
-$options->next = ($sequence < $pagecount);
-$options->prev = ($sequence > 1);
 
 $baseurl = new \moodle_url('/mod/simplelesson/showpage.php', ['courseid' => $cm->course,
         'simplelessonid' => $simplelessonid, 'mode' => $mode, 'starttime' => $starttime,
          'attemptid' => $attemptid]);
 
-// Set home button url
-$options->home = true;
+// Prepare data for output class.
+$options = new \stdClass();
 $options->homeurl = $returnview;
+$options->nexturl = $baseurl->out(false, ['sequence' => ($sequence + 1)]);
+$options->prevurl = $baseurl->out(false, ['sequence' => ($sequence - 1)]);
 
-// Set next and previous page url's.
-if ($options->next) {
-    $options->nexturl = $baseurl->out(false, ['sequence' => ($sequence + 1)]);
-}
-if ($options->prev) {
-    $options->prevurl = $baseurl->out(false, ['sequence' => ($sequence - 1)]);
-}
+// Are we preview or attempt?
+$options->ispreview = ($mode == 'preview');
+$options->isattempt = ($mode == 'attempt');
+
+// Supress navigation by default.
+$options->next = false;
+$options->prev = false;
+$options->home = false;
+
 // Check for manage capability - not available if this is an attempt.
 $options->canmanage = ( (has_capability('mod/simplelesson:manage', $modulecontext)) && ($mode == 'preview') );
 
 if ($options->canmanage) {
+
     $addpageurl = new \moodle_url('/mod/simplelesson/add_page.php',
             ['courseid' => $course->id,
              'simplelessonid' => $simplelessonid,
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
+    $options->add = true;
 
     $deletepageurl = new \moodle_url('/mod/simplelesson/delete_page.php',
             ['courseid' => $course->id,
@@ -265,7 +262,6 @@ if ($options->canmanage) {
                 'sesskey' => sesskey()]);
         $options->addquestion = $addquestionurl->out(false);
         $options->addq = true;
-        $options->ispreview = false;
     } else {
         $deletequestionurl = new \moodle_url('/mod/simplelesson/delete_question.php',
                 ['courseid' => $course->id,
@@ -278,7 +274,6 @@ if ($options->canmanage) {
         $options->previewurl = new \moodle_url('/question/bank/previewquestion/preview.php',
                 ['id' => $hasquestion->qid,
                  'returnurl' => $PAGE->url]);
-        $options->ispreview = true;
     }
 
     $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
@@ -288,54 +283,51 @@ if ($options->canmanage) {
     $options->editlesson = $editlessonurl->out(false);
 }
 
-// Output.
-echo $OUTPUT->header();
+// Prepare question page.
 $answered = false;
+$renderer = $PAGE->get_renderer('mod_simplelesson');
 
 // If there is a question and this is an attempt, show the question.
-if ( ($hasquestion) && ($mode == 'attempt') ) {
+if ( ($hasquestion) && ($options->isattempt) ) {
 
-    // Supress navigation during an attempt.
-    $options->next = false;
-    $options->prev = false;
-    $options->home = false;
-    $options->ispreview = false;
-    $options->isattempt = true;
-
-    $renderer = $PAGE->get_renderer('mod_simplelesson');
     $slot = $DB->get_field('simplelesson_questions', 'slot',
     ['simplelessonid' => $simplelessonid, 'pageid' => $page->id]);
     $options->qform = $renderer->render_question_form($actionurl, $displayoptions,
             $slot, $quba, time(), $qtype);
-    $options->isattempt = true;
 
     // Check if the question was answered.
    $answered = attempts::is_answered($simplelessonid, $attemptid, $page->id);
 }
 
-// Navigation controls.
-if ($answered) {
-
-    if ( ($simplelesson->allowincomplete) || (!$hasquestion) ) {
-
-        // If not a question or incomplete attempts are allowed can navigate.
-        $options->next = ($sequence < count($pages));
-        $options->prev = ($sequence > 1);
-    }
+/* Navigation controls appear after question answered or if incomplete attempts
+   are allowed or if this is not a question page or is a preview. */
+if ( ($answered) || ($simplelesson->allowincomplete) || (!$hasquestion) ||
+        ($options->ispreview) ) {
+    $options->next = ($sequence < $pagecount);
+    $options->prev = ($sequence > 1);
 }
 
+// Always show the home page.
+$options->home = true;
+
+// Special case of last page.
 if ($pagecount == $sequence) {
 
-    // Special case of last page.
-    $url = new \moodle_url('/mod/simplelesson/summary.php',
-            ['courseid' => $cm->course,
-             'simplelessonid' => $cm->instance,
-             'mode' => $mode,
-             'sequence' => $sequence,
-             'attemptid' => $attemptid]);
-    $options->summaryurl = $url->out(false);
-    $options->summary = true;
+    if ($mode == 'attempt') {
+        $url = new \moodle_url('/mod/simplelesson/summary.php',
+                ['courseid' => $cm->course,
+                'simplelessonid' => $cm->instance,
+                'mode' => $mode,
+                'sequence' => $sequence,
+                'attemptid' => $attemptid]);
+        $options->summaryurl = $url->out(false);
+        $options->summary = true;
+    } else {
+        // Preview.
+        $options->home = true;
+        $options->homeurl = $returnview;
+    }
 }
-
+echo $OUTPUT->header();
 echo $OUTPUT->render(new showpage($page, $options));
 echo $OUTPUT->footer();

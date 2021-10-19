@@ -66,7 +66,7 @@ class lesson_editing implements renderable, templatable {
         $table->autourl = new moodle_url('/mod/simplelesson/autosequence.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid]);
-        $table->addq = true; // Show the addpage button
+        $table->addpagelesson = true; // Show the addpage button
         $table->addurl = new moodle_url('/mod/simplelesson/add_page.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid,

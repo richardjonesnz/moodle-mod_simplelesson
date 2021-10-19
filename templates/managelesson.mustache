@@ -13,7 +13,7 @@
 }}
 
 {{!
-    @template mod_simplelesson/managemelesson
+    @template mod_simplelesson/managelesson
     Renders the simplelesson lesson management buttons
 
     Classes required for JS:
@@ -23,12 +23,14 @@
     * none
 
     Context variables required for this template:
-    * addpage String of formatted html representing a url
+    * editlesson string of formatted html representing a url
+    * editquestions string of formatted html representing a url
 
     Example context (json):
-        {
-            "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
-        }
+    {
+      "editlesson": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "editquestions": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+    }
 }}
 <div class="card mt-2">
   <div class="card-body">

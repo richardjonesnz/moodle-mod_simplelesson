@@ -16,11 +16,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/pages_edit
-
-    Moodle table rendering template for lesson page management
-
-    This template renders and html table of page data.
+    @template mod_simplelesson/page_row
+    Moodle table row rendering template for lesson page management
 
     Classes required for JS:
     * none
@@ -28,10 +25,18 @@
     Data attributes required for JS:
     * none
 
+    Context variables required for this template:
+    * sequence integer page sequence number
+    * pagetitle string page title
+    * previous integer previous page sequence number
+    * next integer next page sequence number
+    * question boolean true if a question exists on this page
+    * actions array of icons representing editing actions
+
     Example data (json):
         {
          "sequence": "1",
-         "title": "column name",
+         "pagetitle": "column name",
          "previous": "1",
          "next": "1",
          "question": "1"],

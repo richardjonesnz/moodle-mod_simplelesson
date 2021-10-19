@@ -13,9 +13,8 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Add a page form.
+ * Page editing form.
  *
  * @package   mod_simplelesson
  * @copyright 2018 Richard Jones https://richardnz.net

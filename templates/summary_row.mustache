@@ -17,9 +17,7 @@
 
 {{!
     @template mod_simplelesson/summary_row
-    Moodle table rendering template for attempt summary table.
-
-    This template renders an html table of attempt data.
+    Moodle table row rendering template for lesson attempt summary table.
 
     Classes required for JS:
     * none
@@ -27,14 +25,27 @@
     Data attributes required for JS:
     * none
 
+    Context variables required for this template:
+    * question string a question title
+    * pagetitle string title of the page with the question
+    * rightanswer string from the Moodle question table
+    * youranswer string the student answer to the question
+    * mark int the mark awarded for the answer
+    * maxmark int the total mark available for the question
+    * timetaken int the number of seconds taken in answering the question
+
+
     Example data (json):
         {
-         "sequence": "1",
-         "title": "column name",
-         "previous": "1",
-         "next": "1",
-         "question": "1"],
-         "actions": ["edit", ["icon", "component", "core"]]
+         "question": "Whether 'tis nobler...",
+         "firstname": "Ford",
+         "Lastname": "Prefect",
+         "datetaken": "1970-1-1 12:00",
+         "rightanswer": "In the mind",
+         "youranswer": "In the arm",
+         "mark": "1",
+         "maxmark": "1",
+         "timetaken": "42"
         }
 }}
 <tr class="danger">

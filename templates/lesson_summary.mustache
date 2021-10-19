@@ -23,12 +23,23 @@
     * none
 
     Context variables required for this template:
-    * pages object a set of pages to render
+    * name string lesson name
+    * head string array of column headers
+    * data mixed 2D array of summary row data
+    * score int the mark awarded for the answer
+    * maxscore int the total mark available for the question
+    * timetaken int the number of seconds taken in answering the question
+
 
     Example context (json):
-        {
-            "pages": ""
-        }
+    {
+      "name": "The Lesson",
+      "head": ["header 1", "header2", ...],
+      "data": [ ["item1, item2, ..."], ["item1, item2, ..."] ],
+      "score": "10",
+      "maxscore": "10",
+      "timetaken": "1"
+    }
 }}
 <div>
   <div>

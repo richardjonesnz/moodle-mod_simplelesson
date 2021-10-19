@@ -23,13 +23,13 @@
     * none
 
     Context variables required for this template:
-    * qform string of html representing a Moodle form
+    * mform string of html representing a Moodle form
 
     Example context (json):
     {
-      "qform": "<form action="post"> ... </form>"
+      "mform": "<form action="post"> ... </form>"
     }
 }}
-<div class="mod_simplelesson_question">
-    {{{qform}}}
-</div>
+<h3>{{#str}}edit_page, mod_simplelesson{{/str}}</h3>
+<p>{{#str}}edit_page_form, mod_simplelesson{{/str}}<p>
+{{{mform}}}

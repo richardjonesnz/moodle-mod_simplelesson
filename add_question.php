@@ -39,7 +39,8 @@ $cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid,
 $simplelesson = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', MUST_EXIST);
 $thispageurl = new moodle_url('/mod/simplelesson/add_question.php',
         ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]);
-// Set up the page page.
+
+        // Set up the page page.
 $PAGE->set_url($thispageurl);
 
 require_login($course, true, $cm);
@@ -49,26 +50,26 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 
 $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);
 
 $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
-    array('courseid' => $courseid,
-    'simplelessonid' => $simplelessonid,
-    'sequence' => $sequence,
-    'mode' => 'preview'));
+    ['courseid' => $courseid,
+     'simplelessonid' => $simplelessonid,
+     'sequence' => $sequence,
+     'mode' => 'preview']);
 
+// Get the available questions and check there are some.
 $questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
 
 if (count($questions) == 0) {
-
     // Back to showpage.
     redirect($returnpage, get_string('noquestions', 'mod_simplelesson'), 2,
             notification::NOTIFY_WARNING);
 }
 
+// Instantiate the form.
 $mform = new add_question_form(null,
         array('courseid' => $courseid,
               'simplelessonid' => $simplelessonid,
@@ -81,7 +82,7 @@ if ($mform->is_cancelled()) {
     redirect($returnpage, get_string('cancelled'), 2);
 }
 
-// Save the question data
+// Save the question data.
 if ($data = $mform->get_data()) {
 
     $qdata = new stdClass;

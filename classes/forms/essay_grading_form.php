@@ -16,7 +16,6 @@
 namespace mod_simplelesson\forms;
 require_once('../../config.php');
 require_once($CFG->libdir . '/formslib.php');
-
 /**
  * Manual grading for essay questions
  *

@@ -23,28 +23,31 @@
     * none
 
     Context variables required for this template:
-    * pages object a set of pages to render
+    * caption string page title
+    * tableheaders string array of column headers for the table
+    * tabledata mixed two dimensional array of row data
 
     Example context (json):
-        {
-            "pages": ""
-        }
+    {
+        "caption": "This table",
+        "tableheaders": ["header 1", "header2", ...]
+        "tabledata": [ ["item1, item2, ..."], ["item1, item2, ..."] ]
+    }
 }}
+<h3>{{#str}}simplelesson_editing, mod_simplelesson{{/str}}</h3>
+<p>{{caption}}</p>
+<div class="table-responsive">
+<table class="table table-striped table-sm">
+    <thead>
+      {{#tableheaders}}
+          <th>{{.}}</th>
+      {{/tableheaders}}
+    </thead>
+    <tbody>
+      {{#tabledata}}
+        {{> mod_simplelesson/page_row}}
+      {{/tabledata}}
+    </tbody>
+</table>
+{{> mod_simplelesson/navigation}}
 <div>
-  <p>{{caption}}</p>
-  <div class="table-responsive">
-  <table class="table table-striped table-sm">
-      <thead>
-        {{#tableheaders}}
-           <th>{{.}}</th>
-        {{/tableheaders}}
-      </thead>
-      <tbody>
-        {{#tabledata}}
-          {{> mod_simplelesson/page_row}}
-        {{/tabledata}}
-      </tbody>
-  </table>
-  {{> mod_simplelesson/navigation}}
-  <div>
-</div>

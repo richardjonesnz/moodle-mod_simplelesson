@@ -14,15 +14,52 @@
 
 {{!
     @template mod_simplelesson/navigation
-    Renders the simplelesson nav buttons
+    Renders the simplelesson nav buttons that are required for particular pages
+
     Classes required for JS:
     * none
+
     Data attributes required for JS:
     * none
+
     Context variables required for this template:
+    * home boolean whether to show the home page button
+    * homeurl string html representing a Moodle url
+    * review boolean whether to show the home page button with review as label
+    * addq boolean whether to show the add page button
+    * addurl string html representing a Moodle url
+    * auto boolean whether to show the autosequence pages button
+    * autourl string html representing a Moodle url
+    * prev boolean whether to show the next page button
+    * prevurl string html representing a Moodle url
+    * next boolean whether to show the previous page button
+    * nexturl string html representing a Moodle url
+    * summary boolean whether to show the summary page button
+    * summaryurl string html representing a Moodle url
+    * preview boolean whether to show the preview button
+    * previewurl string html representing a Moodle url
+    * attempt boolean whether to show the attempt button
+    * attempturl string html representing a Moodle url
     Example context (json):
-        {
-        }
+    {
+      "home": "true"
+      "homeurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "review": "true"
+      "addq": "true"
+      "addurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "auto": "true"
+      "autourl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "prev": "true"
+      "prevurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "next": "true"
+      "nexturl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "summary": "true"
+      "summaryurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "preview": "true"
+      "previewurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "attempt": "true"
+      "attempturl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+    }
 }}
 <div class="container ml-2 mb-2 mt-2">
   {{#home}}
@@ -33,15 +70,16 @@
     <a href="{{{homeurl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}finishreview, simplelesson{{/str}}</a>
   {{/review}}
-  {{#addq}}
+  <!-- for the lesson editing page normally add page is part of managepage template -->
+  {{#addpagelesson}}
     <a href="{{{addurl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}add_page, simplelesson{{/str}}</a>
-  {{/addq}}
-
+  {{/addpagelesson}}
   {{#auto}}
     <a href="{{{autourl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}autosequencelink, simplelesson{{/str}}</a>
   {{/auto}}
+  <!-- standard navigation links -->
   {{#prev}}
     <a href="{{{prevurl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}prevpage, simplelesson{{/str}}</a>
@@ -50,18 +88,16 @@
     <a href="{{{nexturl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}nextpage, simplelesson{{/str}}</a>
   {{/next}}
-
+  <!-- Page after attempt completed -->
   {{#summary}}
     <a href="{{{summaryurl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}end_lesson, simplelesson{{/str}}</a>
   {{/summary}}
-
-
+  <!-- Buttons on home page -->
   {{#preview}}
     <a href="{{{previewurl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}preview, simplelesson{{/str}}</a>
   {{/preview}}
-
   {{#attempt}}
     <a href="{{{attempturl}}}"button type="button" class="btn btn-info btn-sm">
         {{#str}}attempt, simplelesson{{/str}}</a>

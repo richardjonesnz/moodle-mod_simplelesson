@@ -53,7 +53,6 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 
 $returnview = new moodle_url('/mod/simplelesson/view.php',
         array('simplelessonid' => $simplelessonid));

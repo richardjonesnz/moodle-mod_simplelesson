@@ -54,7 +54,6 @@ $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:manage', $modulecontext);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 
 $returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
         ['courseid' => $courseid,
@@ -115,7 +114,5 @@ if ( ($sequence != 0) && ($action != 'none') ) {
 }
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('simplelesson_editing', 'mod_simplelesson'), 2);
-echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm,
-        $PAGE->url));
+echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm, $PAGE->url));
 echo $OUTPUT->footer();

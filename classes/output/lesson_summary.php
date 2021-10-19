@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Sets up the table to display the lesson summary.
+ * Sets up the table to display attempt data.
  *
  * @package    mod_simplelesson
  * @copyright  2021 Richard Jones richardnz@outlook.com
@@ -28,7 +28,6 @@ use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
-use moodle_url;
 
 /**
  *
@@ -104,5 +103,4 @@ class lesson_summary implements renderable, templatable {
 
         return $table;
     }
-
 }

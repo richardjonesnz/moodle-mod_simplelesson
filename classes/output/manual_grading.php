@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prints a particular page.
+ * Prepares the data for the essay grading form.
  *
  * @package    mod_simplelesson
  * @copyright  2021 Richard Jones richardnz@outlook.com
@@ -45,12 +45,10 @@ class manual_grading implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
 
         $data = new stdClass();
-
         $data = $this->answerdata;
         $data->mark = round($this->answerdata->mark,2);
         $data->date = $this->answerdata->timecompleted;
         $data->essay_text = $this->answerdata->youranswer;
-
         return $data;
     }
 }

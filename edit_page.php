@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Edit a page
+ * Edit a page.
  *
  * @package   mod_simplelesson
  * @copyright 2018 Richard Jones https://richardnz.net
@@ -24,6 +24,7 @@
 
 use \mod_simplelesson\local\lesson;
 use \mod_simplelesson\forms\edit_page_form;
+use \mod_simplelesson\output\edit_page;
 use \mod_simplelesson\utility\utility;
 use \core\output\notification;
 require_once('../../config.php');
@@ -55,7 +56,6 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 
 $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
     ['courseid' => $courseid,
@@ -134,7 +134,5 @@ $page = file_prepare_standard_editor(
 
 $mform->set_data($page);
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('edit_page', 'mod_simplelesson'), 2);
-echo get_string('edit_page_form', 'mod_simplelesson');
-$mform->display();
+echo $OUTPUT->render(new edit_page($mform));
 echo $OUTPUT->footer();

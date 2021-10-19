@@ -16,11 +16,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/pages_edit
-
-    Moodle table rendering template for lesson page management
-
-    This template renders and html table of page data.
+    @template mod_simplelesson/attempt_row
+    Moodle table row rendering template for student attempt data
 
     Classes required for JS:
     * none
@@ -28,14 +25,25 @@
     Data attributes required for JS:
     * none
 
+    Context variables required for this template:
+    * firstname string user/respondent firstname
+    * lastname string user/respondent firstname
+    * datetaken string with date information - formatted
+    * status string status of the attempt (complete/incomplete)
+    * sessionscore string from the Moodle question table
+    * maxscore int the total mark available for the question
+    * timetaken int the number of seconds taken in answering the question
+
+
     Example data (json):
         {
-         "sequence": "1",
-         "title": "column name",
-         "previous": "1",
-         "next": "1",
-         "question": "1"],
-         "actions": ["edit", ["icon", "component", "core"]]
+         "firstname": "Fred",
+         "Lastname": "Flintstone",
+         "datetaken": "1970-1-1 12:00",
+         "status": "Complete",
+         "sessionscore": "10",
+         "maxscore": "10",
+         "timetaken": "1"
         }
 }}
 <tr class="danger">

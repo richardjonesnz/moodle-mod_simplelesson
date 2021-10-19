@@ -22,9 +22,6 @@
  */
 namespace mod_simplelesson\local;
 use \mod_simplelesson\utility\constants;
-
-
-
 defined('MOODLE_INTERNAL') || die;
 require_once($CFG->libdir . '/questionlib.php');
 
@@ -325,13 +322,14 @@ class attempts  {
         }
     }
     /**
-     * Is question answered?
+     * Checks the question usage engine stateclass entry in the answers table.
      *
-     * @param stdCall $answerdata question answerdata
-     * @return bool true if completed
+     * @param  int $simplelessonid the simplelesson id
+     * @param  int $attemptid the attempt id
+     * @param  int $pageid the page id
+     * @return bool true if question has been completed
      */
-    public static function is_answered($simplelessonid, $attemptid,
-            $pageid) {
+    public static function is_answered($simplelessonid, $attemptid, $pageid) {
         global $DB;
         $result = false;
         $stateclass = $DB->get_field('simplelesson_answers',
@@ -362,8 +360,7 @@ class attempts  {
             array('id' => $attemptid));
     }
     /**
-     * Upate attempt sessions core and the associated answer
-     * after grading an essay attempt.
+     * Upate attempt session score and the associated answer after grading an essay attempt.
      *
      * @param int $answerid the answer record id
      * @param int $mark the mark awarded in manual grading
@@ -392,8 +389,7 @@ class attempts  {
                 $mark, array('id' => $answerid));
     }
     /**
-     * Given a simplelessonid, find all its questions
-     * that are on a page.
+     * Given a simplelessonid, find all its questions that are on a page.
      *
      * @param object $simplelesonid
      * @return array question display data
@@ -406,8 +402,7 @@ class attempts  {
                   JOIN {question} q ON s.qid = q.id
                  WHERE s.simplelessonid = :slid
                    AND s.pageid <> 0";
-        $entries = $DB->get_records_sql($sql,
-              array('slid' => $simplelessonid));
+        $entries = $DB->get_records_sql($sql, ['slid' => $simplelessonid]);
         return $entries;
     }
     /**
@@ -423,8 +418,7 @@ class attempts  {
                   FROM {simplelesson_questions} s
                  WHERE s.simplelessonid = :slid
                    AND s.slot <> 0";
-        $entries = $DB->get_records_sql($sql,
-              array('slid' => $simplelessonid));
+        $entries = $DB->get_records_sql($sql, ['slid' => $simplelessonid]);
 
         $maxscore = 0;
         foreach ($entries as $entry) {
@@ -438,13 +432,12 @@ class attempts  {
      * @param int $qid - the question id
      * @return int $score the score allocated by the teacher
      */
-    public static function fetch_question_score($simplelessonid,
-            $pageid) {
+    public static function fetch_question_score($simplelessonid, $pageid) {
         global $DB;
         $data = $DB->get_record('simplelesson_questions',
-                  array('simplelessonid' => $simplelessonid,
-                  'pageid' => $pageid),
-                  'score', MUST_EXIST);
+                ['simplelessonid' => $simplelessonid,
+                 'pageid' => $pageid],
+                 'score', MUST_EXIST);
         return $data->score;
     }
     /**
@@ -455,12 +448,10 @@ class attempts  {
      * @param int $pageid the page
      * @return int a slot number from the table
      */
-    public static function get_slot($simplelessonid,
-            $pageid) {
+    public static function get_slot($simplelessonid, $pageid) {
         global $DB;
-        return $DB->get_field('simplelesson_questions',
-                'slot', array(
-                'simplelessonid' => $simplelessonid,
-                'pageid' => $pageid));
+        return $DB->get_field('simplelesson_questions', 'slot',
+                ['simplelessonid' => $simplelessonid,
+                 'pageid' => $pageid]);
     }
 }

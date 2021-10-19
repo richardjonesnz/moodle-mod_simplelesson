@@ -13,8 +13,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/management
-    Renders the simplelesson editing.management buttons
+    @template mod_simplelesson/managepage
+    Renders the simplelesson page editing buttons
 
     Classes required for JS:
     * none
@@ -23,12 +23,20 @@
     * none
 
     Context variables required for this template:
-    * addpage String of formatted html representing a url
+    * addpage string of formatted html representing a url
+    * editpage string of formatted html representing a url
+    * deletepage string of formatted html representing a url
+    * addquestion string of formatted html representing a url
+    * deletequestion string of formatted html representing a url
 
     Example context (json):
-        {
-            "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
-        }
+     {
+      "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "editpage": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "deletepage": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "addquestion": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "deletequestion": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+     }
 }}
 <div class="card mt-2">
   <div class="card-body">
@@ -53,6 +61,5 @@
     <a href="{{{deletequestion}}}"button type="button" class="btn btn-success btn-sm">
          {{#str}}delete_question, simplelesson{{/str}}</a>
     {{/deleteq}}
-
   </div>
 </div>

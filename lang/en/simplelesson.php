@@ -64,8 +64,8 @@ $string['showindex'] = 'Show the page index';
 $string['showindex_help'] = 'The page index is optional and will show on the top right of every content page in preview mode by default. This can be overriden by themes. ';
 $string['allowreview'] = 'Allow student to review attempts';
 $string['allowreview_help'] = 'At the end of the attempt, students can review their responses and their scores by default.  Uncheck this box to disallow student review.';
-$string['allowincomplete'] = 'Do not allow incomplete attempts';
-$string['allowincomplete_help'] = 'Check to force students to respond to a question before navigation links are shown.';
+$string['allowincomplete'] = 'Allow incomplete attempts';
+$string['allowincomplete_help'] = 'Uncheck to force students to respond to a question before navigation links are shown.';
 $string['completequestion'] = 'Please attempt this question to continue';
 
 // The category modal popup.
@@ -241,6 +241,7 @@ $string['gradelink'] = 'Grade essay';
 $string['gradelinkheader'] = 'Action';
 $string['requires_grading'] = 'Requires grading';
 $string['essay_grading'] = 'Grade an essay';
+$string['the_essay'] = 'The essay to grade';
 $string['essay_grading_page'] = 'Use this page to manually grade an essay submission.';
 $string['userdetail'] = 'User: {$a}';
 $string['essaydate'] = 'Date submitted: {$a}';

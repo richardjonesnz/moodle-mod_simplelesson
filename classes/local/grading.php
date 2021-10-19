@@ -22,9 +22,6 @@
  */
 namespace mod_simplelesson\local;
 use \mod_simplelesson\utility\constants;
-
-
-
 defined('MOODLE_INTERNAL') || die();
 
 /**

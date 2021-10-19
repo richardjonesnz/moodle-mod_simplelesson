@@ -20,8 +20,6 @@
  * @package    mod_simplelesson
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @see https://github.com/moodlehq/moodle-mod_newmodule
- * @see https://github.com/justinhunt/moodle-mod_pairwork
  */
 
 use mod_simplelesson\event\course_module_viewed;
@@ -76,12 +74,7 @@ $options = new \stdClass();
 
 // Show add page button if permitted.
 if ($canmanage) {
-    $addpageurl = new \moodle_url('/mod/simplelesson/add_page.php',
-            ['courseid' => $course->id,
-             'simplelessonid' => $simplelesson->id,
-             'sequence' => 0,
-             'sesskey' => sesskey()]);
-    $options->addpage = $addpageurl->out(false);
+
 
     $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
             ['courseid' => $course->id,

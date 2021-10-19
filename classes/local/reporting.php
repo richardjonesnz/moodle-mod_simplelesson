@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines report classes
+ * Defines report functions
  *
  * @package    mod_simplelesson
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
@@ -26,11 +26,12 @@
 namespace mod_simplelesson\local;
 use \mod_simplelesson\output\display_options;
 use \mod_simplelesson\utility\constants;
-
 defined('MOODLE_INTERNAL') || die;
-
+/*
+ * A collec tiuon of static functions relating to reporting.
+ *
+ */
 class reporting  {
-
     /*
      * Basic Report - get the module records for this course
      *

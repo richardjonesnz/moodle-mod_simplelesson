@@ -23,8 +23,8 @@
  * @package    mod_simplelesson
  * @copyright  2019 Richard Jones richardnz@outlook.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @see https://github.com/moodlehq/moodle-mod_simplelesson
- * @see https://github.com/justinhunt/moodle-mod_simplelesson */
+ */
+
 use mod_simplelesson\utility\constants;
 defined('MOODLE_INTERNAL') || die();
 

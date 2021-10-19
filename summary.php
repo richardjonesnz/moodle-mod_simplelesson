@@ -56,7 +56,6 @@ $options = display_options::get_options();
 $returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
 $lessontitle = $simplelesson->name;
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 $PAGE->set_heading(format_string($course->fullname));
 echo $OUTPUT->header();
 

@@ -17,7 +17,7 @@
 
 {{!
     @template mod_simplelesson/manual_grade_row
-    Moodle table rendering template for marking essays
+    Moodle table rendering template for selecting essays to mark
 
 
     Classes required for JS:
@@ -26,20 +26,29 @@
     Data attributes required for JS:
     * none
 
+   Context variables required for this template:
+    * firstname string user/respondent firstname
+    * lastname string user/respondent firstname
+    * datetaken int unix date/time
+    * mark int current student essay grade
+    * status string status of the attempt (complete/incomplete)
+    * gradelink string of formatted html representing a url
+
+
     Example data (json):
-        {
-         "sequence": "1",
-         "title": "column name",
-         "previous": "1",
-         "next": "1",
-         "question": "1"],
-         "actions": ["edit", ["icon", "component", "core"]]
-        }
+    {
+      "firstname": "Fred",
+      "Lastname": "Flintstone",
+      "datetaken": "14567832",
+      "mark": "-1",
+      "status": "Complete",
+      "gradelink": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+    }
 }}
 <tr class="danger">
   <td>{{firstname}}</td>
   <td>{{lastname}}</td>
-  <td>{{#userdate}} {{datetaken}}, %Y-%m-%d %H:%M  {{/userdate}}</li></td>
+  <td>{{#userdate}} {{datetaken}}, %Y-%m-%d %H:%M  {{/userdate}}</td>
   <td>{{mark}}</td>
   <td>{{status}}</td>
   <td>{{{gradelink}}}</td>

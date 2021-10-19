@@ -48,7 +48,6 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 
 $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);
@@ -58,6 +57,7 @@ $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
     'simplelessonid' => $simplelessonid,
     'sequence' => $sequence));
 
+// Check if there is a question on this page.
 $result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
         'pageid' => $page->id]);
 

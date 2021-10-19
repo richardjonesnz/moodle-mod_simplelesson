@@ -27,7 +27,6 @@ use \mod_simplelesson\forms\edit_page_form;
 use \mod_simplelesson\event\page_created;
 use \core\output\notification;
 
-//use \mod_simplelesson\event\page_created;
 require_once('../../config.php');
 global $DB;
 
@@ -51,7 +50,6 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 
 // For use with the re-direct.
 $returnview = new moodle_url('/mod/simplelesson/view.php',
@@ -79,6 +77,7 @@ $mform = new edit_page_form(null,
 
 // If the cancel button was pressed.
 if ($mform->is_cancelled()) {
+    // Return to the calling page.
     if ($returnto == 'manage') {
         redirect($returnmanage, get_string('cancelled'), 2);
     }
@@ -115,7 +114,8 @@ if ($data = $mform->get_data()) {
             'mod_simplelesson',
             'pagecontents',
             $data->id);
-    // Update the record with full editor data.
+
+            // Update the record with full editor data.
     $DB->update_record('simplelesson_pages', $data);
 
     // Trigger the page created event.

@@ -15,13 +15,23 @@
 {{!
     @template mod_simplelesson/reportsmenu
     Renders the simplelesson reports links
+
     Classes required for JS:
     * none
+
     Data attributes required for JS:
     * none
+
     Context variables required for this template:
+    * answersurl string of formatted html representing a url
+    * attemptsurl string of formatted html representing a url
+    * gradingurl string of formatted html representing a url
+
     Example context (json):
         {
+          "answersurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+          "attemptsurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+          "gradingurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
         }
 }}
 <div class="container ml-2 mb-2 mt-2">

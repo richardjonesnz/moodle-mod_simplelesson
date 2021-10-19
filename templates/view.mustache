@@ -14,8 +14,7 @@
 
 {{!
     @template mod_simplelesson/view
-
-    Moodle renders a simple view page
+    Moodle renders the simplelesson view page
 
     Classes required for JS:
     * none
@@ -24,13 +23,19 @@
     * none
 
     Context variables required for this template:
-    * title String a page title.
-    * body String of html code the formatted module intro.
+    * viewurl String of html representing a Moodle url
+    * reportsurl String of html representing a Moodle url
+    * body the formatted module intro information
+    * pages int the number of pages in the simplelesson
+    * canmanage boolean true if user has manage capability for the lesson
 
     Example context (json):
         {
-         "title": "My heading",
-         "body": "<p>My html body</p>",
+         "viewurl": "/mod_simplelesson/view.php?id=2",
+         "reportsurl": "/mod_simplelesson/reports.php?id=2",
+         "body": "<p>some <strong>formatted</strong> html text...</p>",
+         "pages": "1",
+         "canmanage": "true"
         }
 }}
 {{#reports}}

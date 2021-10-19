@@ -46,7 +46,6 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 $PAGE->set_heading(format_string($course->fullname));
 
 // Check attempts (for students).

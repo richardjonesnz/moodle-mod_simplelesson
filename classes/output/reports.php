@@ -30,7 +30,7 @@ use templatable;
 use stdClass;
 
 /**
- * Create a new view page renderable object
+ * Prepare the data for the reports page.
  *
  * @param object simplesson - current instance.
  * @param int cmid - course module id.

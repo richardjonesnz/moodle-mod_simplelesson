@@ -23,11 +23,8 @@
  * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
-
 namespace mod_simplelesson\event;
-
 defined('MOODLE_INTERNAL') || die();
-
 /**
  * A page viewed event for Simple lesson.
  *

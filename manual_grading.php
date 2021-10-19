@@ -62,7 +62,6 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_pagelayout('course');
 
 $answerdata = reporting::fetch_essay_answer_record($answerid);
 
@@ -89,8 +88,6 @@ if ($data = $mform->get_data()) {
 }
 
 echo $OUTPUT->header();
-//echo $renderer->grading_header($answerdata);
-//echo $renderer->essay_text($answerdata->youranswer);
 echo $OUTPUT->render(new manual_grading($answerdata));
 $mform->display();
 echo $OUTPUT->footer();

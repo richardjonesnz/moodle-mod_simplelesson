@@ -14,7 +14,7 @@
 
 {{!
     @template mod_simplelesson/reports
-    Moodle renders the reports page
+    Moodle renders the reports page with various contents
 
     Classes required for JS:
     * none
@@ -23,13 +23,31 @@
     * none
 
     Context variables required for this template:
-    * title String a page title.
-    * body String of html code the formatted module intro.
+    * viewurl String of html representing a Moodle url
+    * reportsurl String of html representing a Moodle url
+    * menu boolean true if menu should be printed.
+    * answers boolean true if answers table should be printed
+    * attempts boolean true if attempts table should be printed
+    * manualgrade boolean true if manual grading table should be printed
+    * headers string array of column headers for the table
+    * records mixed two dimensional array of row data
+    * export boolean true if export to csv link should be printed
+    * exporturl String of html representing a Moodle url
+    * exportlink String text for the export link
 
     Example context (json):
         {
-         "title": "My heading",
-         "body": "<p>My html body</p>",
+         "viewurl": "/mod_simplelesson/view.php?id=2",
+         "reportsurl": "/mod_simplelesson/reports.php?id=2",
+         "menu": "true",
+         "answers": "true",
+         "attempts": "false",
+         "manualgrade": "false",
+         "headers": ["header 1", "header2", ...]
+         "records": [ ["item1, item2, ..."], ["item1, item2, ..."] ]
+         "export": "true",
+         "exporturl": "/mod_simplelesson/export.php?id=2",
+         "exportlink": "Export results as csv"
         }
 }}
 <ul class="nav nav-tabs">

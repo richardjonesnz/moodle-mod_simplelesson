@@ -27,9 +27,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_simplelesson';
-$plugin->version = 2020111500;
-$plugin->release = 'v1.29.2'; // Added link to question bank.
-$plugin->requires = 2017111301; // Designed for Moodle 3.5.
+$plugin->version = 2021101900;
+$plugin->release = 'v2.00.1'; // Re-designed for Moodle 4.
+$plugin->requires = 2017111301;
 $plugin->maturity = MATURITY_BETA;
 $plugin->cron = 0;
 $plugin->dependencies = array();

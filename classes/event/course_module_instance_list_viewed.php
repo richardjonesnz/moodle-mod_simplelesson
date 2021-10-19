@@ -21,21 +21,14 @@
  * @copyright  2016 Your Name <your@email.address>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace mod_simplelesson\event;
-
 defined('MOODLE_INTERNAL') || die();
-
 /**
  * The mod_simplelesson instance list viewed event class.
  *
  * @package    mod_simplelesson
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
-class course_module_instance_list_viewed
-        extends
-        \core\event\course_module_instance_list_viewed {
-}
+class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {}

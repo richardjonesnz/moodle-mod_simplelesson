@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prepares the view page of the mod instance.
+ * Prepares the data for view page of the mod instance.
  *
  * @package    mod_simplelesson
  * @copyright  2021 Richard Jones <richardnz@outlook.com>
@@ -34,6 +34,8 @@ use stdClass;
  *
  * @param object simplesson - current instance.
  * @param int cmid - course module id.
+ * @param object options - options relating the the template display.
+ * @param object mform - the question category selection form.
  * @copyright  2021 Richard Jones <richardnz@outlook.com>
  */
 
@@ -68,6 +70,7 @@ class view implements renderable, templatable {
         $data->body = format_module_intro('simplelesson', $this->simplelesson, $this->cmid);
         $data->message = get_string('welcome', 'mod_simplelesson');
 
+        // This form shows in a Bootstrap modal.
         $data->mform = $this->mform->render();
 
         $data->qlinkurl = new \moodle_url('/question/edit.php', ['courseid' => $this->simplelesson->course]);

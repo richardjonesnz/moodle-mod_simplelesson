@@ -13,21 +13,15 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Defines the pagte created event.
+ * Defines the page created event.
  *
  * @package    mod_simplelesson
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @see https://github.com/moodlehq/moodle-mod_newmodule
- *
  */
-
 namespace mod_simplelesson\event;
-
 defined('MOODLE_INTERNAL') || die();
-
 /**
  * A page created event for Simple lesson.
  *

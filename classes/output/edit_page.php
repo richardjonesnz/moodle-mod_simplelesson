@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prepare the data for showing a lesson page.
+ * Prepares the data for the edit page
  *
  * @package    mod_simplelesson
- * @copyright  2021 Richard Jones richardnz@outlook.com
+ * @copyright  2021 Richard Jones <richardnz@outlook.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,15 +29,19 @@ use renderer_base;
 use templatable;
 use stdClass;
 
-class showpage implements renderable, templatable {
+/**
+ * Create a new view page renderable object
+ *
+ * @param object mform - page editing form.
+ */
 
-    private $page;
-    private $options;
+class edit_page implements renderable, templatable {
 
-    public function __construct($page, $options) {
+    private $mform;
 
-        $this->page = $page;
-        $this->options = $options;
+    public function __construct($mform) {
+
+        $this->mform = $mform;
     }
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -48,9 +52,7 @@ class showpage implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
 
         $data = new stdClass();
-        $data = $this->options;
-        $data->title = $this->page->pagetitle;
-        $data->content = $this->page->pagecontents;
+        $data->mform = $this->mform->render();
         return $data;
     }
 }

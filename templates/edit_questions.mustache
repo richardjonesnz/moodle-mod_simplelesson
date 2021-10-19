@@ -13,8 +13,8 @@
 }}
 
 {{!
-    @template mod_simplelesson/managemelesson
-    Renders the simplelesson lesson management buttons
+    @template mod_simplelesson/edit_questions
+    Modal template for selecting question category and behaviour
 
     Classes required for JS:
     * none
@@ -23,12 +23,14 @@
     * none
 
     Context variables required for this template:
-    * addpage String of formatted html representing a url
+    * mform String of formatted html representing a Moodle form
+    * qlink String url of the Moodle question bank
 
     Example context (json):
-        {
-            "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=x"
-        }
+    {
+        "mform": "<form action=....>",
+        "qlink": 'simplelesson\question\bank.php'
+    }
 }}
 <!-- Bootstrap Modal W3 schools -->
 <div id="simplelesson_edit_questions_modal" class="modal fade" role="dialog">
