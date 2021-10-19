@@ -262,6 +262,9 @@ if ($options->canmanage) {
                 'sesskey' => sesskey()]);
         $options->addquestion = $addquestionurl->out(false);
         $options->addq = true;
+
+        // prevents question placeholder showing up.
+        $options->ispreview =- false;
     } else {
         $deletequestionurl = new \moodle_url('/mod/simplelesson/delete_question.php',
                 ['courseid' => $course->id,

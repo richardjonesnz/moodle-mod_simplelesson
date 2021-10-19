@@ -147,7 +147,7 @@ $string['edit_question_page'] = 'Click the Allocate link in the last column to a
 
 // Page editing.
 $string['edit_page'] = 'Edit page';
-$string['page_editing'] = 'Use this page to organize your Simple lesson.  You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. Click the Question number to preview the question.';
+$string['page_editing'] = 'Use this page to organize your Simple lesson.  You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. Click the Question number to preview the question (or add to add one).  Add a new page using the button.';
 $string['edit_page_form'] = 'Edit the page contents';
 $string['add_page'] = 'Add page';
 $string['delete_page'] = 'Delete page';

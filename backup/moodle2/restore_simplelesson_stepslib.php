@@ -23,7 +23,7 @@
  * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
-use \mod_simplelesson\local\pages;
+use \mod_simplelesson\local\lesson;
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @package   mod_simplelesson
  * @category  backup
- * @copyright 2016 Your Name <your@email.address>
+ * @copyright 2021 Richard F Jones <richardnz@outlook.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_simplelesson_activity_structure_step extends restore_activity_structure_step {
@@ -73,7 +73,7 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
     protected function process_simplelesson($data) {
         global $DB;
         $data = (object)$data;
-        $oldid = $data->id;
+        //$oldid = $data->id;
         $data->course = $this->get_courseid();
 
         if (empty($data->timecreated)) {
@@ -141,26 +141,23 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
         $simplelessonid = $this->get_new_parentid('simplelesson');
 
         // How many pages to fix?
-        $pagecount = pages::count_pages($simplelessonid);
+        $lesson = new lesson($simplelessonid);
+        $pages = $lesson->get_pages();
+        $pagecount = count($pages);
 
+        // Fix up the page links.
         for ($p = 1; $p <= $pagecount; $p++) {
-            $newpageid = pages::get_page_id_from_sequence($simplelessonid,
-            $p);
-            $nextpageid = ($p == $pagecount) ? 0 :
-                    pages::get_page_id_from_sequence($simplelessonid,
-                            $p + 1);
-            $prevpageid = ($p == 1) ? 0 :
-                    pages::get_page_id_from_sequence($simplelessonid,
-                            $p - 1);
+            $newpage = $lesson->get_page_record($p);
+            $nextpage = ($p == $pagecount) ? 0 : $lesson->get_page_record($p + 1);
+            $prevpage = ($p == 1) ? 0 : $lesson->get_page_record($p - 1);
 
-            $DB->set_field('simplelesson_pages', 'nextpageid',
-                    $nextpageid,
-                    array('id' => $newpageid,
-                    'simplelessonid' => $simplelessonid));
-            $DB->set_field('simplelesson_pages', 'prevpageid',
-                    $prevpageid,
-                    array('id' => $newpageid,
-                    'simplelessonid' => $simplelessonid));
+            $DB->set_field('simplelesson_pages', 'nextpageid', $nextpage->id,
+                    ['id' => $newpage->id, 'simplelessonid' => $simplelessonid]);
+            $DB->set_field('simplelesson_pages', 'prevpageid', $prevpage->id,
+                    ['id' => $newpage->id, 'simplelessonid' => $simplelessonid]);
         }
+        // Need to remove the entries in the questions table for the new lesson.
+        // Because we are unable to copy questions in the backup.
+        $DB->set_field('simplelesson_questions', 'qid', 0, ['simplelessonid' => $simplelessonid]);
     }
 }

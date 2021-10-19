@@ -29,9 +29,13 @@
 
     Example context (json):
     {
-        "caption": "This table",
-        "tableheaders": ["header 1", "header2", ...]
-        "tabledata": [ ["item1, item2, ..."], ["item1, item2, ..."] ]
+        "caption": {
+          "caption": "This table"
+        }
+        "table": {
+          "tableheaders": ["header 1", "header2", ...]
+          "tabledata": [ ["item1, item2, ..."], ["item1, item2, ..."] ]
+        }
     }
 }}
 <h3>{{#str}}simplelesson_editing, mod_simplelesson{{/str}}</h3>
