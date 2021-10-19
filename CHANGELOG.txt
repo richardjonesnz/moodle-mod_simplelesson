@@ -1,0 +1,90 @@
+CHANGELOG.txt
+=============
+2.0.1 - 19/10/21 - MAJOR revision of code to modern Moodle standards but compatible with existing functionality.
+
+Preview mode shows a question placeholder and a link to preview the question on a page
+Lesson management page shows the question on a page and allows adding questions from there
+Selection of question category and behaviour via modal on main plugin page, also links to question bank
+Tested on Moodle 4.0 development code.
+
+1.29.2 - 15/11/20 - MINOR improvement to Manage Questions page - thanks Stephen Parry @sparry0407
+A link is added that takes you to the question bank for the course where you can preview and
+edit your question.
+
+1.29.1 - 2/3/20 - MINOR fixes to navigation - thanks Joseph Rézeau
+
+1.29.1 - 3/11/20 - MINOR change to navigation - sparry407
+Nav shows on non-question pages when allow incomplete attempts are disallowed.
+
+       - 2/3/20 - MINOR fixes to navigation - thanks Joseph Rézeau
+Nav now shows after answering question in deferred mode.
+If user double-clicks check button, returns to home page
+  - this is an issue with the question engine sometimes
+  - getting an out of sequence error.
+
+1.29 - 26/10/19 - MINOR bug fixes, thanks Al Rachels.
+Language file
+  - capitalized "sequence"
+index.php
+  - fixed use statement
+
+1.28 - 04/09/2018 - MINOR changes/improvements
+=================
+Attempts
+  - Allow incomplete attempts. Otherwise student must answer
+    question to view navigation.
+  - Adds new database field for question state.
+
+1.27 - 01/09/2018 - MINOR changes/improvements
+=================
+Grading
+  - Fixed incorrect grading method calculation
+    Note: Grading changes for all users if grade calculation
+          method is changed in settings.
+Other
+  - Enabled activity reset
+
+1.26 - 30/08/2018 - MAJOR changes to database (uninstall required)
+=================
+Database
+  - increased sizes of some key fields and indexes to macth Moodle tables
+Grading
+  - fixed bug updating grades for single user
+
+1.25 - 23/08/2018 - MINOR changes/improvements in functionality
+=================
+UI
+ - Fixed broken page layout in clean theme
+ - Updated report tab buttons to use template
+
+Reporting
+ - Fixed up calculation bug for sessionscore
+
+Security
+ - Added sesskey checks for action pages
+ - Added capability checks for viewable pages
+
+ Grading
+ - Implemented grading methods: highest, average and latest attempt(s)
+ - Grades sent to Moodle gradebook
+
+1.24 - 16/08/2018 - MINOR changes
+=================
+UI Improvements in consistency
+- Added mustache templates for most page links (buttons).
+- Added mustache templates for formatting table output.
+
+Question types
+- Tested and implemented deferred feedback question behaviours.
+
+Settings
+- Added setting to allow/prevent student review post lesson.
+- Added related changes to database and upgrade.php scripts.
+
+Code
+- Removed code from renderer.php, modified and added to output classes
+- Added allowreview field to install.xml, upgrade.php and backup code
+
+Log is only kept since MINOR version 1.24, 2018081001.
+Version 1.21 is reviewed here:
+https://tracker.moodle.org/browse/CONTRIB-7331
