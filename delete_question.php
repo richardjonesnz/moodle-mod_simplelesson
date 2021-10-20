@@ -53,9 +53,9 @@ $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);
 
 $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
-    array('courseid' => $courseid,
-    'simplelessonid' => $simplelessonid,
-    'sequence' => $sequence));
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'sequence' => $sequence]);
 
 // Check if there is a question on this page.
 $result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,

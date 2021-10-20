@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_simplelesson';
-$plugin->version = 2021101900;
+$plugin->version = 2021101901;
 $plugin->release = 'v2.00.1'; // Re-designed for Moodle 4.
 $plugin->requires = 2017111301;
 $plugin->maturity = MATURITY_BETA;

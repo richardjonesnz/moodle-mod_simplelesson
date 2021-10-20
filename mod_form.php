@@ -71,25 +71,19 @@ class mod_simplelesson_mod_form extends moodleform_mod {
         $mform->setType('title', PARAM_TEXT);
 
         // Allow the page index.
-        //$mform->addElement('advcheckbox', 'showindex',
-        //        get_string('showindex', 'mod_simplelesson'));
-        //$mform->setDefault('showindex', 1);
-        //$mform->addHelpButton('showindex', 'showindex',
-        //        'simplelesson');
+        $mform->addElement('advcheckbox', 'showindex', get_string('showindex', 'mod_simplelesson'));
+        $mform->setDefault('showindex', 1);
+        $mform->addHelpButton('showindex', 'showindex', 'simplelesson');
 
         // Allow student review.
-        $mform->addElement('advcheckbox', 'allowreview',
-                get_string('allowreview', 'mod_simplelesson'));
+        $mform->addElement('advcheckbox', 'allowreview', get_string('allowreview', 'mod_simplelesson'));
         $mform->setDefault('allowreview', 1);
-        $mform->addHelpButton('allowreview', 'allowreview',
-                'simplelesson');
+        $mform->addHelpButton('allowreview', 'allowreview', 'simplelesson');
 
         // Allow incomplete attempts.
-        $mform->addElement('advcheckbox', 'allowincomplete',
-                get_string('allowincomplete', 'mod_simplelesson'));
+        $mform->addElement('advcheckbox', 'allowincomplete', get_string('allowincomplete', 'mod_simplelesson'));
         $mform->setDefault('allowincomplete', 1);
-        $mform->addHelpButton('allowincomplete', 'allowincomplete',
-                'simplelesson');
+        $mform->addHelpButton('allowincomplete', 'allowincomplete', 'simplelesson');
 
         // Attempts.
         $attemptoptions = array(0 => get_string('unlimited', 'mod_simplelesson'),
@@ -98,7 +92,7 @@ class mod_simplelesson_mod_form extends moodleform_mod {
         $mform->setType('maxattempts', PARAM_INT);
 
         // Grade Method.
-        $gradeoptions = array(
+        $gradeoptions = [
                 constants::MOD_SIMPLELESSON_GRADE_HIGHEST =>
                 get_string('gradehighest', 'mod_simplelesson'),
                 constants::MOD_SIMPLELESSON_GRADE_AVERAGE =>
@@ -107,7 +101,7 @@ class mod_simplelesson_mod_form extends moodleform_mod {
                 get_string('gradelast', 'mod_simplelesson'));
         $mform->addElement('select', 'grademethod',
                 get_string('grademethod', 'mod_simplelesson'),
-                $gradeoptions);
+                $gradeoptions];
         $mform->addHelpButton('grademethod', 'grademethod', 'scorm');
         $mform->setType('grademethod', PARAM_INT);
         $mform->setDefault('grademethod', 'highest');

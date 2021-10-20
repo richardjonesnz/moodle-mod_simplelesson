@@ -45,14 +45,17 @@ if ($id) {
     // Simplelesson instance id.
     $simplelesson = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', MUST_EXIST);
     $course = $DB->get_record('course', ['id' => $simplelesson->course], '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('simplelesson', $simplelesson->id, $course->id, false, MUST_EXIST);
+    $cm = get_coursemodule_from_instance('simplelesson', $simplelesson->id, $course->id, false,
+            MUST_EXIST);
 }
 
 // Set page and check permissions.
 $modulecontext = context_module::instance($cm->id);
 $PAGE->set_url('/mod/simplelesson/view.php', ['id' => $cm->id]);
+
 require_login($course, true, $cm);
 require_capability('mod/simplelesson:view', $modulecontext);
+
 $canmanage = has_capability('mod/simplelesson:manage', $modulecontext);
 
 $PAGE->set_title(format_string($simplelesson->name));
@@ -96,7 +99,14 @@ $options->pages = count($lesson->get_pages());
 $options->addq = false; // can't add a question from here.
 
 if ($options->pages === 0) {
+    // No  pages, no next or manage pages, just an add button.
+    // Can use the Manage questions interface to set up category though.
     $options->next = false;
+    $options->addpagelesson = true;
+    $options->addurl = new \moodle_url('/mod/simplelesson/add_page.php',
+            ['courseid' => $course->id,
+             'simplelessonid' => $simplelesson->id,
+             'sesskey' => sesskey()]);
 } else {
     // Setup the first page.
     $options->preview = true;

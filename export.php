@@ -32,14 +32,13 @@ defined('MOODLE_INTERNAL') || die();
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 $type = required_param('type', PARAM_TEXT);
-$course = $DB->get_record('course', array('id' => $courseid),
-        '*', MUST_EXIST);
-$cm = get_coursemodule_from_instance('simplelesson', $simplelessonid,
-        $courseid, false, MUST_EXIST);
-$moduleinstance  = $DB->get_record('simplelesson', array('id' => $simplelessonid), '*', MUST_EXIST);
-$modulecontext = context_module::instance($cm->id);
+$course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
+$cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid, false, MUST_EXIST);
+
+$context = context_module::instance($cm->id);
+
 require_login();
-require_capability('mod/simplelesson:exportreportpages', $modulecontext);
+require_capability('mod/simplelesson:exportreportpages', $context);
 
 if ($type == 'answers') {
     $records = reporting::fetch_answer_data($simplelessonid);

@@ -38,17 +38,13 @@ $sequence = required_param('sequence', PARAM_INT);
 $returnto = optional_param('returnto', 'show', PARAM_TEXT);
 
 // Set course related variables.
-$moduleinstance = $DB->get_record('simplelesson',
-        array('id' => $simplelessonid), '*', MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
-$cm = get_coursemodule_from_instance('simplelesson', $simplelessonid,
-        $courseid, false, MUST_EXIST);
+$moduleinstance = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
+$cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid, false, MUST_EXIST);
 
 // Set up the page.
-$PAGE->set_url('/mod/simplelesson/edit_page.php',
-        array('courseid' => $courseid,
-              'simplelessonid' => $simplelessonid,
-              'sequence' => $sequence));
+$PAGE->set_url('/mod/simplelesson/edit_page.php', ['courseid' => $courseid,
+        'simplelessonid' => $simplelessonid, 'sequence' => $sequence]);
 
 require_login($course, true, $cm);
 require_sesskey();

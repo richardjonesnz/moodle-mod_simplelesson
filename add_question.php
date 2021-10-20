@@ -71,11 +71,11 @@ if (count($questions) == 0) {
 
 // Instantiate the form.
 $mform = new add_question_form(null,
-        array('courseid' => $courseid,
+        ['courseid' => $courseid,
               'simplelessonid' => $simplelessonid,
               'sequence' => $sequence,
               'questions' => $questions,
-              'sesskey' => sesskey()));
+              'sesskey' => sesskey()]);
 
 // If the cancel button was pressed.
 if ($mform->is_cancelled()) {

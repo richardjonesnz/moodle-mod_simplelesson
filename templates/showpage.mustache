@@ -39,20 +39,32 @@
         }
 }}
 <div class="card">
-    <div class="card-body">
-        <h2 class="card-title">{{title}}</h2>
-        {{{content}}}
-    </div>
-    <div class="card-footer">
-      {{#ispreview}}
-        {{#str}}  question_placeholder, simplelesson {{/str}}<br />
-        <a href="{{{previewurl}}}">{{#str}} preview_question, simplelesson{{/str}}</a>
-      {{/ispreview}}
-      {{#isattempt}}
-          {{> mod_simplelesson/question_form}}
-      {{/isattempt}}
-    </div>
-    {{> mod_simplelesson/navigation}}
+  <div class="card-body">
+    {{#pageindex}}
+      <div class="float-right">
+        <h5>{{#str}}page_index_header, simplelesson{{/str}}</h5>
+          <nav class="navbar">
+            <ul class="navbar-nav">
+              {{#pagelinks}}
+                <li class="nav-item">{{{.}}}</li>
+              {{/pagelinks}}
+            </ul>
+          </nav>
+      </div>
+    {{/pageindex}}
+    <h2 class="card-title">{{title}}</h2>
+      {{{content}}}
+  </div>
+  <div class="card-footer">
+    {{#ispreview}}
+      {{#str}}question_placeholder, simplelesson{{/str}}<br />
+      <a href="{{{previewurl}}}">{{#str}}preview_question, simplelesson{{/str}}</a>
+    {{/ispreview}}
+    {{#isattempt}}
+        {{> mod_simplelesson/question_form}}
+    {{/isattempt}}
+  </div>
+  {{> mod_simplelesson/navigation}}
 </div>
 {{#canmanage}}
     {{> mod_simplelesson/managepage}}

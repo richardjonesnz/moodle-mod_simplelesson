@@ -129,7 +129,7 @@ function simplelesson_refresh_events($courseid = 0) {
             return true;
         }
     } else {
-        if (!$simplelessons = $DB->get_records('simplelesson', array('course' => $courseid))) {
+        if (!$simplelessons = $DB->get_records('simplelesson', ['course' => $courseid])) {
             return true;
         }
     }
@@ -155,28 +155,21 @@ function simplelesson_refresh_events($courseid = 0) {
 function simplelesson_delete_instance($id) {
     global $DB;
 
-    if (!$simplelesson = $DB->get_record('simplelesson',
-            array('id' => $id))) {
+    if (!$simplelesson = $DB->get_record('simplelesson', ['id' => $id])) {
         return false;
     }
-    if (!$cm = get_coursemodule_from_instance('simplelesson',
-            $simplelesson->id)) {
+    if (!$cm = get_coursemodule_from_instance('simplelesson', $simplelesson->id)) {
         return false;
     }
 
     // Delete any dependent records.
-    $DB->delete_records('simplelesson_questions',
-            array('simplelessonid' => $simplelesson->id));
-    $DB->delete_records('simplelesson_answers',
-            array('simplelessonid' => $simplelesson->id));
-    $DB->delete_records('simplelesson_attempts',
-            array('simplelessonid' => $simplelesson->id));
-    $DB->delete_records('simplelesson_pages',
-            array('simplelessonid' => $simplelesson->id));
+    $DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelesson->id]);
+    $DB->delete_records('simplelesson_answers', ['simplelessonid' => $simplelesson->id]);
+    $DB->delete_records('simplelesson_attempts', ['simplelessonid' => $simplelesson->id]);
+    $DB->delete_records('simplelesson_pages', ['simplelessonid' => $simplelesson->id]);
 
     // Delete the module record.
-    $DB->delete_records('simplelesson',
-            array('id' => $simplelesson->id));
+    $DB->delete_records('simplelesson', ['id' => $simplelesson->id]);
 
     // Delete files.
     $context = context_module::instance($cm->id);
@@ -308,7 +301,8 @@ function simplelesson_get_extra_capabilities() {
 function simplelesson_scale_used($simplelessonid, $scaleid) {
     global $DB;
 
-    if ($scaleid and $DB->record_exists('simplelesson', array('id' => $simplelessonid, 'grade' => -$scaleid))) {
+    if ($scaleid and $DB->record_exists('simplelesson',
+            ['id' => $simplelessonid, 'grade' => -$scaleid])) {
         return true;
     } else {
         return false;
@@ -326,7 +320,7 @@ function simplelesson_scale_used($simplelessonid, $scaleid) {
 function simplelesson_scale_used_anywhere($scaleid) {
     global $DB;
 
-    if ($scaleid and $DB->record_exists('simplelesson', array('grade' => -$scaleid))) {
+    if ($scaleid and $DB->record_exists('simplelesson', ['grade' => -$scaleid])) {
         return true;
     } else {
         return false;
@@ -350,8 +344,7 @@ function simplelesson_reset_gradebook($courseid) {
                AND cm.instance=a.id
                AND a.course=:courseid";
 
-    $params = array('moduletype'=>'mod_simplelesson',
-            'courseid'=>$courseid);
+    $params = ['moduletype'=>'mod_simplelesson', 'courseid'=>$courseid];
 
     if ($simplelessons = $DB->get_records_sql($sql, $params)) {
         foreach ($simplelessons as $simplelesson) {
@@ -377,9 +370,9 @@ function simplelesson_reset_course_form_definition(&$mform) {
  * @return array
  */
 function simplelesson_reset_course_form_defaults($course) {
-    return array('reset_mod_simplelesson_submissions' => 1,
+    return ['reset_mod_simplelesson_submissions' => 1,
             'reset_mod_simplelesson_group_overrides' => 1,
-            'reset_mod_simplelesson_user_overrides' => 1);
+            'reset_mod_simplelesson_user_overrides' => 1];
 }
 /**
  * Actual implementation of the reset course functionality,
@@ -401,19 +394,15 @@ function simplelesson_reset_userdata($data) {
         $sql = "SELECT l.id
                   FROM {simplelesson} l
                  WHERE l.course=:course";
-        $params = array('course' => $data->courseid);
+        $params = ['course' => $data->courseid];
         $simplelessons = $DB->get_records_sql($sql, $params);
 
-        // Delete all the data for all simple lesson attempts and
-        // answers in this course.
-        $DB->delete_records_select('simplelesson_attempts',
-                "simplelessonid IN ($sql)", $params);
-        $DB->delete_records_select('simplelesson_answers',
-                "simplelessonid IN ($sql)", $params);
+        // Delete all the data for all simple lesson attempts and answers in this course.
+        $DB->delete_records_select('simplelesson_attempts', "simplelessonid IN ($sql)", $params);
+        $DB->delete_records_select('simplelesson_answers',  "simplelessonid IN ($sql)", $params);
 
-        $status[] = array('component'=>$componentstr, 'item' =>
-                get_string('deleteallattempts', 'simplelesson'),
-                'error'=>false);
+        $status[] = ['component'=>$componentstr, 'item' =>
+                get_string('deleteallattempts', 'simplelesson'), 'error'=>false];
 
         // remove all grades from gradebook.
         if (empty($data->reset_gradebook_grades)) {
@@ -479,7 +468,7 @@ function simplelesson_grade_item_delete($simplelesson) {
     require_once($CFG->libdir.'/gradelib.php');
     return grade_update('mod/simplelesson', $simplelesson->course,
             'mod', 'simplelesson', $simplelesson->id, 0, $grades,
-            array('deleted' => 1));
+            ['deleted' => 1]);
 }
 
 /**
@@ -532,8 +521,7 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
                  WHERE a.simplelessonid = :slid
               GROUP BY a.userid";
 
-        $slusers = $DB->get_records_sql($sql,
-                array('slid' => $simplelesson->id));
+        $slusers = $DB->get_records_sql($sql, ['slid' => $simplelesson->id]);
         if ($slusers) {
             foreach ($slusers as $sluser) {
                 $grades[$sluser->userid] = new stdClass();
@@ -549,14 +537,12 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
                     ON u.id = a.userid
                  WHERE a.simplelessonid = :slid
                    AND u.id = :uid";
-                $attempts = $DB->get_records_sql($sql,
-                array('slid' => $simplelesson->id,
-                      'uid' => $sluser->userid));
+                $attempts = $DB->get_records_sql($sql, ['slid' => $simplelesson->id,
+                      'uid' => $sluser->userid]);
 
                 // Apply grading method.
                 $grades[$sluser->userid]->rawgrade =
-                        \mod_simplelesson\local\grading::
-                        grade_user($simplelesson, $attempts);
+                        \mod_simplelesson\local\grading::grade_user($simplelesson, $attempts);
             }
         } else {
             return false;
@@ -573,9 +559,7 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
                  WHERE a.simplelessonid = :slid
                    AND u.id = :uid";
 
-        $attempts = $DB->get_records_sql($sql,
-                array('slid' => $simplelesson->id,
-                      'uid' => $userid));
+        $attempts = $DB->get_records_sql($sql, ['slid' => $simplelesson->id, 'uid' => $userid]);
         if (!$attempts) {
             return false; // No attempt yet.
         }

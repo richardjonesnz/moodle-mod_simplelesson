@@ -119,7 +119,7 @@ if ($data = $mform->get_data()) {
     $DB->update_record('simplelesson_pages', $data);
 
     // Trigger the page created event.
-    $eventparams = array('context' => $modulecontext, 'objectid' => $data->id);
+    $eventparams = ['context' => $modulecontext, 'objectid' => $data->id];
     $event = page_created::create($eventparams);
     $event->add_record_snapshot('course', $PAGE->course);
     $event->add_record_snapshot($PAGE->cm->modname, $simplelesson);

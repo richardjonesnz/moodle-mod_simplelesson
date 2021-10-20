@@ -43,9 +43,9 @@ $cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid,
 
 // Set up the page.
 $PAGE->set_url('/mod/simplelesson/delete_page.php',
-        array('courseid' => $courseid,
-              'simplelessonid' => $simplelessonid,
-              'sequence' => $sequence));
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'sequence' => $sequence]);
 require_login($course, true, $cm);
 require_sesskey();
 
@@ -54,13 +54,12 @@ $modulecontext = context_module::instance($cm->id);
 
 $PAGE->set_context($modulecontext);
 
-$returnview = new moodle_url('/mod/simplelesson/view.php',
-        array('simplelessonid' => $simplelessonid));
+$returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
 
 $returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
-        array('courseid' => $courseid,
-        'simplelessonid' => $simplelessonid,
-        'sesskey' => sesskey()));
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'sesskey' => sesskey()]);
 
 // Get this page and the lastpage sequence number.
 $lesson = new lesson($simplelessonid);

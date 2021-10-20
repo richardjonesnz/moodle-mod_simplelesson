@@ -35,8 +35,10 @@
 <div class="card mt-2">
   <div class="card-body">
     <p class="text-info font-weight-bold">{{#str}}managelesson, simplelesson{{/str}}</p>
-    <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}manage_pages, simplelesson{{/str}}</a>
+    {{#editlesson}}
+      <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
+           {{#str}}manage_pages, simplelesson{{/str}}</a>
+    {{/editlesson}}
     <a href="{{{editquestions}}}"button type="button" class="btn btn-success btn-sm" data-toggle="modal"
             data-target="#simplelesson_edit_questions_modal">{{#str}}manage_questions, simplelesson{{/str}}</button>
          </a>

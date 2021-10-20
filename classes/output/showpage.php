@@ -49,6 +49,7 @@ class showpage implements renderable, templatable {
 
         $data = new stdClass();
         $data = $this->options;
+
         $data->title = $this->page->pagetitle;
         $data->content = $this->page->pagecontents;
         return $data;

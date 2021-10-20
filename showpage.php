@@ -331,6 +331,25 @@ if ($pagecount == $sequence) {
         $options->homeurl = $returnview;
     }
 }
+
+// Show the page index if required (but not during an attempt).
+if ( ($simplelesson->showindex) && ($mode != 'attempt') ) {
+
+    $options->pagelinks = array();
+    $debug = array();
+    foreach($pages as $indexpage) {
+        // Make link, but not to current page.
+        if ($indexpage->sequence == $sequence) {
+
+            $options->pagelinks[] = $indexpage->pagetitle;
+        } else {
+            $link = $baseurl->out(false, ['sequence' => $indexpage->sequence]);
+            $options->pagelinks[] = \html_writer::link($link, $indexpage->pagetitle);
+        }
+    }
+    $options->pageindex = true;
+}
+
 echo $OUTPUT->header();
 echo $OUTPUT->render(new showpage($page, $options));
 echo $OUTPUT->footer();

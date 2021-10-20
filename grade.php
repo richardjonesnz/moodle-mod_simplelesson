@@ -19,24 +19,22 @@
  * @package    mod_simplelesson
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
 require_once('../../config.php');
 $id = required_param('id', PARAM_INT);
 $cm = get_coursemodule_from_id('simplelesson', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course),
-        '*', MUST_EXIST);
-$simplelesson = $DB->get_record('simplelesson',
-            array('id' => $cm->instance), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$simplelesson = $DB->get_record('simplelesson', ['id' => $cm->instance], '*', MUST_EXIST);
 
 require_login($course, false, $cm);
 $modulecontext = context_module::instance($cm->id);
+
 // Re-direct the user.
 if (has_capability('mod/simplelesson:manage', $modulecontext)) {
-    $url = new moodle_url('reports.php', array('courseid' => $cm->course,
-        'simplelessonid' => $simplelesson->id));
+    $url = new moodle_url('reports.php', ['courseid' => $cm->course,
+            'simplelessonid' => $simplelesson->id]);
 } else {
-    $url = new moodle_url('view.php', array('id' => $id));
+    $url = new moodle_url('view.php', ['id' => $id]);
 }
 redirect($url);
