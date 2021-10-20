@@ -38,6 +38,7 @@ class grading {
 
         if (!$attempts) { return 0; }
 
+        $result = 0;
         // Grading methods are in instance settings.
         switch($cm->grademethod) {
 
@@ -48,7 +49,7 @@ class grading {
                     $maxscore = ($attemptscore > $maxscore) ?
                             $attemptscore : $maxscore;
                 }
-                return $maxscore;
+                $result = $maxscore;
             break;
 
             case constants::MOD_SIMPLELESSON_GRADE_AVERAGE:
@@ -57,7 +58,7 @@ class grading {
                     $score += $attempt->sessionscore;
                 }
                 $n = count($attempts);
-                return $score / $n;
+                $result = $score / $n;
             break;
 
             case constants::MOD_SIMPLELESSON_GRADE_LAST:
@@ -69,7 +70,13 @@ class grading {
                       $score = $attempt->sessionscore;
                     }
                 }
-                return $score;
+                $result = $score;
         }
+
+        // Scale result to match grade assigned in module settings.
+        $maxgrademodule = $cm->grade;
+        $maxgradeattempt = $attempt->maxscore;
+        // Note: Moodle prevents maxgrademodule from being 0.
+        return $result *  $maxgrademodule / $maxgradeattempt;
     }
 }

@@ -101,6 +101,8 @@ switch ($report) {
         $options->records = $records;
         $options->headers = reporting::fetch_essay_answer_report_headers();
         break;
+    case 'menu':
+        break;
     default:
         // Developer debugging called.
         debugging('Internal error: missing or invalid report type',

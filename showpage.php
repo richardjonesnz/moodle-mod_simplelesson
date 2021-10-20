@@ -300,6 +300,7 @@ if ( ($hasquestion) && ($options->isattempt) ) {
 
     // Check if the question was answered.
    $answered = attempts::is_answered($simplelessonid, $attemptid, $page->id);
+
 }
 
 /* Navigation controls appear after question answered or if incomplete attempts

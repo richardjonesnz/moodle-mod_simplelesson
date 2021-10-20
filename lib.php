@@ -416,48 +416,6 @@ function simplelesson_reset_userdata($data) {
     return $status;
 }
 /**
- * Creates or updates grade item for the given simplelesson instance
- *
- * Needed by {@link grade_update_mod_grades()}.
- *
- * @param stdClass $mod_simplelesson record with extra cmidnumber
- * @param array $grades optional array/object of grade(s);
- *        'reset' means reset grades in gradebook
- * @return int 0 if ok, error code otherwise
- */
-function simplelesson_grade_item_update(stdClass $simplelesson,
-        $grades=null) {
-    global $CFG;
-   // Workaround for buggy PHP versions.
-    if (!function_exists('grade_update')) {
-        require_once($CFG->libdir.'/gradelib.php');
-    }
-
-    $item = array();
-    $item['itemname'] = clean_param($simplelesson->name, PARAM_NOTAGS);
-    $item['gradetype'] = GRADE_TYPE_VALUE;
-
-    if ($simplelesson->grade > 0) {
-        $item['gradetype'] = GRADE_TYPE_VALUE;
-        $item['grademax']  = $simplelesson->grade;
-        $item['grademin']  = 0;
-    } else if ($simplelesson->grade < 0) {
-        $item['gradetype'] = GRADE_TYPE_SCALE;
-        $item['scaleid']   = -$simplelesson->grade;
-    } else {
-        $item['gradetype'] = GRADE_TYPE_NONE;
-    }
-
-    if ($grades === 'reset') {
-        $item['reset'] = true;
-        $grades = null;
-    }
-    return grade_update('mod/simplelesson', $simplelesson->course,
-            'mod', 'simplelesson', $simplelesson->id, 0,
-            $grades, $item);
-}
-
-/**
  * Delete grade item for given simplelesson instance
  *
  * @param stdClass $simplelesson instance
@@ -499,6 +457,47 @@ function simplelesson_update_grades(stdClass $simplelesson,
         simplelesson_grade_item_update($simplelesson);
     }
 }
+
+/**
+ * Creates or updates grade item for the given simplelesson instance
+ *
+ * Needed by {@link grade_update_mod_grades()}.
+ *
+ * @param stdClass $mod_simplelesson record with extra cmidnumber
+ * @param array $grades optional array/object of grade(s);
+ *        'reset' means reset grades in gradebook
+ * @return int 0 if ok, error code otherwise
+ */
+function simplelesson_grade_item_update(stdClass $simplelesson, $grades=null) {
+    global $CFG;
+   // Workaround for buggy PHP versions.
+   if (!function_exists('grade_update')) {
+        require_once($CFG->libdir.'/gradelib.php');
+   }
+
+    $item = array();
+    $item['itemname'] = clean_param($simplelesson->name, PARAM_NOTAGS);
+    $item['gradetype'] = GRADE_TYPE_VALUE;
+
+    if ($simplelesson->grade > 0) {
+        $item['gradetype'] = GRADE_TYPE_VALUE;
+        $item['grademax']  = $simplelesson->grade;
+        $item['grademin']  = 0;
+    } else if ($simplelesson->grade < 0) {
+        $item['gradetype'] = GRADE_TYPE_SCALE;
+        $item['scaleid']   = -$simplelesson->grade;
+    } else {
+        $item['gradetype'] = GRADE_TYPE_NONE;
+    }
+
+    if ($grades === 'reset') {
+        $item['reset'] = true;
+        $grades = null;
+    }
+    return grade_update('mod/simplelesson', $simplelesson->course,
+            'mod', 'simplelesson', $simplelesson->id, 0,
+            $grades, $item);
+}
 /**
  * Return grade for given user or all users.
  *
@@ -530,7 +529,7 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
 
                 // Get this users attempts.
                 $sql = "SELECT a.id, a.simplelessonid,
-                       a.userid, a.sessionscore,
+                       a.userid, a.sessionscore, a.maxscore,
                        a.timecreated
                   FROM {simplelesson_attempts} a
             INNER JOIN {user} u
@@ -551,7 +550,7 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
     } else {
         // User grade for userid.
         $sql = "SELECT a.id, a.simplelessonid,
-                       a.userid, a.sessionscore,
+                       a.userid, a.sessionscore, a.maxscore,
                        a.timecreated
                   FROM {simplelesson_attempts} a
             INNER JOIN {user} u
@@ -569,8 +568,7 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
         $grades[$userid]->userid = $userid;
         // Using selected grading strategy here.
         $grades[$userid]->rawgrade =
-                \mod_simplelesson\local\grading::grade_user($simplelesson,
-                $attempts);
+                \mod_simplelesson\local\grading::grade_user($simplelesson, $attempts);
     }
     return $grades;
 }
@@ -585,7 +583,6 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
  * @param float $newmin
  * @param float $newmax
  */
-/** to be fixed
 function simplelesson_rescale_activity_grades($course, $cm, $oldmin, $oldmax, $newmin, $newmax) {
     global $DB;
 
@@ -607,19 +604,20 @@ function simplelesson_rescale_activity_grades($course, $cm, $oldmin, $oldmax, $n
     );
 
     // Only rescale grades that are greater than or equal to 0. Anything else is a special value.
-    $sql = 'UPDATE {simplelesson_attempts} set grade = (((grade - :p1) * :p2) + :p3)
-            where simplelessonid = :a and grade >= 0';
+    $sql = 'UPDATE {simplelesson} set grade = (((grade - :p1) * :p2) + :p3)
+            where id = :a and grade >= 0';
     $dbupdate = $DB->execute($sql, $params);
     if (!$dbupdate) {
         return false;
     }
 
     // Now re-push all grades to the gradebook.
-    $simplelesson = $DB->get_record('simplelesson_attempts', ['id' => $cm->instance]);
+    // Get this instance of simplelesson.
+    $simplelesson = $DB->get_record('simplelesson', ['id' => $cm->instance], '*', MUST_EXIST);
     simplelesson_update_grades($simplelesson);
+
     return true;
 }
- */
 
 /* ===============  File API ========================= */
 /**

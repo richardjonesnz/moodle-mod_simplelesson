@@ -98,10 +98,10 @@ class mod_simplelesson_mod_form extends moodleform_mod {
                 constants::MOD_SIMPLELESSON_GRADE_AVERAGE =>
                 get_string('gradeaverage', 'mod_simplelesson'),
                 constants::MOD_SIMPLELESSON_GRADE_LAST =>
-                get_string('gradelast', 'mod_simplelesson'));
+                get_string('gradelast', 'mod_simplelesson')];
         $mform->addElement('select', 'grademethod',
                 get_string('grademethod', 'mod_simplelesson'),
-                $gradeoptions];
+                $gradeoptions);
         $mform->addHelpButton('grademethod', 'grademethod', 'scorm');
         $mform->setType('grademethod', PARAM_INT);
         $mform->setDefault('grademethod', 'highest');
