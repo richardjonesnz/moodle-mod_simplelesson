@@ -31,10 +31,12 @@ use stdClass;
 class manual_grading implements renderable, templatable {
 
     private $answerdata;
+    private $graderinfo;
 
-    public function __construct($answerdata) {
+    public function __construct($answerdata, $graderinfo) {
 
         $this->answerdata = $answerdata;
+        $this->graderinfo = $graderinfo;
     }
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -49,6 +51,7 @@ class manual_grading implements renderable, templatable {
         $data->mark = round($this->answerdata->mark,2);
         $data->date = $this->answerdata->timecompleted;
         $data->essay_text = $this->answerdata->youranswer;
+        $data->graderinfo = $this->graderinfo;
         return $data;
     }
 }

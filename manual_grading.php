@@ -87,8 +87,13 @@ if ($data = $mform->get_data()) {
             notification::NOTIFY_SUCCESS);
 }
 
+// Find the grader info if it exists.
+$record = $DB->get_record('simplelesson_questions',
+        ['simplelessonid' => $simplelessonid, 'pageid' => $answerdata->pageid], '*', MUST_EXIST);
+$extra = $DB->get_record('qtype_essay_options', ['questionid' => $record->qid], '*', MUST_EXIST);
+
 echo $OUTPUT->header();
-echo $OUTPUT->render(new manual_grading($answerdata));
+echo $OUTPUT->render(new manual_grading($answerdata, $extra->graderinfo));
 $mform->display();
 echo $OUTPUT->footer();
 return;

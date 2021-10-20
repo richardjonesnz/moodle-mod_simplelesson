@@ -207,7 +207,7 @@ class reporting  {
         global $DB;
 
         $sql = "SELECT a.id, a.youranswer, a.maxmark, a.mark,
-                       a.timecompleted, t.userid,
+                       a.timecompleted, a.pageid, t.userid,
                        u.firstname, u.lastname, u.deleted
                   FROM {simplelesson_answers} a
                   JOIN {simplelesson_attempts} t

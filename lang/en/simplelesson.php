@@ -237,6 +237,7 @@ $string['attempt_not_deleted'] = 'Attempt to delete record failed';
 
 // Grading.
 $string['manual_grade'] = 'Manual grading';
+$string['graderinfo'] = 'Grader Information (if any)';
 $string['gradelink'] = 'Grade essay';
 $string['gradelinkheader'] = 'Action';
 $string['requires_grading'] = 'Requires grading';
