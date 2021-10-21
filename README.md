@@ -5,6 +5,8 @@ Simple Lesson new version for Moodle 4.  Beta software.
 NOTE: If you are using Moodle 3.5 to 3.11 this may not be the droid you are looking for.
 Please use the repo marked moodle_mod_simplelesson. Apologies for any confusion.
 
+For testing only you would need to upgrade to Moodle 4 before upgrading this plugin as it uses some new features of the re-written question bank.
+
 Brief description
 =================
 This is hopefully a good basis for a simplified lesson module that has basic features as follows:
