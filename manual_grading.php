@@ -51,9 +51,9 @@ require_login($course, true, $cm);
 require_sesskey();
 
 $reportsurl = new moodle_url('/mod/simplelesson/reports.php',
-        array('courseid' => $courseid,
-        'simplelessonid' => $simplelessonid,
-        'report' => 'menu'));
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'report' => 'menu']);
 
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);

@@ -86,7 +86,9 @@ $actionurl = $actionurl = new moodle_url('/mod/simplelesson/showpage.php',
          'simplelessonid' => $simplelessonid,
          'sequence' => $sequence,
          'mode' => $mode,
-         'attemptid' => $a('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
+         'attemptid' => $attemptid]);
+
+$viewurl = new \moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
 
 // Check if data submitted.
 if (data_submitted() && confirm_sesskey()) {
