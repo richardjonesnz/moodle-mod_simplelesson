@@ -61,7 +61,7 @@ $returnpage = new moodle_url('/mod/simplelesson/showpage.php',
 $result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
         'pageid' => $page->id]);
 
-if ($result >= 1)  {
+if ($result >= 1) {
     $DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
             'pageid' => $page->id]);
     // Back to showpage.

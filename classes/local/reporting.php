@@ -101,9 +101,7 @@ class reporting  {
                    AND a.qtype LIKE :qtype
                    AND u.deleted <> 1";
 
-        $records = $DB->get_records_sql($sql,
-                array('slid' => $simplelessonid,
-                'qtype' => 'essay'));
+        $records = $DB->get_records_sql($sql, ['slid' => $simplelessonid, 'qtype' => 'essay']);
 
         return $records;
     }
@@ -228,8 +226,7 @@ class reporting  {
     public static function fetch_attempt_data($simplelessonid) {
         global $DB;
         $options = display_options::get_options();
-        $sql = "SELECT a.id, a.simplelessonid,
-                       a.userid, a.status, a.sessionscore,
+        $sql = "SELECT a.id, a.simplelessonid, a.userid, a.status, a.sessionscore,
                        a.maxscore, a.timetaken, a.timecreated,
                        u.firstname, u.lastname, u.deleted
                   FROM {simplelesson_attempts} a
@@ -268,6 +265,7 @@ class reporting  {
      * @return array of column names
      */
     public static function fetch_attempt_report_headers() {
+
         $fields = array();
 
         $fields[] = get_string('firstname', 'mod_simplelesson');
@@ -289,6 +287,7 @@ class reporting  {
      */
     public static function fetch_answer_data($simplelessonid) {
         global $DB;
+
         $sql = "SELECT a.id, a.attemptid, a.maxmark,
                        a.mark, a.questionsummary, a.rightanswer,
                        a.youranswer, a.mark, a.maxmark,
@@ -307,6 +306,7 @@ class reporting  {
                 array('slid' => $simplelessonid));
         $options = display_options::get_options();
         $markdp = $options->markdp;
+
         // Select and order these for the csv export process.
         $table = array();
         foreach ($records as $record) {
@@ -342,7 +342,6 @@ class reporting  {
     public static function fetch_answer_report_headers() {
         $fields = array();
 
-        //$fields[] = get_string('id', 'mod_simplelesson');
         $fields[] = get_string('attemptid', 'mod_simplelesson');
         $fields[] = get_string('firstname', 'mod_simplelesson');
         $fields[] = get_string('lastname', 'mod_simplelesson');
@@ -364,11 +363,9 @@ class reporting  {
      */
     public static function fetch_course_attempt_data($courseid) {
         global $DB;
-        $sql = "SELECT a.id, a.simplelessonid,
-                       a.userid, a.status, a.sessionscore,
+        $sql = "SELECT a.id, a.simplelessonid, a.userid, a.status, a.sessionscore,
                        a.maxscore, a.timetaken, a.timecreated,
-                       u.firstname, u.lastname, u.deleted,
-                       s.name
+                       u.firstname, u.lastname, u.deleted, s.name
                   FROM {simplelesson_attempts} a
             INNER JOIN {simplelesson} s
                     ON s.id = a.simplelessonid

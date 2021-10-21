@@ -24,15 +24,15 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$tasks = array(
+$tasks = [
     // The cron will delete all simplequestion usage records.
     // Run every week - normally won't have much to do.
-    array('classname' => 'mod_simplelesson\task\scheduled_clean',
+    ['classname' => 'mod_simplelesson\task\scheduled_clean',
             'blocking' => 0,
             'minute' => '*',
             'hour' => '*',
             'day' => '*',
             'dayofweek' => '0',
             'month' => '*'
-    )
-);
+    ]
+]

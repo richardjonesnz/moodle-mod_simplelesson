@@ -65,10 +65,10 @@ $returnview = new moodle_url('/mod/simplelesson/view.php',
          'sesskey' => sesskey()]);
 
 $lesson = new lesson($simplelessonid);
-$pages =  $lesson->get_pages();
+$pages = $lesson->get_pages();
 
 // Need at least 2 pages.
-If (count($pages) < 2) {
+if (count($pages) < 2) {
         redirect($returnview, get_string('lackpages', 'mod_simplelesson'), 2);
 }
 /*
@@ -77,7 +77,7 @@ If (count($pages) < 2) {
  * sequence positions so we don't have to check that
  */
 if ( ($sequence != 0) && ($action != 'none') ) {
-    /**
+    /*
      * Given a sequence number
      * Move the page by exchanging sequence numbers
      *
@@ -89,7 +89,6 @@ if ( ($sequence != 0) && ($action != 'none') ) {
 
         echo 'Pages up: ' . $pageup->id . ' seq ' . $pageup->sequence;
         echo 'Pages down: ' . $pagedown->id . ' seq ' . $pagedown->sequence;
-
 
         $DB->set_field('simplelesson_pages', 'sequence', $up,
                 ['simplelessonid' => $simplelessonid, 'id' => $pageup->id]);

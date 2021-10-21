@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_simplelesson\forms;
+defined('MOODLE_INTERNAL') || die();
 require_once('../../lib/formslib.php');
 /**
  * Define the edit page form elements.
@@ -57,7 +58,7 @@ class edit_questions_form extends \moodleform {
 
         // Question behaviours for simplelesson.
         $boptions = ['adaptive' => get_string('adaptive', 'mod_simplelesson'),
-                     'adaptivenopenalty' => get_string('adaptivenopenalty','mod_simplelesson'),
+                     'adaptivenopenalty' => get_string('adaptivenopenalty', 'mod_simplelesson'),
                      'immediatefeedback' => get_string('immediatefeedback', 'mod_simplelesson'),
                      'deferredfeedback' => get_string('deferredfeedback', 'mod_simplelesson')];
 

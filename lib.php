@@ -17,12 +17,10 @@
 /**
  * Library of interface functions and constants for module simplelesson
  *
- * All the core Moodle functions, neeeded to allow the module to work
- * integrated in Moodle should be placed here.
+ * Core Moodle functions and callbacks.
  *
- * All the simplelesson specific functions, needed to implement all the module
- * logic, should go to locallib.php. This will help to save some memory when
- * Moodle is performing actions across all modules.
+ * The simplelesson specific functions, needed to implement all the module
+ * logic will be found in the classes folder.
  *
  * @package    mod_simplelesson
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
@@ -30,7 +28,7 @@
  * @see https://github.com/moodlehq/moodle-mod_newmodule
  * @see https://github.com/justinhunt/moodle-mod_pairwork
  */
-/* Moodle core API */
+
 defined('MOODLE_INTERNAL') || die();
 /**
  * Returns the information on whether the module supports a feature
@@ -74,8 +72,6 @@ function simplelesson_add_instance(stdClass $simplelesson, mod_simplelesson_mod_
     global $DB;
 
     $simplelesson->timecreated = time();
-
-    // You may have to add extra stuff in here.
     $simplelesson->id = $DB->insert_record('simplelesson', $simplelesson);
 
     simplelesson_grade_item_update($simplelesson);
@@ -100,46 +96,12 @@ function simplelesson_update_instance(stdClass $simplelesson, mod_simplelesson_m
     $simplelesson->timemodified = time();
     $simplelesson->id = $simplelesson->instance;
 
-    // You may have to add extra stuff in here.
-
     $result = $DB->update_record('simplelesson', $simplelesson);
 
     simplelesson_grade_item_update($simplelesson);
     simplelesson_update_grades($simplelesson, 0);
 
     return $result;
-}
-
-
-/**
- * This standard function will check all instances of this module
- * and make sure there are up-to-date events created for each of them.
- * If courseid = 0, then every simplelesson event in the site is checked, else
- * only simplelesson events belonging to the course specified are checked.
- * This is only required if the module is generating calendar events.
- *
- * @param int $courseid Course ID
- * @return bool
- */
-function simplelesson_refresh_events($courseid = 0) {
-    global $DB;
-
-    if ($courseid == 0) {
-        if (!$simplelessons = $DB->get_records('simplelesson')) {
-            return true;
-        }
-    } else {
-        if (!$simplelessons = $DB->get_records('simplelesson', ['course' => $courseid])) {
-            return true;
-        }
-    }
-    /*
-    foreach ($simplelessons as $simplelesson) {
-        // Create a function such as the one below to deal with updating calendar events.
-        // simplelesson_update_events($simplelesson);.
-    }
-    */
-    return true;
 }
 
 /**
@@ -229,52 +191,6 @@ function simplelesson_print_recent_activity($course, $viewfullnames, $timestart)
 }
 
 /**
- * Prepares the recent activity data
- *
- * This callback function is supposed to populate the passed array with
- * custom activity records. These records are then rendered into HTML via
- * {@link simplelesson_print_recent_mod_activity()}.
- *
- * Returns void, it adds items into $activities and increases $index.
- *
- * @param array $activities sequentially indexed array of objects with added 'id' property
- * @param int $index the index in the $activities to use for the next record
- * @param int $timestart append activity since this time
- * @param int $courseid the id of the course we produce the report for
- * @param int $id course module id
- * @param int $userid check for a particular user's activity only, defaults to 0 (all users)
- * @param int $groupid check for a particular group's activity only, defaults to 0 (all groups)
- */
-function simplelesson_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $id, $userid=0, $groupid=0) {
-}
-
-/**
- * Prints single activity item prepared by {@link simplelesson_get_recent_mod_activity()}
- *
- * @param stdClass $activity activity record with added 'id' property
- * @param int $courseid the id of the course we produce the report for
- * @param bool $detail print detailed report
- * @param array $modnames as returned by {@link get_module_types_names()}
- * @param bool $viewfullnames display users' full names
- */
-function simplelesson_print_recent_mod_activity($activity, $courseid, $detail, $modnames, $viewfullnames) {
-}
-
-/**
- * Function to be run periodically according to the moodle cron
- *
- * This function searches for things that need to be done, such
- * as sending out mail, toggling flags etc ...
- *
- * Note that this has been deprecated in favour of scheduled task API.
- *
- * @return boolean
- */
-function simplelesson_cron () {
-    return true;
-}
-
-/**
  * Returns all other caps used in the module
  *
  * For example, this could be array('moodle/site:accessallgroups') if the
@@ -326,11 +242,9 @@ function simplelesson_scale_used_anywhere($scaleid) {
         return false;
     }
 }
-/**----------------------------------
- *  Implementing reset functionality
- *-----------------------------------
+
 /**
- * Removes all grades from gradebook
+ * Removes all grades from gradebook - implements reset activity.
  *
  * @param int $courseid The ID of the course to reset
  */
@@ -344,7 +258,7 @@ function simplelesson_reset_gradebook($courseid) {
                AND cm.instance=a.id
                AND a.course=:courseid";
 
-    $params = ['moduletype'=>'mod_simplelesson', 'courseid'=>$courseid];
+    $params = ['moduletype' => 'mod_simplelesson', 'courseid' => $courseid];
 
     if ($simplelessons = $DB->get_records_sql($sql, $params)) {
         foreach ($simplelessons as $simplelesson) {
@@ -401,17 +315,13 @@ function simplelesson_reset_userdata($data) {
         $DB->delete_records_select('simplelesson_attempts', "simplelessonid IN ($sql)", $params);
         $DB->delete_records_select('simplelesson_answers',  "simplelessonid IN ($sql)", $params);
 
-        $status[] = ['component'=>$componentstr, 'item' =>
-                get_string('deleteallattempts', 'simplelesson'), 'error'=>false];
+        $status[] = ['component' => $componentstr, 'item' =>
+                get_string('deleteallattempts', 'simplelesson'), 'error' => false];
 
-        // remove all grades from gradebook.
+        // Remove all grades from gradebook.
         if (empty($data->reset_gradebook_grades)) {
             simplelesson_reset_gradebook($data->courseid);
         }
-        // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
-        // See MDL-9367.
-        // Don't need to roll dates at present.
-
     }
     return $status;
 }
@@ -435,14 +345,13 @@ function simplelesson_grade_item_delete($simplelesson) {
  * Needed by {@link grade_update_mod_grades()}.
  *
  * @param stdClass $simplelesson instance object
- * @param int $userid update grade of specific user only,
- *        0 means all participants
+ * @param int $userid update grade of specific user only, 0 means all participants
  * @param bool $nullifnone - not used
  */
 function simplelesson_update_grades(stdClass $simplelesson,
         $userid = 0, $nullifnone=true) {
     global $CFG, $DB;
-    require_once($CFG->libdir.'/gradelib.php');
+    require_once($CFG->libdir . '/gradelib.php');
 
     // Populate array of grade objects indexed by userid.
     $grades = simplelesson_get_user_grades($simplelesson, $userid);
@@ -451,7 +360,7 @@ function simplelesson_update_grades(stdClass $simplelesson,
     } else if ($userid) {
         $grade = new stdClass();
         $grade->userid = $userid;
-        $grade->rawgrade = NULL;
+        $grade->rawgrade = null;
         simplelesson_grade_item_update($simplelesson, $grade);
     } else {
         simplelesson_grade_item_update($simplelesson);
@@ -464,16 +373,15 @@ function simplelesson_update_grades(stdClass $simplelesson,
  * Needed by {@link grade_update_mod_grades()}.
  *
  * @param stdClass $mod_simplelesson record with extra cmidnumber
- * @param array $grades optional array/object of grade(s);
- *        'reset' means reset grades in gradebook
+ * @param array $grades optional array/object of grade(s): 'reset' means reset grades in gradebook.
  * @return int 0 if ok, error code otherwise
  */
 function simplelesson_grade_item_update(stdClass $simplelesson, $grades=null) {
     global $CFG;
-   // Workaround for buggy PHP versions.
-   if (!function_exists('grade_update')) {
+    // Workaround for buggy PHP versions.
+    if (!function_exists('grade_update')) {
         require_once($CFG->libdir.'/gradelib.php');
-   }
+    }
 
     $item = array();
     $item['itemname'] = clean_param($simplelesson->name, PARAM_NOTAGS);
@@ -508,7 +416,7 @@ function simplelesson_grade_item_update(stdClass $simplelesson, $grades=null) {
  * @return array array of grades, false if none
  */
 function simplelesson_get_user_grades($simplelesson, $userid=0) {
-    global $CFG, $DB;
+    global $DB;
 
     $grades = array();
     if (empty($userid)) {
@@ -546,7 +454,6 @@ function simplelesson_get_user_grades($simplelesson, $userid=0) {
         } else {
             return false;
         }
-
     } else {
         // User grade for userid.
         $sql = "SELECT a.id, a.simplelessonid,
@@ -619,7 +526,6 @@ function simplelesson_rescale_activity_grades($course, $cm, $oldmin, $oldmax, $n
     return true;
 }
 
-/* ===============  File API ========================= */
 /**
  * Returns the lists of all browsable file areas within the given module context
  *
@@ -728,8 +634,6 @@ function simplelesson_question_pluginfile($course, $context, $component,
 
     send_stored_file($file, 0, 0, $forcedownload, $options);
 }
-
-/* Navigation API */
 
 /**
  * Extends the global navigation tree by adding simplelesson nodes if there is a relevant content

@@ -69,7 +69,7 @@ class lesson {
      */
     public function get_page_record($sid) {
 
-        foreach($this->pages as $page) {
+        foreach ($this->pages as $page) {
             if ($page->sequence == $sid) {
                 return $page;
             }
@@ -83,7 +83,7 @@ class lesson {
     public function get_page_titles() {
         $pagetitles = array();
         $pagetitles[0] = get_string('nolink', 'mod_simplelesson');
-        foreach($this->pages as $page) {
+        foreach ($this->pages as $page) {
             $pagetitles[] = $page->pagetitle;
         }
         return $pagetitles;

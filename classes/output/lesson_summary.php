@@ -38,7 +38,7 @@ use stdClass;
  * @param int $markdp - numer of decimal places in mark
  * @param object $sessiondata - score, maxscore and time
  * @return $html table with summary data on user's attempt
-*/
+ */
 
 class lesson_summary implements renderable, templatable {
 

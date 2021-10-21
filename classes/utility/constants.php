@@ -30,7 +30,7 @@ class constants {
     // Attempt status constants.
     const MOD_SIMPLELESSON_ATTEMPT_STARTED = 1;
     const MOD_SIMPLELESSON_ATTEMPT_COMPLETE = 2;
-    // grading methods
+    // Grading methods.
     const MOD_SIMPLELESSON_GRADE_HIGHEST = 1;
     const MOD_SIMPLELESSON_GRADE_AVERAGE = 2;
     const MOD_SIMPLELESSON_GRADE_LAST = 3;

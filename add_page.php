@@ -64,7 +64,7 @@ $returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
 $lesson = new lesson($simplelessonid);
 
 // Page data for link dropdown.
-$pagetitles =$lesson->get_page_titles();
+$pagetitles = $lesson->get_page_titles();
 
 // Get the page editing form.
 $mform = new edit_page_form(null,

@@ -22,7 +22,7 @@
  */
 namespace mod_simplelesson\forms;
 use \mod_simplelesson\utility\utility;
-
+defined('MOODLE_INTERNAL') || die();
 require_once('../../lib/formslib.php');
 /**
  * Define the edit page form elements.

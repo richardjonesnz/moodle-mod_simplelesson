@@ -62,11 +62,11 @@ class lesson_editing implements renderable, templatable {
         $table->home = true; // Show the home button.
         $table->homeurl = new moodle_url('/mod/simplelesson/view.php',
                 ['simplelessonid' => $this->simplelessonid]);
-        $table->auto = true; // Show the auto-sequence button
+        $table->auto = true; // Show the auto-sequence button.
         $table->autourl = new moodle_url('/mod/simplelesson/autosequence.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid]);
-        $table->addpagelesson = true; // Show the addpage button
+        $table->addpagelesson = true; // Show the addpage button.
         $table->addurl = new moodle_url('/mod/simplelesson/add_page.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid,
@@ -88,7 +88,7 @@ class lesson_editing implements renderable, templatable {
         $baseparams = ['courseid' => $this->cm->course,
                        'simplelessonid' => $this->cm->instance];
 
-        foreach($this->pages as $page) {
+        foreach ($this->pages as $page) {
             $data = array();
             $data['sequence'] = $page->sequence;
             $data['pagetitle'] = $page->pagetitle;
@@ -124,7 +124,7 @@ class lesson_editing implements renderable, templatable {
 
             // Add edit and delete links.
             $link = new \moodle_url('edit_page.php', $baseparams);
-            $icon = ['icon' => 't/edit', 'component' => 'core', 'alt'=>
+            $icon = ['icon' => 't/edit', 'component' => 'core', 'alt' =>
                     get_string('gotoeditpage', 'mod_simplelesson')];
             $actions['edit'] = ['link' => $link->out(false,
                                ['sequence' => $page->sequence,
@@ -134,7 +134,7 @@ class lesson_editing implements renderable, templatable {
 
             // Preview = showpage.
             $link = new \moodle_url('showpage.php', $baseparams);
-            $icon = ['icon' => 't/preview', 'component' => 'core', 'alt'=>
+            $icon = ['icon' => 't/preview', 'component' => 'core', 'alt' =>
                 get_string('showpage', 'mod_simplelesson')];
             $actions['preview'] = ['link' => $link->out(false,
                                   ['sequence' => $page->sequence]),
@@ -160,7 +160,7 @@ class lesson_editing implements renderable, templatable {
                                       'action' => 'move_up',
                                       'sesskey' => sesskey()]),
                                       'icon' => $icon];
-                }
+            }
 
             // Move down.
             if (($page->sequence != $lastpage)) {

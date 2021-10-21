@@ -86,7 +86,7 @@ $DB->delete_records('simplelesson_pages', ['simplelessonid' => $simplelessonid, 
 // Delete any question entry relating to the page.
 $result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
         'pageid' => $page->id]);
-if ($result >= 1)  {
+if ($result >= 1) {
     $DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
             'pageid' => $page->id]);
 }

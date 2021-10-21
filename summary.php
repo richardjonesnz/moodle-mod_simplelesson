@@ -81,11 +81,11 @@ if ($mode == 'attempt') {
         // Navigation.
         $navoptions = new \stdClass();
         if ($mode == 'attempt') {
-            // Set exit button url
+            // Set exit button url.
             $navoptions->review = true;
             $navoptions->home = false;
         } else {
-            // Set home button url
+            // Set home button url.
             $navoptions->review = false;
             $navoptions->home = true;
         }

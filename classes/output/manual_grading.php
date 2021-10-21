@@ -48,7 +48,7 @@ class manual_grading implements renderable, templatable {
 
         $data = new stdClass();
         $data = $this->answerdata;
-        $data->mark = round($this->answerdata->mark,2);
+        $data->mark = round($this->answerdata->mark, 2);
         $data->date = $this->answerdata->timecompleted;
         $data->essay_text = $this->answerdata->youranswer;
         $data->graderinfo = $this->graderinfo;

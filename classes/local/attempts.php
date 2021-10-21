@@ -396,8 +396,7 @@ class attempts  {
      */
     public static function fetch_attempt_questions($simplelessonid) {
         global $DB;
-        $sql = "SELECT s.id, s.qid, s.pageid, q.name,
-                       q.questiontext, q.defaultmark
+        $sql = "SELECT s.id, s.qid, s.pageid, q.name, q.questiontext, q.defaultmark
                   FROM {simplelesson_questions} s
                   JOIN {question} q ON s.qid = q.id
                  WHERE s.simplelessonid = :slid

@@ -72,8 +72,8 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
      */
     protected function process_simplelesson($data) {
         global $DB;
+
         $data = (object)$data;
-        //$oldid = $data->id;
         $data->course = $this->get_courseid();
 
         if (empty($data->timecreated)) {

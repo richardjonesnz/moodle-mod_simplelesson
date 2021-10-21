@@ -75,19 +75,18 @@ $hasquestion = $DB->get_record('simplelesson_questions', ['pageid' => $page->id]
 
 // Load up the usage and get the question type.
 if ( ($hasquestion) && ($mode == 'attempt') ) {
-    $attempt = $DB->get_record('simplelesson_attempts', ['id' =>$attemptid], '*', MUST_EXIST);
+    $attempt = $DB->get_record('simplelesson_attempts', ['id' => $attemptid], '*', MUST_EXIST);
     $quba = \question_engine::load_questions_usage_by_activity($attempt->qubaid);
     $record = $DB->get_record('question', ['id' => $hasquestion->qid], 'qtype', MUST_EXIST);
     $qtype = $record->qtype;
 }
 
-$actionurl = $actionurl = new moodle_url ('/mod/simplelesson/showpage.php',
+$actionurl = $actionurl = new moodle_url('/mod/simplelesson/showpage.php',
         ['courseid' => $courseid,
          'simplelessonid' => $simplelessonid,
          'sequence' => $sequence,
          'mode' => $mode,
-         'attemptid' => $attemptid]);
-$viewurl = new moodle_url ('/mod/simplelesson/view.php',['simplelessonid' => $simplelessonid]);
+         'attemptid' => $a('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
 
 // Check if data submitted.
 if (data_submitted() && confirm_sesskey()) {
@@ -171,7 +170,7 @@ $page = $lesson->get_page_record($sequence);
 $pages = $lesson->get_pages();
 
 if (!$page) {
-    // page record was not found.
+    // Page record was not found.
     redirect($returnview, get_string('pagenotfound', 'mod_simplelesson'), 2);
 }
 
@@ -253,7 +252,7 @@ if ($options->canmanage) {
     $options->edit = true;
 
     // Show the add button if no question, otherwise delete button.
-    if(!$hasquestion) {
+    if (!$hasquestion) {
         $addquestionurl = new \moodle_url('/mod/simplelesson/add_question.php',
                 ['courseid' => $course->id,
                 'simplelessonid' => $simplelesson->id,
@@ -263,8 +262,8 @@ if ($options->canmanage) {
         $options->addquestion = $addquestionurl->out(false);
         $options->addq = true;
 
-        // prevents question placeholder showing up.
-        $options->ispreview =- false;
+        // Prevents question placeholder showing up.
+        $options->ispreview = false;
     } else {
         $deletequestionurl = new \moodle_url('/mod/simplelesson/delete_question.php',
                 ['courseid' => $course->id,
@@ -284,6 +283,9 @@ if ($options->canmanage) {
              'simplelessonid' => $simplelesson->id,
              'sesskey' => sesskey()]);
     $options->editlesson = $editlessonurl->out(false);
+} else {
+    // Prevents question placeholder showing up for students.
+    $options->ispreview = false;
 }
 
 // Prepare question page.
@@ -299,8 +301,7 @@ if ( ($hasquestion) && ($options->isattempt) ) {
             $slot, $quba, time(), $qtype);
 
     // Check if the question was answered.
-   $answered = attempts::is_answered($simplelessonid, $attemptid, $page->id);
-
+    $answered = attempts::is_answered($simplelessonid, $attemptid, $page->id);
 }
 
 /* Navigation controls appear after question answered or if incomplete attempts
@@ -338,7 +339,7 @@ if ( ($simplelesson->showindex) && ($mode != 'attempt') ) {
 
     $options->pagelinks = array();
     $debug = array();
-    foreach($pages as $indexpage) {
+    foreach ($pages as $indexpage) {
         // Make link, but not to current page.
         if ($indexpage->sequence == $sequence) {
 

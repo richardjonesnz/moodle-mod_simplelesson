@@ -22,15 +22,12 @@
  * @copyright 2018 Richard Jones https://richardnz.net
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 use \mod_simplelesson\local\lesson;
 use \core\output\notification;
 
-global $DB;
-
 require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die();
-
+global $DB;
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 
@@ -56,4 +53,5 @@ if ($pagecount > 0) {
 }
 
 // Go back to page where request came from.
-redirect($returnedit, get_string('sequence_updated', 'mod_simplelesson'), 2, notification::NOTIFY_SUCCESS);
+redirect($returnedit, get_string('sequence_updated', 'mod_simplelesson'), 2,
+        notification::NOTIFY_SUCCESS);

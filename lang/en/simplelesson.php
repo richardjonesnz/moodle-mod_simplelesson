@@ -42,7 +42,8 @@ $string['simplelessonname_help'] = 'Choose a suitable name for your Simple lesso
 $string['pluginadministration'] = 'simplelesson administration';
 $string['pluginname'] = 'Simple lesson';
 $string['welcome'] = 'Welcome user!';
-// Reset form
+
+// Reset form.
 $string['deleteallsubmissions'] = 'Delete all submissions';
 $string['removealluseroverrides'] = 'Remove user overrides';
 $string['removeallgroupoverrides'] = 'Remove group overrides';
@@ -173,7 +174,7 @@ $string['page_index_header'] = 'Index';
 $string['preview_completed'] = 'preview completed';
 
 // Reporting.
-$string{'reportspage'} = 'Available reports';
+$string['reportspage'] = 'Available reports';
 $string['reportsheader'] = 'Select required report, click the reports tab to return to the menu.';
 $string['moduleid'] = 'id';
 $string['viewtab'] = 'view';
@@ -219,7 +220,7 @@ $string['youranswer'] = "Your answer";
 $string['mark'] = "Mark";
 $string['outof'] = "Out of";
 $string['timetaken'] = "Time (s)";
-$string['id']= 'id';
+$string['id'] = 'id';
 $string['max_attempts_exceeded'] = "No more attempts allowed";
 $string['numattempts'] = 'Attempts made: {$a} of';
 $string['unlimited_attempts'] = 'Unlimited attempts';
@@ -275,6 +276,6 @@ $string['privacy:metadata:simplelesson_answers:youranswer'] = 'The response of t
 // Task.
 $string['clean_up_usages'] = 'Clean old question usages for Simple lesson';
 
-// Reset
+// Reset.
 $string['deleteallattempts'] = 'Delete all attempts.';
 $string['outofsequence'] = 'Something went wrong with the question engine, please try again';

@@ -21,9 +21,7 @@
  * @copyright  2021 Richard Jones richardnz@outlook.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace mod_simplelesson\utility;
-
 defined('MOODLE_INTERNAL') || die();
 /**
  * This class provides useful methods for Moodle.

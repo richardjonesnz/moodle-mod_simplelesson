@@ -62,7 +62,7 @@ $PAGE->set_title(format_string($simplelesson->name));
 $PAGE->set_heading(format_string($course->fullname));
 
 // Log the module viewed event.
-$event = course_module_viewed::create(['objectid' => $cm->id, 'context' => $modulecontext,]);
+$event = course_module_viewed::create(['objectid' => $cm->id, 'context' => $modulecontext]);
 $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot($cm->modname, $simplelesson);
 $event->trigger();
@@ -96,7 +96,7 @@ if ($canmanage) {
 $lesson = new lesson($simplelesson->id);
 $options->pages = count($lesson->get_pages());
 
-$options->addq = false; // can't add a question from here.
+$options->addq = false; // Can't add a question from here.
 
 if ($options->pages === 0) {
     // No  pages, no next or manage pages, just an add button.

@@ -36,7 +36,9 @@ class grading {
     public static function grade_user($cm, $attempts) {
         global $DB;
 
-        if (!$attempts) { return 0; }
+        if (!$attempts) {
+            return 0;
+        }
 
         $result = 0;
         // Grading methods are in instance settings.
@@ -66,8 +68,8 @@ class grading {
                 foreach ($attempts as $attempt) {
                     $time = $attempt->timecreated;
                     if ($time > $latest) {
-                      $latest = $time;
-                      $score = $attempt->sessionscore;
+                        $latest = $time;
+                        $score = $attempt->sessionscore;
                     }
                 }
                 $result = $score;
@@ -76,7 +78,8 @@ class grading {
         // Scale result to match grade assigned in module settings.
         $maxgrademodule = $cm->grade;
         $maxgradeattempt = $attempt->maxscore;
+
         // Note: Moodle prevents maxgrademodule from being 0.
-        return $result *  $maxgrademodule / $maxgradeattempt;
+        return $result * $maxgrademodule / $maxgradeattempt;
     }
 }

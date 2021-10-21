@@ -45,7 +45,6 @@ function xmldb_simplelesson_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
-
     if ($oldversion < 2018082002) {
 
         // Define field for grading method.

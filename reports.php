@@ -45,7 +45,6 @@ $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:viewreportstab', $modulecontext);
 
 $PAGE->set_context($modulecontext);
-//$PAGE->set_pagelayout('course');
 $PAGE->set_heading(format_string($course->fullname));
 
 // Navigation options.
