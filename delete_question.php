@@ -31,6 +31,7 @@ global $DB;
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 $sequence = required_param('sequence', PARAM_INT);
+$returnto = optional_param('returnto', 'show', PARAM_TEXT);
 
 // Set course related variables.
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
@@ -52,23 +53,27 @@ $PAGE->set_context($modulecontext);
 $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);
 
-$returnpage = new moodle_url('/mod/simplelesson/showpage.php',
+$returnshow = new moodle_url('/mod/simplelesson/showpage.php',
         ['courseid' => $courseid,
          'simplelessonid' => $simplelessonid,
          'sequence' => $sequence]);
 
-// Check if there is a question on this page.
+$returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'sequence' => $sequence,
+         'sesskey' => sesskey()]);
+
+         // Check if there is a question on this page.
 $result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
         'pageid' => $page->id]);
 
-if ($result >= 1) {
-    $DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
-            'pageid' => $page->id]);
-    // Back to showpage.
-    redirect($returnpage, get_string('question_deleted', 'mod_simplelesson'), 2,
-            notification::NOTIFY_SUCCESS);
+$notify = ($result >= 1) ? notification::NOTIFY_SUCCESS : notification::NOTIFY_WARNING;
+$DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
+        'pageid' => $page->id]);
+// Back to where we came from.
+if ($returnto == 'manage') {
+        redirect($returnmanage, get_string('question_deleted', 'mod_simplelesson'), 2, $notify);
 } else {
-
-    redirect($returnpage, get_string('no_question', 'mod_simplelesson'), 2,
-            notification::NOTIFY_WARNING);
+        redirect($returnshow, get_string('question_deleted', 'mod_simplelesson'), 2, $notify);
 }

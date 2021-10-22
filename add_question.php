@@ -32,6 +32,7 @@ global $DB;
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 $sequence = required_param('sequence', PARAM_INT);
+$returnto = optional_param('returnto', 'show', PARAM_TEXT);
 
 // Set course related variables.
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
@@ -54,11 +55,16 @@ $PAGE->set_context($modulecontext);
 $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);
 
-$returnpage = new moodle_url('/mod/simplelesson/showpage.php',
-    ['courseid' => $courseid,
-     'simplelessonid' => $simplelessonid,
-     'sequence' => $sequence,
-     'mode' => 'preview']);
+$returnshow = new moodle_url('/mod/simplelesson/showpage.php',
+['courseid' => $courseid,
+ 'simplelessonid' => $simplelessonid,
+ 'sequence' => $sequence]);
+
+$returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
+['courseid' => $courseid,
+ 'simplelessonid' => $simplelessonid,
+ 'sequence' => $sequence,
+ 'sesskey' => sesskey()]);
 
 // Get the available questions and check there are some.
 $questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
@@ -74,6 +80,7 @@ $mform = new add_question_form(null,
         ['courseid' => $courseid,
               'simplelessonid' => $simplelessonid,
               'sequence' => $sequence,
+              'returnto' => $returnto,
               'questions' => $questions,
               'sesskey' => sesskey()]);
 
@@ -98,12 +105,22 @@ if ($data = $mform->get_data()) {
             'simplelessonid' => $simplelessonid]);
     if ($records == 0) {
         $DB->insert_record('simplelesson_questions', $qdata);
-        // Back to showpage.
-        redirect($returnpage, get_string('question_added', 'mod_simplelesson'), 2,
-                notification::NOTIFY_SUCCESS);
+        // Back to where we came from.
+        if ($returnto == 'manage') {
+            redirect($returnmanage, get_string('question_added', 'mod_simplelesson'), 2,
+                    notification::NOTIFY_SUCCESS);
+        } else {
+            redirect($returnshow, get_string('question_added', 'mod_simplelesson'), 2,
+                    notification::NOTIFY_SUCCESS);
+        }
     } else {
-        redirect($returnpage, get_string('duplicate_question', 'mod_simplelesson'), 2,
-                notification::NOTIFY_WARNING);
+        if ($returnto == 'manage') {
+            redirect($returnmanage, get_string('duplicate_question', 'mod_simplelesson'), 2,
+                    notification::NOTIFY_WARNING);
+        } else {
+            redirect($returnshow, get_string('duplicate_question', 'mod_simplelesson'), 2,
+                    notification::NOTIFY_WARNING);
+        }
     }
 }
 

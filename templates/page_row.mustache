@@ -50,11 +50,16 @@
   <td>{{next}}</td>
   {{#question}}
     <td><a href="{{{questionurl}}}">{{questionlink}}</a></td>
+    {{# actions.deleteq}}
+      <td>{{> mod_simplelesson/page_actions}}</td>
+    {{/ actions.deleteq}}
   {{/question}}
   {{^question}}
     <td><a href="{{{questionurl}}}">{{questionlink}}</a></td>
+    <td> </td>
   {{/question}}
   <td>
+
     {{# actions.edit}}
       {{> mod_simplelesson/page_actions}}
     {{/ actions.edit}}

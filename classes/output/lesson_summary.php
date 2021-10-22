@@ -92,6 +92,7 @@ class lesson_summary implements renderable, templatable {
                 $data['your_answer'] = $answer->youranswer;
                 $data['right_answer'] = $answer->rightanswer;
             }
+            $data['maxmark'] = round($answer->maxmark, 2);
             $data['timetaken'] = $answer->timetaken;
             $table->data[] = $data;
         }

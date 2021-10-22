@@ -53,11 +53,13 @@ class add_question_form extends \moodleform {
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
         $mform->addElement('hidden', 'simplelessonid', $this->_customdata['simplelessonid']);
         $mform->addElement('hidden', 'sequence', $this->_customdata['sequence']);
+        $mform->addElement('hidden', 'returnto', $this->_customdata['returnto']);
         $mform->addElement('hidden', 'sesskey', $this->_customdata['sesskey']);
 
         $mform->setType('courseid', PARAM_INT);
         $mform->setType('simplelessonid', PARAM_INT);
         $mform->setType('sequence', PARAM_INT);
+        $mform->setType('returnto', PARAM_TEXT);
         $this->add_action_buttons($cancel = true);
     }
 }

@@ -101,7 +101,7 @@ $string['pagecontents'] = 'Page content';
 $string['nextpage'] = 'Next';
 $string['prevpage'] = 'Previous';
 $string['home'] = 'Home';
-$string['actions'] = 'Actions';
+$string['actions'] = 'Page Actions';
 $string['move_up'] = 'Move up';
 $string['move_down'] = 'Move down';
 $string['showpage'] = 'Preview page';
@@ -126,6 +126,7 @@ $string['question_text'] = 'Question text';
 $string['setpage'] = 'Allocate';
 $string['add_question'] = 'Add question';
 $string['add'] = 'add';
+$string['remove'] = 'Remove';
 $string['delete_question'] = 'Delete question';
 $string['preview_question'] = 'Preview question';
 $string['no_question'] = 'No question found';
@@ -148,7 +149,7 @@ $string['edit_question_page'] = 'Click the Allocate link in the last column to a
 
 // Page editing.
 $string['edit_page'] = 'Edit page';
-$string['page_editing'] = 'Use this page to organize your Simple lesson.  You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. Click the Question number to preview the question (or add to add one).  Add a new page using the button.';
+$string['page_editing'] = 'Use this page to organize your Simple lesson. You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. Click the Question number to preview the question (or add to add one). Remove to remove a question.';
 $string['edit_page_form'] = 'Edit the page contents';
 $string['add_page'] = 'Add page';
 $string['delete_page'] = 'Delete page';

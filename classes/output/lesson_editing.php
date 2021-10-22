@@ -80,6 +80,7 @@ class lesson_editing implements renderable, templatable {
         $headerdata[] = get_string('prevpage', 'mod_simplelesson');
         $headerdata[] = get_string('nextpage', 'mod_simplelesson');
         $headerdata[] = get_string('hasquestion', 'mod_simplelesson');
+        $headerdata[] = get_string('remove', 'mod_simplelesson');
         $headerdata[] = get_string('actions', 'mod_simplelesson');
 
         $table->tableheaders = $headerdata;
@@ -115,12 +116,23 @@ class lesson_editing implements renderable, templatable {
                         ['courseid' => $this->courseid,
                          'simplelessonid' => $this->simplelessonid,
                          'sequence' => $page->sequence,
+                         'returnto' => 'manage',
                          'sesskey' => sesskey()]);
                 $data['questionlink'] = get_string('add', 'mod_simplelesson');
                 $data['questionurl'] = $link->out(false);
             }
 
             $actions = array();
+
+            // Add edit and delete links.
+            $link = new \moodle_url('delete_question.php', $baseparams);
+            $icon = ['icon' => 't/block', 'component' => 'core', 'alt' =>
+                    get_string('delete_question', 'mod_simplelesson')];
+            $actions['deleteq'] = ['link' => $link->out(false,
+                               ['sequence' => $page->sequence,
+                                'returnto' => 'manage',
+                                'sesskey' => sesskey()]),
+                                'icon' => $icon];
 
             // Add edit and delete links.
             $link = new \moodle_url('edit_page.php', $baseparams);
