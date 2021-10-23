@@ -103,7 +103,8 @@ if (data_submitted() && confirm_sesskey()) {
     // Force finish the deferred question on save. But not if
     // it's an essay where we want multiple saves allowed.
     $slot = attempts::get_slot($simplelessonid, $page->id);
-    if ( ($quba->get_preferred_behaviour() == 'deferredfeedback') && ($qtype != 'essay') ) {
+    $preferred = $quba->get_preferred_behaviour();
+    if ( (($preferred == 'deferredfeedback') || ($preferred == 'deferredcbm')) && ($qtype != 'essay') ) {
             $quba->finish_question($slot);
     }
 

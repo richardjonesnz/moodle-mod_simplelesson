@@ -68,9 +68,9 @@ class mod_simplelesson_renderer extends plugin_renderer_base {
         // If it's deferred feedback add a save button.
 
         if ( ($qtype == 'essay') || ($quba->get_preferred_behaviour()
-                == 'deferredfeedback') ) {
-            $html .= html_writer::start_div(
-                    'mod_simplelesson_save_button');
+                == 'deferredfeedback') || ($quba->get_preferred_behaviour()
+                == 'deferredcbm') ) {
+            $html .= html_writer::start_div('container text-center');
             $label = ($qtype == 'essay') ?
                     get_string('saveanswer', 'mod_simplelesson') :
                     get_string('save', 'mod_simplelesson');

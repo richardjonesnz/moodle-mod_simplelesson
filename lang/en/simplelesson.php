@@ -75,8 +75,10 @@ $string['immediatecbm'] = 'Immediate feedback with CBM';
 $string['adaptive'] = 'Adaptive feedback';
 $string['adaptivenopenalty'] = 'Adaptive (no penalty)';
 $string['deferredfeedback'] = 'Deferred feedback';
+$string['deferredcbm'] = 'Deferred feedback with cbm';
+$string['immediatecbm'] = 'Immediate feedback with cbm';
 $string['behaviour'] = 'Question behaviour';
-$string['behaviour_help'] = 'With Adaptive feedback the user has multiple tries at each question - a penalty can be applied unless adaptive no penalty is used.  This can only be set on a lesson basis, not per question. Immediate feedback has one attempt available. For Deferred feedback the answer must be explicitly saved but multiple saves are permitted, the student only sees the score when reviewing the lesson.';
+$string['behaviour_help'] = 'With Adaptive feedback the user has multiple tries at each question - a penalty can be applied unless adaptive no penalty is used.  This can only be set on a lesson basis, not per question. Immediate feedback has one attempt available. For Deferred feedback the answer must be explicitly saved but multiple saves are permitted, the student only sees the score when reviewing the lesson. CBM means "certainty-based marking" the student must also say how certain they are that their answer is correct and thereby gain extra marks (or extra penalties).  This can lead to strange scores.';
 $string['category_select'] = 'Select category';
 $string['categoryid'] = 'Category';
 $string['categoryid_help'] = 'Choose a category for the questions that can be added to this simplelesson.  You can use the Find in bank link to manipulate the question bank for this course/activity.';
@@ -236,6 +238,7 @@ $string['manage_attempts'] = 'Manage attempts';
 $string['delete'] = 'delete ';
 $string['attempt_deleted'] = 'Attempt deleted';
 $string['attempt_not_deleted'] = 'Attempt to delete record failed';
+$string['select_sort'] = 'Select column to sort on:';
 
 // Grading.
 $string['manual_grade'] = 'Manual grading';

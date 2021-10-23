@@ -70,9 +70,14 @@ $returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
 $questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
 
 if (count($questions) == 0) {
-    // Back to showpage.
-    redirect($returnpage, get_string('noquestions', 'mod_simplelesson'), 2,
-            notification::NOTIFY_WARNING);
+    // Back to where we came from.
+    if ($returnto == 'manage') {
+        redirect($returnmanage, get_string('noquestions', 'mod_simplelesson'), 2,
+                notification::NOTIFY_WARNING);
+    } else {
+        redirect($returnshow, get_string('noquestions', 'mod_simplelesson'), 2,
+                notification::NOTIFY_WARNING);
+    }
 }
 
 // Instantiate the form.
@@ -86,7 +91,12 @@ $mform = new add_question_form(null,
 
 // If the cancel button was pressed.
 if ($mform->is_cancelled()) {
-    redirect($returnpage, get_string('cancelled'), 2);
+    // Back to where we came from.
+    if ($returnto == 'manage') {
+        redirect($returnmanage, get_string('cancelled'), 2);
+    } else {
+        redirect($returnshow, get_string('cancelled'), 2);
+    }
 }
 
 // Save the question data.

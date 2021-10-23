@@ -361,7 +361,7 @@ class reporting  {
      * @param $courseid - Course to get records for
      * @return array of objects
      */
-    public static function fetch_course_attempt_data($courseid) {
+    public static function fetch_course_attempt_data($courseid, $sortby) {
         global $DB;
         $sql = "SELECT a.id, a.simplelessonid, a.userid, a.status, a.sessionscore,
                        a.maxscore, a.timetaken, a.timecreated,
@@ -372,10 +372,10 @@ class reporting  {
             INNER JOIN {user} u
                     ON u.id = a.userid
                  WHERE s.course = :cid
-                   AND u.deleted <> 1";
+                   AND u.deleted <> 1
+              ORDER BY $sortby";
 
-        $records = $DB->get_records_sql($sql,
-                array('cid' => $courseid));
+        $records = $DB->get_records_sql($sql, ['cid' => $courseid]);
 
         // Select and arrange for report/csv export.
         $table = array();
@@ -428,7 +428,8 @@ class reporting  {
             $data[] = $record->status;
             $data[] = $record->sessionscore;
             $data[] = $record->maxscore;
-            $data[] = $record->timetaken;$url = new \moodle_url(
+            $data[] = $record->timetaken;
+            $url = new \moodle_url(
                 '/mod/simplelesson/manage_attempts.php',
                 array('courseid' => $courseid,
                 'action' => 'delete',

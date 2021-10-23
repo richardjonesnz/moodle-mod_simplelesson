@@ -60,7 +60,9 @@ class edit_questions_form extends \moodleform {
         $boptions = ['adaptive' => get_string('adaptive', 'mod_simplelesson'),
                      'adaptivenopenalty' => get_string('adaptivenopenalty', 'mod_simplelesson'),
                      'immediatefeedback' => get_string('immediatefeedback', 'mod_simplelesson'),
-                     'deferredfeedback' => get_string('deferredfeedback', 'mod_simplelesson')];
+                     'deferredfeedback' => get_string('deferredfeedback', 'mod_simplelesson'),
+                     'deferredcbm' => get_string('deferredcbm', 'mod_simplelesson'),
+                     'immediatecbm' => get_string('immediatecbm', 'mod_simplelesson')];
 
         $mform->addElement('select', 'behaviour', get_string('behaviour', 'mod_simplelesson'), $boptions);
         $mform->setType('behaviour', PARAM_TEXT);

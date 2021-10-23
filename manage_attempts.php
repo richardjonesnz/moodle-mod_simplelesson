@@ -23,17 +23,16 @@
  */
 use \mod_simplelesson\local\reporting;
 use \mod_simplelesson\local\attempts;
+use \mod_simplelesson\forms\manage_attempts_select;
 require_once('../../config.php');
 
 $courseid = required_param('courseid', PARAM_INT);
 $action = optional_param('action', 'none', PARAM_TEXT);
 $attemptid = optional_param('attemptid', 0, PARAM_INT);
-$course = $DB->get_record('course', array('id' => $courseid),
-        '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
 
 // Set up the page.
-$PAGE->set_url('/mod/simplelesson/manage_attempts.php',
-        array('courseid' => $courseid));
+$PAGE->set_url('/mod/simplelesson/manage_attempts.php', ['courseid' => $courseid, 'action' => $action]);
 
 require_login($course, true);
 $coursecontext = context_course::instance($courseid);
@@ -41,22 +40,23 @@ $coursecontext = context_course::instance($courseid);
 require_capability('mod/simplelesson:manageattempts', $coursecontext);
 
 $PAGE->set_heading(format_string($course->fullname));
-$returnmanage = new moodle_url('/mod/simplelesson/manage_attempts.php',
-        array('courseid' => $courseid));
+$simplelesson = $PAGE->cm;
 
-if ( ($action == 'delete') && ($attemptid != 0) ) {
-    $status = attempts::delete_attempt($attemptid);
-    if ($status) {
-        $message = get_string('attempt_deleted', 'mod_simplelesson');
-    } else {
-        $message = get_string('attempt_not_deleted', 'mod_simplelesson');
-    }
+$returnmanage = new moodle_url('/mod/simplelesson/manage_attempts.php', ['courseid' => $courseid,
+        'action' => $action]);
 
-    redirect($returnmanage, $message);
+if ( ($action == 'delete') && ($attempt != 0) ) {
+    $message = attempts::delete_attempt($attemptid) ? get_string('attempt_deleted', 'mod_simplelesson')
+                                                    : get_string('attempt_not_deleted', 'mod_simplelesson');
+    redirect($returnmanage, $message, 2);
+
 }
 
-$simplelesson = $PAGE->cm;
+$mform = new manage_attempts_select(null, ['courseid' => $courseid, 'action' => $action]);
+$sortby = ($data = $mform->get_data()) ? $data->sortby : 'id';
+$records = reporting::fetch_course_attempt_data($courseid, $sortby);
+
 echo $OUTPUT->header();
-$records = reporting::fetch_course_attempt_data($courseid);
+$mform->display();
 echo reporting::show_course_attempt_report($records, $courseid);
 echo $OUTPUT->footer();
