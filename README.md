@@ -9,17 +9,17 @@ For testing only you would need to upgrade to Moodle 4 before upgrading this plu
 
 Brief description
 =================
-This is hopefully a good basis for a simplified lesson module that has basic features as follows:
+Simple lesson is a content presentation system similar to Book or Lesson but with the possibility of inserting questions from the Question Bank similar to Quiz.
 
-1.  Supports adding basic question types (and behaviours) from the question bank
-2.  Consists of multimedia pages with simple hyperlinked navigation
+1.  Supports adding question types (and behaviours) from the question bank
+2.  Consists of multimedia pages with simple hyperlinked linear navigation
 3.  Summary lesson attempt reports for students and teacher's
 4.  Grades to gradebook, essay questions require manual grading
 5.  Implements GDPR privacy requests for reporting and deletion of user data
-6.  Designed for Moodle 4.0
+6.  Implements a Page Management console allowing easy setup of pages and questions
+7.  Designed for Moodle 4.0
 
-For more complex needs (timing, access restrictions, use the Lesson activity module)
-For summative activities and a wider range of question types use the quiz or lesson.
+It is designed primarily as a formative tool rather than an assessment tool.
 
 Richard Jones
 richardnz@outlook.com
