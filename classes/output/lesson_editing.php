@@ -75,7 +75,7 @@ class lesson_editing implements renderable, templatable {
 
         // Set up table headers.
         $headerdata = array();
-        $headerdata[] = get_string('sequence', 'mod_simplelesson');
+        $headerdata[] = get_string('id', 'mod_simplelesson');
         $headerdata[] = get_string('pagetitle', 'mod_simplelesson');
         $headerdata[] = get_string('prevpage', 'mod_simplelesson');
         $headerdata[] = get_string('nextpage', 'mod_simplelesson');
@@ -91,10 +91,10 @@ class lesson_editing implements renderable, templatable {
 
         foreach ($this->pages as $page) {
             $data = array();
-            $data['sequence'] = $page->sequence;
+            $data['id'] = $page->id;
             $data['pagetitle'] = $page->pagetitle;
             $data['previous'] = $page->prevpageid;
-            $data['next'] = $page->nextpageid + 1; // For display.
+            $data['next'] = $page->nextpageid;
             $data[ 'question'] = false;
 
             // Is there a question on the page?
