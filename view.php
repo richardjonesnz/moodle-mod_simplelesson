@@ -78,18 +78,21 @@ $options = new \stdClass();
 // Show add page button if permitted.
 if ($canmanage) {
 
-
     $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
             ['courseid' => $course->id,
              'simplelessonid' => $simplelesson->id,
              'sesskey' => sesskey()]);
     $options->editlesson = $editlessonurl->out(false);
 
-    $editquestionsurl = new \moodle_url('/mod/simplelesson/edit_questions.php',
-            ['courseid' => $course->id,
-             'simplelessonid' => $simplelesson->id,
-             'sesskey' => sesskey()]);
-    $options->editquestions = $editquestionsurl->out(false);
+    // If can add a question.
+    if (has_capability('mod/simplelesson:addquestion', $modulecontext)) {
+        $editquestionsurl = new \moodle_url('/mod/simplelesson/edit_questions.php',
+                ['courseid' => $course->id,
+                 'simplelessonid' => $simplelesson->id,
+                 'sesskey' => sesskey()]);
+        $options->editquestions = $editquestionsurl->out(false);
+        $options->managequestions = true;
+    }
 }
 
 // Are there any pages yet?

@@ -93,6 +93,7 @@ $string['simplelesson:view'] = 'View Simple lesson';
 $string['simplelesson:exportreportpages'] = 'Export report pages';
 $string['simplelesson:exportpages'] = 'Export pages';
 $string['simplelesson:importpages'] = 'Import pages';
+$string['simplelesson:addquestion'] = 'Add question';
 
 // Page management.
 $string['simplelesson_editing'] = 'Editing Simple lesson';
