@@ -35,6 +35,10 @@
 <div class="card mt-2">
   <div class="card-body">
     <p class="text-info font-weight-bold">{{#str}}managelesson, simplelesson{{/str}}</p>
+    {{#addpagehome}}
+        <a href="{{{addpage}}}"button type="button" class="btn btn-primary btn-sm">
+             {{#str}}add_page, simplelesson{{/str}}</a>
+    {{/addpagehome}}
     {{#editlesson}}
       <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
            {{#str}}manage_pages, simplelesson{{/str}}</a>

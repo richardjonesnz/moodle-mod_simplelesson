@@ -93,6 +93,16 @@ if ($canmanage) {
         $options->editquestions = $editquestionsurl->out(false);
         $options->managequestions = true;
     }
+
+    // Add button on home page.
+    $addpageurl = new \moodle_url('/mod/simplelesson/add_page.php',
+    ['courseid' => $course->id,
+     'simplelessonid' => $simplelessonid,
+     'sequence' => 0,
+     'sesskey' => sesskey()]);
+    $options->addpage = $addpageurl->out(false);
+    $options->addpagehome = true;
+
 }
 
 // Are there any pages yet?
