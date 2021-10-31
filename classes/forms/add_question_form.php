@@ -37,10 +37,17 @@ class add_question_form extends \moodleform {
 
         // Get questions.
         $questions = $this->_customdata['questions'];
-
+        $returnpageurl = $this->_customdata['returnpageurl'];
         $radios = array();
         foreach ($questions as $question) {
-            $checkname = $question->id . ' ' . $question->name . '<br>';
+            $previewurl = new \moodle_url('/question/bank/previewquestion/preview.php',
+            ['id' => $question->id,
+             'returnurl' => $returnpageurl]);
+
+            $checkname = $question->id . ':  ' . $question->name . '<br>' .
+                    '<a href="' . $previewurl . '">' . ' [' .
+                    get_string('preview_question', 'mod_simplelesson') .
+                    ']</a>';                     ;
             $radios[] = $mform->createElement('radio', 'optradio', '', $checkname, $question->id);
         }
         $mform->addGroup($radios, 'options', '' , '<br />', false);
@@ -54,12 +61,14 @@ class add_question_form extends \moodleform {
         $mform->addElement('hidden', 'simplelessonid', $this->_customdata['simplelessonid']);
         $mform->addElement('hidden', 'sequence', $this->_customdata['sequence']);
         $mform->addElement('hidden', 'returnto', $this->_customdata['returnto']);
+        $mform->addElement('hidden', 'returnpageurl', $this->_customdata['returnpageurl']);
         $mform->addElement('hidden', 'sesskey', $this->_customdata['sesskey']);
 
         $mform->setType('courseid', PARAM_INT);
         $mform->setType('simplelessonid', PARAM_INT);
         $mform->setType('sequence', PARAM_INT);
         $mform->setType('returnto', PARAM_TEXT);
+        $mform->setType('returnpageurl', PARAM_URL);
         $this->add_action_buttons($cancel = true);
     }
 }

@@ -41,7 +41,7 @@ $simplelesson = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', 
 $thispageurl = new moodle_url('/mod/simplelesson/add_question.php',
         ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]);
 
-        // Set up the page page.
+// Set up the page page.
 $PAGE->set_url($thispageurl);
 
 require_login($course, true, $cm);
@@ -66,6 +66,8 @@ $returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
  'sequence' => $sequence,
  'sesskey' => sesskey()]);
 
+$returnurl = ($returnto == 'show') ? $returnshow : $returnmanage;
+
 // Get the available questions and check there are some.
 $questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
 
@@ -79,6 +81,7 @@ if (count($questions) == 0) {
                 notification::NOTIFY_WARNING);
     }
 }
+$returnpageurl = $thispageurl->out(false, ['sequence' => $sequence, 'sesskey' => sesskey()]);
 
 // Instantiate the form.
 $mform = new add_question_form(null,
@@ -87,51 +90,39 @@ $mform = new add_question_form(null,
               'sequence' => $sequence,
               'returnto' => $returnto,
               'questions' => $questions,
+              'returnpageurl' => $returnpageurl,
               'sesskey' => sesskey()]);
 
 // If the cancel button was pressed.
 if ($mform->is_cancelled()) {
     // Back to where we came from.
-    if ($returnto == 'manage') {
-        redirect($returnmanage, get_string('cancelled'), 2);
-    } else {
-        redirect($returnshow, get_string('cancelled'), 2);
-    }
+    redirect($returnurl, get_string('cancelled'), 2);
 }
 
 // Save the question data.
 if ($data = $mform->get_data()) {
 
     $qdata = new stdClass;
-    $i = $data->optradio;
-    $qdata->qid = $i;
+    // User could save without picking an option on the form.
+    $qdata->qid = property_exists($data, 'optradio') ? $data->optradio : 0;
     $qdata->pageid = $page->id;
     $qdata->simplelessonid = $simplelessonid;
     $qdata->slot = 0;
     $qdata->score = $data->score;
 
-    // Only add the question if it doesn't already exist in this simplelesson.
-    $records = $DB->count_records('simplelesson_questions', ['qid' => $qdata->qid,
-            'simplelessonid' => $simplelessonid]);
-    if ($records == 0) {
-        $DB->insert_record('simplelesson_questions', $qdata);
-        // Back to where we came from.
-        if ($returnto == 'manage') {
-            redirect($returnmanage, get_string('question_added', 'mod_simplelesson'), 2,
+    // Check that a radio was selected.
+    if ($qdata->qid != 0) {
+        // Only add the question if it doesn't already exist in this simplelesson.
+        $records = $DB->count_records('simplelesson_questions', ['qid' => $qdata->qid,
+                'simplelessonid' => $simplelessonid]);
+        if ($records == 0) {
+            $DB->insert_record('simplelesson_questions', $qdata);
+            redirect($returnurl, get_string('question_added', 'mod_simplelesson'), 2,
                     notification::NOTIFY_SUCCESS);
-        } else {
-            redirect($returnshow, get_string('question_added', 'mod_simplelesson'), 2,
-                    notification::NOTIFY_SUCCESS);
-        }
-    } else {
-        if ($returnto == 'manage') {
-            redirect($returnmanage, get_string('duplicate_question', 'mod_simplelesson'), 2,
-                    notification::NOTIFY_WARNING);
-        } else {
-            redirect($returnshow, get_string('duplicate_question', 'mod_simplelesson'), 2,
-                    notification::NOTIFY_WARNING);
         }
     }
+    redirect($returnurl, get_string('bad_question', 'mod_simplelesson'), 2,
+                notification::NOTIFY_WARNING);
 }
 
 echo $OUTPUT->header();
