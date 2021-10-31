@@ -74,7 +74,7 @@ class view implements renderable, templatable {
         // This form shows in a Bootstrap modal.
         $data->mform = $this->mform->render();
 
-        //$data->qlinkurl = new moodle_url('/question/edit.php', ['courseid' => $this->simplelesson->course]);
+        $data->qlinkurl = new moodle_url('/question/edit.php', ['courseid' => $this->simplelesson->course]);
 
         return $data;
     }
