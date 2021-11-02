@@ -66,10 +66,8 @@ class edit_page_form extends \moodleform {
         $mform->setType('nextpage', PARAM_TEXT);
         $mform->setType('prevpage', PARAM_TEXT);
 
-        // Hidden fields.
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
-        $mform->addElement('hidden', 'simplelessonid',
-                $this->_customdata['simplelessonid']);
+        $mform->addElement('hidden', 'simplelessonid', $this->_customdata['simplelessonid']);
         $mform->addElement('hidden', 'returnto', $this->_customdata['returnto']);
         $mform->addElement('hidden', 'sequence', $this->_customdata['sequence']);
         $mform->addElement('hidden', 'sesskey', sesskey());

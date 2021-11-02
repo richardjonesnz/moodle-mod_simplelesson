@@ -17,7 +17,7 @@
  * Question attempt and related utilities for simplelesson
  *
  * @package    mod_simplelesson
- * @copyright  Richard Jones https://richardnz.net
+ * @copyright  2018 Richard Jones https://richardnz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_simplelesson\local;
@@ -44,12 +44,10 @@ class attempts  {
      */
     public static function create_usage($context, $behaviour, $entries, $simplelessonid) {
 
-        $quba = \question_engine::make_questions_usage_by_activity(
-                'mod_simplelesson',
-                $context);
+        $quba = \question_engine::make_questions_usage_by_activity('mod_simplelesson', $context);
+        $quba->set_preferred_behaviour($behaviour);
 
-                $quba->set_preferred_behaviour($behaviour);
-
+        // Set the question slot.
         foreach ($entries as $entry) {
             $questiondef = \question_bank::load_question($entry->qid);
             $slot = $quba->add_question($questiondef, $entry->defaultmark);
@@ -69,10 +67,8 @@ class attempts  {
      */
     public static function set_slot($simplelessonid, $pageid, $slot) {
         global $DB;
-        $DB->set_field('simplelesson_questions',
-                'slot', $slot,
-                array('simplelessonid' => $simplelessonid,
-                'pageid' => $pageid));
+        $DB->set_field('simplelesson_questions', 'slot', $slot,
+                ['simplelessonid' => $simplelessonid, 'pageid' => $pageid]);
     }
     /**
      * Get the usage id for a simplelesson attempt
@@ -82,8 +78,7 @@ class attempts  {
      */
     public static function get_usageid($attemptid) {
         global $DB;
-        return $DB->get_field('simplelesson_attempts',
-                'qubaid', array('id' => $attemptid));
+        return $DB->get_field('simplelesson_attempts', 'qubaid', ['id' => $attemptid]);
     }
     /**
      * Remove all usage data for all simplelesson instances
@@ -96,8 +91,7 @@ class attempts  {
           our plugin's tables.  The data can be left
           when the user aborts an attempt improperly.
         */
-        $usages = $DB->get_records('question_usages',
-                array('component' => 'mod_simplelesson'));
+        $usages = $DB->get_records('question_usages', ['component' => 'mod_simplelesson']);
         foreach ($usages as $usage) {
             self::remove_usage_data($usage->id);
         }
@@ -117,28 +111,20 @@ class attempts  {
 
         // Delete these records explicitly, we have the
         // attempt data we need in our attempts table.
-        $ataids = $DB->get_records('question_attempts',
-                array('questionusageid' => $qubaid));
+        $ataids = $DB->get_records('question_attempts', ['questionusageid' => $qubaid]);
         foreach ($ataids as $ataid) {
             // Get the attempt step id's.
-            $atsteps = $DB->get_records('question_attempt_steps',
-                    array('questionattemptid' => $ataid->id));
+            $atsteps = $DB->get_records('question_attempt_steps', ['questionattemptid' => $ataid->id]);
             foreach ($atsteps as $atstep) {
                 // Get the step data out.
-                $DB->delete_records(
-                        'question_attempt_step_data',
-                        array('attemptstepid' => $atstep->id));
+                $DB->delete_records('question_attempt_step_data', ['attemptstepid' => $atstep->id]);
             }
             // Get the attempt steps cleaned out.
-            $DB->delete_records('question_attempt_steps',
-                    array('questionattemptid' => $ataid->id));
+            $DB->delete_records('question_attempt_steps', ['questionattemptid' => $ataid->id]);
         }
         // Delete the attempt data.
-        $DB->delete_records('question_attempts',
-               array('questionusageid' => $qubaid));
-
-        $DB->delete_records('question_usages',
-                array('id' => $qubaid));
+        $DB->delete_records('question_attempts', ['questionusageid' => $qubaid]);
+        $DB->delete_records('question_usages', ['id' => $qubaid]);
     }
     /**
      * Return the wanted row from question attempts
@@ -147,13 +133,10 @@ class attempts  {
      * @param int $slot question attempt slot
      * @return object corresponding row in question attempts
      */
-    public static function get_question_attempt_id(
-            $qubaid, $slot) {
+    public static function get_question_attempt_id($qubaid, $slot) {
         global $DB;
-        $data = $DB->get_record('question_attempts',
-                  array('questionusageid' => $qubaid,
-                  'slot' => $slot),
-                  'id', MUST_EXIST);
+        $data = $DB->get_record('question_attempts', ['questionusageid' => $qubaid, 'slot' => $slot],
+                'id', MUST_EXIST);
         return $data->id;
     }
     /**
@@ -199,18 +182,16 @@ class attempts  {
         global $DB;
         // Check if answerdata already recorded.
         $answerrecord = $DB->get_record('simplelesson_answers',
-                array('attemptid' => $answerdata->attemptid,
-                'simplelessonid' => $answerdata->simplelessonid,
-                'pageid' => $answerdata->pageid),
-                '*', IGNORE_MISSING);
+                ['attemptid' => $answerdata->attemptid,
+                 'simplelessonid' => $answerdata->simplelessonid,
+                 'pageid' => $answerdata->pageid], '*', IGNORE_MISSING);
         if ($answerrecord) {
             // Update the record.
             $answerdata->id = $answerrecord->id;
             $DB->update_record('simplelesson_answers', $answerdata);
         } else {
             // Create a new record.
-            $answerdata->id = $DB->insert_record(
-                    'simplelesson_answers', $answerdata);
+            $answerdata->id = $DB->insert_record('simplelesson_answers', $answerdata);
         }
         return $answerdata->id;
     }
@@ -224,7 +205,6 @@ class attempts  {
     public static function set_attempt_start($data) {
         global $DB;
         return $DB->insert_record('simplelesson_attempts', $data);
-
     }
     /**
      * Get the user record for an attempt
@@ -234,10 +214,8 @@ class attempts  {
      */
     public static function get_attempt_user($attemptid) {
         global $DB;
-        $data = $DB->get_record('simplelesson_attempts',
-                array('id' => $attemptid), 'userid', MUST_EXIST);
-        return $DB->get_record('user',
-                array('id' => $data->userid), '*', MUST_EXIST);
+        $data = $DB->get_record('simplelesson_attempts', ['id' => $attemptid], 'userid', MUST_EXIST);
+        return $DB->get_record('user', ['id' => $data->userid], '*', MUST_EXIST);
     }
     /**
      * Set status the attempts table
@@ -246,19 +224,15 @@ class attempts  {
      * @param int $attemptid - record id to update
      * @param object $sessiondata - Score & time for this attempt
      */
-    public static function set_attempt_completed($attemptid,
-            $sessiondata) {
+    public static function set_attempt_completed($attemptid, $sessiondata) {
         global $DB;
-        $DB->set_field('simplelesson_attempts',
-                'status',
+        $DB->set_field('simplelesson_attempts', 'status',
                 constants::MOD_SIMPLELESSON_ATTEMPT_COMPLETE,
-                array('id' => $attemptid));
-        $DB->set_field('simplelesson_attempts',
-                'sessionscore', $sessiondata->score,
-                array('id' => $attemptid));
-        $DB->set_field('simplelesson_attempts',
-                'timetaken', $sessiondata->stime,
-                array('id' => $attemptid));
+                ['id' => $attemptid]);
+        $DB->set_field('simplelesson_attempts', 'sessionscore', $sessiondata->score,
+                ['id' => $attemptid]);
+        $DB->set_field('simplelesson_attempts', 'timetaken', $sessiondata->stime,
+                ['id' => $attemptid]);
     }
     /**
      * Add up the marks and times in the answer data
@@ -291,8 +265,8 @@ class attempts  {
     public static function get_number_of_attempts($userid, $simplelessonid) {
         global $DB;
         return $DB->count_records('simplelesson_attempts',
-                array('userid' => $userid,
-                'simplelessonid' => $simplelessonid));
+                ['userid' => $userid,
+                 'simplelessonid' => $simplelessonid]);
     }
     /**
      * save answer data
@@ -353,11 +327,9 @@ class attempts  {
     public static function delete_attempt($attemptid) {
         global $DB;
 
-        $DB->delete_records('simplelesson_answers',
-            array('attemptid' => $attemptid));
+        $DB->delete_records('simplelesson_answers', ['attemptid' => $attemptid]);
 
-        return $DB->delete_records('simplelesson_attempts',
-            array('id' => $attemptid));
+        return $DB->delete_records('simplelesson_attempts', ['id' => $attemptid]);
     }
     /**
      * Upate attempt session score and the associated answer after grading an essay attempt.
@@ -369,10 +341,9 @@ class attempts  {
         global $DB;
 
         // Get the relevant answer record and current session score.
-        $answer = $DB->get_record('simplelesson_answers',
-                array('id' => $answerid), '*', MUST_EXIST);
-        $sessionscore = $DB->get_field('simplelesson_attempts',
-                'sessionscore', array('id' => $answer->attemptid));
+        $answer = $DB->get_record('simplelesson_answers', ['id' => $answerid], '*', MUST_EXIST);
+        $sessionscore = $DB->get_field('simplelesson_attempts', 'sessionscore',
+                ['id' => $answer->attemptid]);
 
         // Update with mark for essay question. Might be a re-grade.
         if ($answer->mark == -1) {
@@ -383,10 +354,8 @@ class attempts  {
             $update = $sessionscore - $answer->mark + $mark;
         }
         // Update the attempt, answer tables for this question.
-        $DB->set_field('simplelesson_attempts', 'sessionscore',
-                ($update), array('id' => $answer->attemptid));
-        $DB->set_field('simplelesson_answers', 'mark',
-                $mark, array('id' => $answerid));
+        $DB->set_field('simplelesson_attempts', 'sessionscore', ($update), ['id' => $answer->attemptid]);
+        $DB->set_field('simplelesson_answers', 'mark', $mark, ['id' => $answerid]);
     }
     /**
      * Given a simplelessonid, find all its questions that are on a page.

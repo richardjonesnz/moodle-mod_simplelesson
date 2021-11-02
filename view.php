@@ -85,7 +85,7 @@ if ($canmanage) {
     $options->editlesson = $editlessonurl->out(false);
 
     // If can add a question.
-    if (has_capability('mod/simplelesson:addquestion', $modulecontext)) {
+    if (has_capability('mod/simplelesson:managequestions', $modulecontext)) {
         $editquestionsurl = new \moodle_url('/mod/simplelesson/edit_questions.php',
                 ['courseid' => $course->id,
                  'simplelessonid' => $simplelesson->id,

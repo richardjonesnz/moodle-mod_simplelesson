@@ -57,7 +57,7 @@ $reportsurl = new moodle_url('/mod/simplelesson/reports.php',
 
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
-
+require_capability('mod/simplelesson:manage', $modulecontext);
 $PAGE->set_context($modulecontext);
 
 $answerdata = reporting::fetch_essay_answer_record($answerid);

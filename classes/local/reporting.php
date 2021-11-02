@@ -28,7 +28,7 @@ use \mod_simplelesson\output\display_options;
 use \mod_simplelesson\utility\constants;
 defined('MOODLE_INTERNAL') || die;
 /*
- * A collec tiuon of static functions relating to reporting.
+ * A collection of static functions relating to reporting.
  *
  */
 class reporting  {
@@ -40,8 +40,8 @@ class reporting  {
      */
     public static function fetch_module_data($courseid) {
         global $DB;
-        $records = $DB->get_records('simplelesson',
-                array('course' => $courseid), null, 'id, name, title, timecreated');
+        $records = $DB->get_records('simplelesson', ['course' => $courseid], null,
+                'id, name, title, timecreated');
 
         foreach ($records as $record) {
             $record->timecreated = date("Y-m-d H:i:s", $record->timecreated);
@@ -52,7 +52,7 @@ class reporting  {
      * Returns HTML to a basic report of module usage
      *
      * @param $records - an array of data records
-     * @return string, html table
+     * @return string html table
      */
     public static function show_basic_report($records) {
 
@@ -152,7 +152,7 @@ class reporting  {
      * Returns HTML to a user report of lesson essay attempts
      *
      * @param $records - an array of attempt records
-     * @return string, html table
+     * @return string html table
      */
     public static function show_essay_answer_report($records) {
 
@@ -181,7 +181,7 @@ class reporting  {
      * Page export - get the columns for essay grading report
      *
      * @param none
-     * @return array of column names
+     * @return array string of column names
      */
     public static function fetch_essay_answer_report_headers() {
         $fields = array();
@@ -262,7 +262,7 @@ class reporting  {
      * Page export - get the columns for attempts report
      *
      * @param none
-     * @return array of column names
+     * @return array string of column names
      */
     public static function fetch_attempt_report_headers() {
 

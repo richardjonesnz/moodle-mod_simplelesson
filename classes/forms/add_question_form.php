@@ -37,29 +37,39 @@ class add_question_form extends \moodleform {
 
         // Get questions.
         $questions = $this->_customdata['questions'];
+
+        // Where to come back to from question preview page.
         $returnpageurl = $this->_customdata['returnpageurl'];
+
         $radios = array();
         foreach ($questions as $question) {
             $previewurl = new \moodle_url('/question/bank/previewquestion/preview.php',
             ['id' => $question->id,
              'returnurl' => $returnpageurl]);
 
-            $checkname = $question->id . ':  ' . $question->name . '<br>' .
+             // Messy but it does work.
+            $checkname = $question->id . ':  ' . $question->name . '&nbsp;' .
+                    '('. $question->qtype . ')&nbsp;' .
                     '<a href="' . $previewurl . '">' . ' [' .
-                    get_string('preview_question', 'mod_simplelesson') .
-                    ']</a>';                     ;
-            $radios[] = $mform->createElement('radio', 'optradio', '', $checkname, $question->id);
+                    get_string('preview_question', 'mod_simplelesson') . ']</a>';
+
+            // Questions already used in the lesson were marked.
+            $attribute = ($question->marked) ? 'disabled' : '';                   ;
+            $radios[] = $mform->createElement('radio', 'optradio', '', $checkname, $question->id, $attribute);
         }
+
+        // Set up the radio group, the br is needed to prevent wrapping.
         $mform->addGroup($radios, 'options', '' , '<br />', false);
 
         $mform->addElement('text', 'score', get_string('questionscore', 'mod_simplelesson'));
         $mform->setDefault('score', 1);
         $mform->setType('score', PARAM_INT);
 
-        // Hidden fields.
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
         $mform->addElement('hidden', 'simplelessonid', $this->_customdata['simplelessonid']);
         $mform->addElement('hidden', 'sequence', $this->_customdata['sequence']);
+
+        // Returnto is the Simplelesson page the user came here from.
         $mform->addElement('hidden', 'returnto', $this->_customdata['returnto']);
         $mform->addElement('hidden', 'returnpageurl', $this->_customdata['returnpageurl']);
         $mform->addElement('hidden', 'sesskey', $this->_customdata['sesskey']);

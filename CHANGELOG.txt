@@ -1,10 +1,14 @@
 CHANGELOG.txt
 =============
-2.0.1 - 19/10/21 - MAJOR revision of code to modern Moodle standards but compatible with existing functionality.
+2.0.1 - 19/10/21 - MAJOR revision of code to modern Moodle standards.
+                   Compatible with existing data tables and functionality.
 
+Considerable number of usability improvements
 Preview mode shows a question placeholder and a link to preview the question on a page
-Lesson management page shows the question on a page and allows adding questions from there
+Lesson management page shows the question on a page and allows adding and deleting questions from there
 Selection of question category and behaviour via modal on main plugin page, also links to question bank
+Questions can be previewed easily
+
 Tested on Moodle 4.0 development code.
 
 1.29.2 - 15/11/20 - MINOR improvement to Manage Questions page - thanks Stephen Parry @sparry0407

@@ -93,7 +93,7 @@ $string['simplelesson:view'] = 'View Simple lesson';
 $string['simplelesson:exportreportpages'] = 'Export report pages';
 $string['simplelesson:exportpages'] = 'Export pages';
 $string['simplelesson:importpages'] = 'Import pages';
-$string['simplelesson:addquestion'] = 'Add question';
+$string['simplelesson:managequestions'] = 'Manage questions';
 
 // Page management.
 $string['simplelesson_editing'] = 'Editing Simple lesson';
@@ -128,6 +128,7 @@ $string['question_name'] = 'Question name';
 $string['question_text'] = 'Question text';
 $string['setpage'] = 'Allocate';
 $string['add_question'] = 'Add question';
+$string['add_question_help'] = 'Select one question to add to the page, the question type is shown in brackets.  Use the Preview question link to view and test the question as it will appear on the page.  Set a score as required. Questions which have already been added to the Simplelesson are disabled.';
 $string['add'] = 'add';
 $string['remove'] = 'Remove';
 $string['delete_question'] = 'Delete question';
@@ -135,7 +136,7 @@ $string['preview_question'] = 'Preview question';
 $string['no_question'] = 'No question found';
 $string['noquestions'] = 'There are no questions, select a category from Manage Pages on the Home screen.';
 $string['bad_question'] = 'Duplicate or no question selected';
-$string['question_adding'] = 'Adding questions to Simple lesson';
+$string['question_adding'] = 'Select a category and a behaviour for questions.  You can use questions from more than one category by returning here and selecting another.  Selected behaviour applies to all questions in the Simple lesson.';
 $string['essay'] = 'Essay';
 $string['select_category'] = 'Select category';
 $string['select_question'] = 'Select question';
@@ -143,12 +144,7 @@ $string['questions_added'] = 'Added questions';
 $string['question_added'] = 'Added question';
 $string['question_deleted'] = 'Deleted question';
 $string['question_placeholder'] = '[[There is a question on this page]]';
-$string['add_question_page'] = 'Check the boxes to add selected questions to this Simple lesson.  You can change the category in settings to add questions from multiple categories. HINT: Name your questions sensibly when creating them, it will make life easier.';
-$string['selecting_page'] = 'Select the page for question: ';
-$string['question_exists'] = 'That page has a question already';
-$string['one_question_only'] = 'You can only add one question to a page';
 $string['questionscore'] = "Score";
-$string['edit_question_page'] = 'Click the Allocate link in the last column to allocate questions to pages (only one question per page is permitted).  You can also set the score for a question.  The Find in bank link will take you to the question bank.';
 
 // Page editing.
 $string['edit_page'] = 'Edit page';

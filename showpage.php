@@ -255,32 +255,33 @@ if ($options->canmanage) {
     $options->edit = true;
 
     // Show the add button if no question, otherwise delete button.
-    if (!$hasquestion) {
-        $addquestionurl = new \moodle_url('/mod/simplelesson/add_question.php',
-                ['courseid' => $course->id,
-                'simplelessonid' => $simplelesson->id,
-                'sequence' => $sequence,
-                'returnto' => 'show',
-                'sesskey' => sesskey()]);
-        $options->addquestion = $addquestionurl->out(false);
-        $options->addq = true;
+    if (has_capability('mod/simplelesson:managequestions', $modulecontext)) {
+        if (!$hasquestion) {
+            $addquestionurl = new \moodle_url('/mod/simplelesson/add_question.php',
+                    ['courseid' => $course->id,
+                    'simplelessonid' => $simplelesson->id,
+                    'sequence' => $sequence,
+                    'returnto' => 'show',
+                    'sesskey' => sesskey()]);
+            $options->addquestion = $addquestionurl->out(false);
+            $options->addq = true;
 
-        // Prevents question placeholder showing up.
-        $options->ispreview = false;
-    } else {
-        $deletequestionurl = new \moodle_url('/mod/simplelesson/delete_question.php',
-                ['courseid' => $course->id,
-                 'simplelessonid' => $simplelesson->id,
-                 'sequence' => $sequence,
-                 'returnto' => 'show',
-                 'sesskey' => sesskey()]);
-        $options->deletequestion = $deletequestionurl->out(false);
-        $options->deleteq = true;
-        $options->previewurl = new \moodle_url('/question/bank/previewquestion/preview.php',
-                ['id' => $hasquestion->qid,
-                 'returnurl' => $PAGE->url]);
+            // Prevents question placeholder showing up.
+            $options->ispreview = false;
+        } else {
+            $deletequestionurl = new \moodle_url('/mod/simplelesson/delete_question.php',
+                    ['courseid' => $course->id,
+                    'simplelessonid' => $simplelesson->id,
+                    'sequence' => $sequence,
+                    'returnto' => 'show',
+                    'sesskey' => sesskey()]);
+            $options->deletequestion = $deletequestionurl->out(false);
+            $options->deleteq = true;
+            $options->previewurl = new \moodle_url('/question/bank/previewquestion/preview.php',
+                    ['id' => $hasquestion->qid,
+                    'returnurl' => $PAGE->url]);
+        }
     }
-
     $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
             ['courseid' => $course->id,
              'simplelessonid' => $simplelesson->id,

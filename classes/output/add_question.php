@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Prepare data fro add_question form.
  */
-class add_question {
+class add_question implements renderable, templatable {
     private $mform;
 
     public function __construct($mform) {

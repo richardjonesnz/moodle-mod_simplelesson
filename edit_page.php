@@ -50,7 +50,7 @@ require_login($course, true, $cm);
 require_sesskey();
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
-
+require_capability('mod/simplelesson:manage', $modulecontext);
 $PAGE->set_context($modulecontext);
 
 $returnpage = new moodle_url('/mod/simplelesson/showpage.php',

@@ -23,6 +23,7 @@
  */
 use \mod_simplelesson\local\lesson;
 use \mod_simplelesson\forms\add_question_form;
+use \mod_simplelesson\output\add_question;
 use \core\output\notification;
 
 require_once('../../config.php');
@@ -49,6 +50,7 @@ require_sesskey();
 
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
+require_capability('mod/simplelesson:managequestions', $modulecontext);
 
 $PAGE->set_context($modulecontext);
 
@@ -71,6 +73,12 @@ $returnurl = ($returnto == 'show') ? $returnshow : $returnmanage;
 // Get the available questions and check there are some.
 $questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
 
+// Check if a question has already been used in this Simple lesson.
+foreach ($questions as $question) {
+    $records = $DB->count_records('simplelesson_questions', ['qid' => $question->id,
+                'simplelessonid' => $simplelessonid]);
+    $question->marked = ($records != 0);
+}
 if (count($questions) == 0) {
     // Back to where we came from.
     if ($returnto == 'manage') {
@@ -103,6 +111,7 @@ if ($mform->is_cancelled()) {
 if ($data = $mform->get_data()) {
 
     $qdata = new stdClass;
+
     // User could save without picking an option on the form.
     $qdata->qid = property_exists($data, 'optradio') ? $data->optradio : 0;
     $qdata->pageid = $page->id;
@@ -112,19 +121,15 @@ if ($data = $mform->get_data()) {
 
     // Check that a radio was selected.
     if ($qdata->qid != 0) {
-        // Only add the question if it doesn't already exist in this simplelesson.
-        $records = $DB->count_records('simplelesson_questions', ['qid' => $qdata->qid,
-                'simplelessonid' => $simplelessonid]);
-        if ($records == 0) {
-            $DB->insert_record('simplelesson_questions', $qdata);
-            redirect($returnurl, get_string('question_added', 'mod_simplelesson'), 2,
-                    notification::NOTIFY_SUCCESS);
-        }
+        // Add the question to our own table and return to where we came from.
+        $DB->insert_record('simplelesson_questions', $qdata);
+        redirect($returnurl, get_string('question_added', 'mod_simplelesson'), 2,
+                notification::NOTIFY_SUCCESS);
     }
     redirect($returnurl, get_string('bad_question', 'mod_simplelesson'), 2,
                 notification::NOTIFY_WARNING);
 }
 
 echo $OUTPUT->header();
-$mform->display();
+echo $OUTPUT->render(new add_question($mform));
 echo $OUTPUT->footer();
