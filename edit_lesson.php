@@ -32,7 +32,7 @@ global $DB;
 // Fetch URL parameters.
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
-$action = optional_param('action', 'none', PARAM_TEXT);
+$action = optional_param('action', 'none', PARAM_ALPHA);
 $sequence = optional_param('sequence', 0, PARAM_INT);
 
 // Set course related variables.

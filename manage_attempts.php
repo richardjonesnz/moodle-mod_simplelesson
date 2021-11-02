@@ -27,7 +27,7 @@ use \mod_simplelesson\forms\manage_attempts_select;
 require_once('../../config.php');
 
 $courseid = required_param('courseid', PARAM_INT);
-$action = optional_param('action', 'none', PARAM_TEXT);
+$action = optional_param('action', 'none', PARAM_ALPHA);
 $attemptid = optional_param('attemptid', 0, PARAM_INT);
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
 

@@ -74,7 +74,7 @@ class edit_page_form extends \moodleform {
 
         $mform->setType('courseid', PARAM_INT);
         $mform->setType('simplelessonid', PARAM_INT);
-        $mform->setType('returnto', PARAM_TEXT);
+        $mform->setType('returnto', PARAM_ALPHA);
         $mform->setType('sequence', PARAM_INT);
 
         // Add the action buttons.

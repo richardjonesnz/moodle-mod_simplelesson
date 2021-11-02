@@ -33,7 +33,7 @@ global $DB;
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 $sequence = required_param('sequence', PARAM_INT);
-$returnto = optional_param('returnto', 'show', PARAM_TEXT);
+$returnto = optional_param('returnto', 'show', PARAM_ALPHA);
 
 // Set course related variables.
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);

@@ -35,7 +35,7 @@ require_once(dirname(__FILE__).'/lib.php');
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid  = required_param('simplelessonid', PARAM_INT);
 $sequence = required_param('sequence', PARAM_INT);
-$mode = optional_param('mode', 'preview', PARAM_TEXT);
+$mode = optional_param('mode', 'preview', PARAM_ALPHA);
 $starttime = optional_param('starttime', 0, PARAM_INT);
 $attemptid = optional_param('attemptid', 0, PARAM_INT);
 

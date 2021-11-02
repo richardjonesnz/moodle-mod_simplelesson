@@ -31,7 +31,7 @@ require_once($CFG->libdir.'/dataformatlib.php');
 defined('MOODLE_INTERNAL') || die();
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
-$type = required_param('type', PARAM_TEXT);
+$type = required_param('type', PARAM_ALPHA);
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
 $cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid, false, MUST_EXIST);
 

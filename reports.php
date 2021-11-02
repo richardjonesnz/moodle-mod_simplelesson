@@ -28,7 +28,7 @@ require_once('../../config.php');
 
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid  = required_param('simplelessonid', PARAM_INT);
-$report = optional_param('report', 'menu', PARAM_TEXT);
+$report = optional_param('report', 'menu', PARAM_ALPHA);
 
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
 $cm = get_coursemodule_from_instance('simplelesson', $simplelessonid, $courseid, false, MUST_EXIST);

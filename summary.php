@@ -30,7 +30,7 @@ global $DB;
 
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
-$mode = optional_param('mode', 'preview', PARAM_TEXT);
+$mode = optional_param('mode', 'preview', PARAM_ALPHA);
 $attemptid = optional_param('attemptid', 0, PARAM_INT);
 $sequence = optional_param('sequence', 0, PARAM_INT);
 

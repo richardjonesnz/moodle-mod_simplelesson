@@ -77,8 +77,8 @@ class add_question_form extends \moodleform {
         $mform->setType('courseid', PARAM_INT);
         $mform->setType('simplelessonid', PARAM_INT);
         $mform->setType('sequence', PARAM_INT);
-        $mform->setType('returnto', PARAM_TEXT);
-        $mform->setType('returnpageurl', PARAM_URL);
+        $mform->setType('returnto', PARAM_ALPHA);
+        $mform->setType('returnpageurl', PARAM_LOCALURL);
         $this->add_action_buttons($cancel = true);
     }
 }
