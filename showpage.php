@@ -235,7 +235,8 @@ if ($options->canmanage) {
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
-    $options->add = true;
+    $options->addpagehome = true;
+    $options->addpage = false;
 
     $deletepageurl = new \moodle_url('/mod/simplelesson/delete_page.php',
             ['courseid' => $course->id,

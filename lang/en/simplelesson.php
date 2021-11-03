@@ -98,6 +98,7 @@ $string['simplelesson:managequestions'] = 'Manage questions';
 // Page management.
 $string['simplelesson_editing'] = 'Editing Simple lesson';
 $string['manage_pages'] = 'Manage pages';
+$string['manage_pages_here'] = 'Manage this page';
 $string['sequence'] = 'Seq';
 $string['pagetitle'] = 'Title';
 $string['pagecontents'] = 'Page content';
