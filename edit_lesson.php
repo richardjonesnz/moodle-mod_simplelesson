@@ -82,7 +82,7 @@ if ( ($sequence != 0) && ($action != 'none') ) {
      * Move the page by exchanging sequence numbers
      *
      */
-    if ($action == 'move_up') {
+    if ($action == 'moveup') {
         $pageup = $lesson->get_page_record($sequence);
         $pagedown = $lesson->get_page_record($sequence - 1);
         $up = $pageup->sequence - 1;
@@ -99,7 +99,7 @@ if ( ($sequence != 0) && ($action != 'none') ) {
                 echo 'Pages up: ' . $pageup->id . ' seq ' . $pageup->sequence;
         echo 'Pages down: ' . $pagedown->id . ' seq ' . $pagedown->sequence;
 
-    } else if ($action == 'move_down') {
+    } else if ($action == 'movedown') {
         $pageup = $lesson->get_page_record($sequence + 1);
         $pagedown = $lesson->get_page_record($sequence);
         $up = $pageup->sequence - 1;

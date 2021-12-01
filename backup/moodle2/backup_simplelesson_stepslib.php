@@ -55,7 +55,7 @@ class backup_simplelesson_activity_structure_step extends backup_activity_struct
                 array('id'),
                 array('course', 'name', 'intro', 'introformat',
                 'title', 'showindex', 'allowreview', 'allowincomplete',
-                'categoryid', 'behaviour', 'maxattempts', 'grademethod',
+                'categoryid', 'behaviour', 'maxattempts', 'pagesviewed', 'grademethod',
                 'grade', 'timecreated', 'timemodified'));
 
         // Define the child elements.

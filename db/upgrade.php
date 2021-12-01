@@ -73,5 +73,19 @@ function xmldb_simplelesson_upgrade($oldversion) {
 
         upgrade_mod_savepoint(true, 2018090400, 'simplelesson');
     }
+    if ($oldversion < 2021120100) {
+
+        // Define field to count pages viewed.
+        $table = new xmldb_table('simplelesson');
+        $field = new xmldb_field('pagesviewed', XMLDB_TYPE_INTEGER, 10, XMLDB_UNSIGNED, XMLDB_NOTNULL, 
+            null, '0', 'maxattempts');
+
+        // Add field.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_mod_savepoint(true, 2021120100, 'simplelesson');
+    }
     return true;
 }

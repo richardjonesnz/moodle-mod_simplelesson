@@ -235,8 +235,9 @@ if ($options->canmanage) {
              'sequence' => 0,
              'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
+    // We are dropping the add button into Manage lesson section here.
+    $options->add = false;
     $options->addpagehome = true;
-    $options->addpage = false;
 
     $deletepageurl = new \moodle_url('/mod/simplelesson/delete_page.php',
             ['courseid' => $course->id,

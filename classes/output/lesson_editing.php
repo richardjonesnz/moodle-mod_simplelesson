@@ -75,7 +75,6 @@ class lesson_editing implements renderable, templatable {
 
         // Set up table headers.
         $headerdata = array();
-        $headerdata[] = get_string('id', 'mod_simplelesson');
         $headerdata[] = get_string('pagetitle', 'mod_simplelesson');
         $headerdata[] = get_string('prevpage', 'mod_simplelesson');
         $headerdata[] = get_string('nextpage', 'mod_simplelesson');
@@ -169,7 +168,7 @@ class lesson_editing implements renderable, templatable {
                         'alt' => get_string('move_up', 'mod_simplelesson')];
                 $actions['moveup'] = ['link' => $link->out(false,
                                      ['sequence' => $page->sequence,
-                                      'action' => 'move_up',
+                                      'action' => 'moveup',
                                       'sesskey' => sesskey()]),
                                       'icon' => $icon];
             }
@@ -181,7 +180,7 @@ class lesson_editing implements renderable, templatable {
                         'alt' => get_string('move_down', 'mod_simplelesson')];
                 $actions['movedown'] = ['link' => $link->out(false,
                                        ['sequence' => $page->sequence,
-                                        'action' => 'move_down',
+                                        'action' => 'movedown',
                                         'sesskey' => sesskey()]),
                                         'icon' => $icon];
             }
