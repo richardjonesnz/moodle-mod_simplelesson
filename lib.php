@@ -49,8 +49,6 @@ function simplelesson_supports($feature) {
             return true;
         case FEATURE_COMPLETION_TRACKS_VIEWS:
             return true;
-        case FEATURE_COMPLETION_HAS_RULES:
-            return true;
         case FEATURE_BACKUP_MOODLE2:
             return true;
         case FEATURE_USES_QUESTIONS:
