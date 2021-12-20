@@ -115,4 +115,75 @@ class mod_simplelesson_mod_form extends moodleform_mod {
         // Add standard buttons, common to all modules.
         $this->add_action_buttons();
     }
+    /**
+     * Add elements for setting the custom completion rules.
+     *  
+     * @category completion
+     * @return array List of added element names, or names of wrapping group elements.
+     */
+    public function add_completion_rules() {
+
+        $mform = $this->_form;
+
+        // Set completion according to status set in summary.php.
+        // This is recorded in the simplelesson_attempts table.
+        $mform->addElement('checkbox', 'attemptcompleted', 
+                get_string('attemptcompleted', 'simplelesson'),
+                get_string('attemptcompleted_desc', 'simplelesson'));
+        // The grade condition would normally be used here.
+        $mform->setDefault('attemptcompleted', 0);
+
+        // Set completion by time spent on activity.
+        // This is also recorded in the simplelesson_attempts table (timetaken).
+        $group = array();
+        $group[] =& $mform->createElement('checkbox', 'timetakenenabled', '',
+                get_string('timetaken', 'simplelesson'));
+        $group[] =& $mform->createElement('duration', 'timetaken', '', array('optional' => false));
+        $mform->addGroup($group, 'timetakengroup', get_string('timetakengroup', 'simplelesson'), array(' '), false);
+        $mform->disabledIf('timetaken[number]', 'timetakenenabled', 'notchecked');
+        $mform->disabledIf('timetaken[timeunit]', 'timetakenenabled', 'notchecked');
+
+        return array('attemptcompleted', 'timetakengroup');
+    }
+    /**
+     * Called during validation. Indicates whether a module-specific completion rule is selected.
+     *
+     * @param array $data Input data (not yet validated)
+     * @return bool True if one or more rules is enabled, false if none are.
+     */
+    public function completion_rule_enabled($data) {
+        return ( !empty($data['attemptcompleted']) || ($data['timetaken'] > 0) );
+    }
+    /**
+     * Enforce defaults here
+     *
+     * @param array $defaultvalues Form defaults
+     * @return void
+     **/
+    public function data_preprocessing(&$defaultvalues) {
+        // Set up the completion checkbox which is not part of standard data.
+        $defaultvalues['timetakenenabled'] =
+            !empty($defaultvalues['timetaken']) ? 1 : 0;
+    }
+    /**
+     * Allows module to modify the data returned by form get_data().
+     * This method is also called in the bulk activity completion form.
+     *
+     * Only available on moodleform_mod.
+     *
+     * @param stdClass $data the form data to be modified.
+     */
+    public function data_postprocessing($data) {
+        parent::data_postprocessing($data);
+        // Turn off completion setting if the checkbox is not ticked.
+        if (!empty($data->completionunlocked)) {
+            $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
+            if (empty($data->timetakenenabled) || !$autocompletion) {
+                $data->timetaken = 0;
+            }
+            if (empty($data->attemptcompleted) || !$autocompletion) {
+                $data->attemptcompleted = 0;
+            }
+        }
+    }
 }

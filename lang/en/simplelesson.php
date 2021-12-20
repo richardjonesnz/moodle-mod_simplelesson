@@ -265,13 +265,13 @@ $string['gradeaverage'] = 'Average of attempts';
 $string['gradelast'] = 'Last attempt';
 
 // Privacy.
-$string['privacy:metadata:simplelesson_attempts'] = 'Information about users simplelesson attempts including completion status, the number of correct responses (a score) and the time taken (seconds) for the attempt.';
+$string['privacy:metadata:simplelesson_attempts'] = 'Information about users Simple lesson attempts including completion status, the number of correct responses (a score) and the time taken (seconds) for the attempt.';
 $string['privacy:metadata:simplelesson_attempts:userid'] = 'The id of the user taking the attempt.';
 $string['privacy:metadata:simplelesson_attempts:status'] = 'The completion status of the attempt.';
 $string['privacy:metadata:simplelesson_attempts:sessionscore'] = 'The score achieved on the attempt.';
 $string['privacy:metadata:simplelesson_attempts:timetaken'] = 'The time taken to complete the attempt (seconds).';
 
-$string['privacy:metadata:simplelesson_answers'] = 'Information about users simplelesson attempts at individual questions including their response and a score.';
+$string['privacy:metadata:simplelesson_answers'] = 'Information about users Simple lesson attempts at individual questions including their response and a score.';
 $string['privacy:metadata:simplelesson_answers:mark'] = 'The score of the user answering the question.';
 $string['privacy:metadata:simplelesson_answers:youranswer'] = 'The response of the user to the question.';
 
@@ -281,3 +281,12 @@ $string['clean_up_usages'] = 'Clean old question usages for Simple lesson';
 // Reset.
 $string['deleteallattempts'] = 'Delete all attempts.';
 $string['outofsequence'] = 'Something went wrong with the question engine, please try again';
+
+// Completion rules.
+$string['attemptcompleted'] = 'Attempt completed';
+$string['attemptcompleted_desc'] = 'Require student to have attempted all question pages in the Simple lesson. Do not use if there are no questions included in the lesson.';
+$string['timetaken'] = 'Time spent on Simple lesson';
+$string['timetakenenabled'] = 'Student must do this activity for at least: ';
+$string['timetakengroup'] = 'Require time spent';
+$string['completiondetail:timetaken'] = 'Spend at least {$a} on this activity';
+$string['completiondetail:attemptcompleted'] = 'Student must attempt all questions in the lesson';
