@@ -54,6 +54,7 @@ $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:manage', $modulecontext);
 
 $PAGE->set_context($modulecontext);
+$PAGE->activityheader->set_description('');
 
 $returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
         ['courseid' => $courseid,

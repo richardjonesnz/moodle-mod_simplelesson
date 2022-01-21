@@ -48,6 +48,9 @@ $modulecontext = context_module::instance($cm->id);
 $PAGE->set_context($modulecontext);
 $PAGE->set_heading(format_string($course->fullname));
 
+// Use with redirect.
+$returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
+
 // Check attempts (for students).
 if (!has_capability('mod/simplelesson:manage', $modulecontext)) {
     $maxattempts = $simplelesson->maxattempts;
@@ -55,7 +58,6 @@ if (!has_capability('mod/simplelesson:manage', $modulecontext)) {
 
     if ( ($userattempts >= $maxattempts) && ($maxattempts != 0) ) {
         // Max attempts is exceeded.
-        $returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
         redirect($returnview, get_string('max_attempts_exceeded', 'mod_simplelesson'), 2,
                 notification::NOTIFY_ERROR);
     }
@@ -70,7 +72,6 @@ if (!empty($questionentries)) {
             $simplelessonid);
 } else {
     // No questions.
-    $returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
     redirect($returnview, get_string('no_questions', 'mod_simplelesson', 2));
 }
 
@@ -100,13 +101,10 @@ $event->trigger();
 // Go to to the first lesson page.
 $returnshowpage = new moodle_url('/mod/simplelesson/showpage.php',
     ['courseid' => $courseid,
-    'simplelessonid' => $simplelessonid,
-    'sequence' => 1,
-    'mode' => 'attempt',
-    'starttime' => time(),
-    'attemptid' => $attemptid]);
+     'simplelessonid' => $simplelessonid,
+     'sequence' => 1,
+     'mode' => 'attempt',
+     'starttime' => time(),
+     'attemptid' => $attemptid]);
 
 redirect($returnshowpage, get_string('starting_attempt', 'mod_simplelesson'), 2);
-echo $OUTPUT->header();
-echo 'put the cancel form in here';
-echo $OUTPUT->footer();

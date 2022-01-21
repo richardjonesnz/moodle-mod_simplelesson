@@ -68,8 +68,8 @@ class view implements renderable, templatable {
         $data->title = $this->simplelesson->title;
 
         // Moodle handles processing of std intro field.
-        $data->body = format_module_intro('simplelesson', $this->simplelesson, $this->cmid);
-        $data->message = get_string('welcome', 'mod_simplelesson');
+        // $data->body = format_module_intro('simplelesson', $this->simplelesson, $this->cmid);
+        // $data->message = get_string('welcome', 'mod_simplelesson');
 
         // This form shows in a Bootstrap modal.
         $data->mform = $this->mform->render();

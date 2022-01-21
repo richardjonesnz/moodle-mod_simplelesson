@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Prints the simplelesson summary page
+ * Prints the simplelesson summary page following an attempt.
  *
  * @package   mod_simplelesson
  * @copyright 2018 Richard Jones https://richardnz.net
@@ -46,17 +46,18 @@ $PAGE->set_url('/mod/simplelesson/summary.php',
 
 require_login($course, true, $cm);
 
+// Url for redirect.
 $returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
+
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
-// Get the question feedback type. Get display options.
-$options = display_options::get_options();
-
-$returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
-$lessontitle = $simplelesson->name;
 $PAGE->set_context($modulecontext);
 $PAGE->set_heading(format_string($course->fullname));
+
+// This option supresses the Description field (module intro).
+$PAGE->activityheader->set_description('');
+
 echo $OUTPUT->header();
 
 /*
@@ -71,13 +72,11 @@ if ($mode == 'attempt') {
     attempts::save_lesson_answerdata($answerdata);
     $sessiondata = attempts::get_sessiondata($answerdata);
 
-    // Update gradebook.
+    // Get user object to display attempt detail and update gradebook.
     $user = attempts::get_attempt_user($attemptid);
 
     // Show review page (if allowed).
-    $review = ( ($simplelesson->allowreview) || has_capability('mod/simplelesson:manage', $modulecontext) );
-
-    if ($review) {
+    if (($simplelesson->allowreview) || has_capability('mod/simplelesson:manage', $modulecontext)) {
         // Navigation.
         $navoptions = new \stdClass();
         if ($mode == 'attempt') {
@@ -90,8 +89,8 @@ if ($mode == 'attempt') {
             $navoptions->home = true;
         }
         $navoptions->homeurl = $returnview;
-        echo $OUTPUT->render(new lesson_summary($navoptions, $user, $answerdata, $options->markdp,
-                $sessiondata));
+        echo $OUTPUT->render(new lesson_summary($navoptions, $user, $answerdata, 
+                display_options::get_options()->markdp, $sessiondata));
     }
 
     // Log the completion event and update the gradebook.

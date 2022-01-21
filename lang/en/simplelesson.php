@@ -26,267 +26,209 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// General module strings.
-$string['modulename'] = 'Simple lesson';
-$string['modulenameplural'] = 'Simple lessons';
-$string['modulename_help'] = 'Use the Simple lesson module for a simple sequential display of pages with an optional index. The simplelesson module allows the creation and addition of multiple pages of content.
 
-It allows the use of questions from a selected question bank. Valid question types that have been tested are true/false, multiple choice (one answer), match, gapselect and short answer.  Essay questions are allowed and need to be manually marked.  Question behaviours implemented are adaptive, immediate and deferred feedback (without CBM).
-
-User attempt data, including detailed question responses are recorded and marked.  Grading strategies used for multiple attempts are Highest, Average and Last attempt(s).
-
-Simplelessons and their content pages are backed up but questions are not.';
-$string['simplelessonfieldset'] = 'Custom example fieldset';
-$string['simplelessonname'] = 'Simple lesson name';
-$string['simplelessonname_help'] = 'Choose a suitable name for your Simple lesson.';
-$string['pluginadministration'] = 'simplelesson administration';
-$string['pluginname'] = 'Simple lesson';
-$string['welcome'] = 'Welcome user!';
-
-// Reset form.
-$string['deleteallsubmissions'] = 'Delete all submissions';
-$string['removealluseroverrides'] = 'Remove user overrides';
-$string['removeallgroupoverrides'] = 'Remove group overrides';
-$string['unlimited'] = 'Unlimited';
-$string['managelesson'] = 'Manage Lesson: ';
-
-// Events.
-$string['simplelessonviewed'] = 'Simple lesson viewed';
-$string['pagecreated'] = 'New page created';
-$string['pageviewed'] = 'Simple lesson page viewed';
-$string['pagedeleted'] = 'Simplelesson page deleted';
-$string['attemptstarted'] = 'Simple lesson attempt started';
-$string['attemptcompleted'] = 'Simple lesson attempt started';
-
-// The mod_form settings.
-$string['simplelesson_settings'] = 'Simplelesson settings';
-$string['simplelesson_title'] = 'Title of this resource';
-$string['showindex'] = 'Show the page index';
-$string['showindex_help'] = 'The page index is optional and will show on the top right of every content page in preview mode by default. This can be overriden by themes. ';
-$string['allowreview'] = 'Allow student to review attempts';
-$string['allowreview_help'] = 'At the end of the attempt, students can review their responses and their scores by default.  Uncheck this box to disallow student review.';
-$string['allowincomplete'] = 'Allow incomplete question attempts';
-$string['allowincomplete_help'] = 'Uncheck to force students to respond to a question before navigation links are shown.';
-$string['completequestion'] = 'Please attempt this question to continue';
-
-// The category modal popup.
-$string['immediatefeedback'] = 'Immediate feedback';
-$string['immediatecbm'] = 'Immediate feedback with CBM';
+$string['action'] = 'Action';
+$string['actions'] = 'Page Actions';
 $string['adaptive'] = 'Adaptive feedback';
 $string['adaptivenopenalty'] = 'Adaptive (no penalty)';
-$string['deferredfeedback'] = 'Deferred feedback';
-$string['deferredcbm'] = 'Deferred feedback with cbm';
-$string['immediatecbm'] = 'Immediate feedback with cbm';
+$string['add'] = 'add';
+$string['add_page'] = 'Add page';
+$string['add_question'] = 'Add question';
+$string['add_question_help'] = 'Select one question to add to the page, the question type is shown in brackets.  Use the Preview question link to view and test the question as it will appear on the page.  Set a score as required. Questions which have already been added to the Simplelesson are disabled.';
+$string['allocate_mark'] = 'Allocate a mark for the essay:';
+$string['allowincomplete'] = 'Allow incomplete question attempts';
+$string['allowincomplete_help'] = 'Uncheck to force students to respond to a question before navigation links are shown.';
+$string['allowreview'] = 'Allow student to review attempts';
+$string['allowreview_help'] = 'At the end of the attempt, students can review their responses and their scores by default.  Uncheck this box to disallow student review.';
+$string['answer_report'] = 'User responses';
+$string['answerquestions'] = 'Please answer all the questions';
+$string['attempt'] = "Attempt lesson";
+$string['attempt_deleted'] = 'Attempt deleted';
+$string['attempt_not_deleted'] = 'Attempt to delete record failed';
+$string['attempt_report'] = 'User attempts';
+$string['attemptcompleted'] = 'Attempt completed';
+$string['attemptcompleted_desc'] = 'Require student to have attempted all question pages in the Simple lesson. Do not use if there are no questions included in the lesson.';
+$string['attemptid'] = "Attempt";
+$string['attemptstarted'] = 'Simple lesson attempt started';
+$string['autosequencelink'] = 'Auto-sequence pages';
+$string['bad_question'] = 'Duplicate or no question selected';
+$string['basic_report'] = 'Basic report';
 $string['behaviour'] = 'Question behaviour';
 $string['behaviour_help'] = 'With Adaptive feedback the user has multiple tries at each question - a penalty can be applied unless adaptive no penalty is used.  This can only be set on a lesson basis, not per question. Immediate feedback has one attempt available. For Deferred feedback the answer must be explicitly saved but multiple saves are permitted, the student only sees the score when reviewing the lesson. CBM means "certainty-based marking" the student must also say how certain they are that their answer is correct and thereby gain extra marks (or extra penalties).  This can lead to strange scores.';
 $string['category_select'] = 'Select category';
 $string['categoryid'] = 'Category';
 $string['categoryid_help'] = 'Choose a category for the questions that can be added to this simplelesson.  You can use the Find in bank link to manipulate the question bank for this course/activity.';
-$string['nocategory'] = 'none';
-
-// Capabilities.
-$string['simplelesson:manage'] = 'Manage Simple lesson';
-$string['simplelesson:manageattempts'] = 'Manage attempt records';
-$string['simplelesson:addinstance'] = 'Add a new Simple lesson';
-$string['simplelesson:viewreportstab'] = 'View the reports tab';
-$string['simplelesson:view'] = 'View Simple lesson';
-$string['simplelesson:exportreportpages'] = 'Export report pages';
-$string['simplelesson:exportpages'] = 'Export pages';
-$string['simplelesson:importpages'] = 'Import pages';
-$string['simplelesson:managequestions'] = 'Manage questions';
-
-// Page management.
-$string['simplelesson_editing'] = 'Editing Simple lesson';
-$string['manage_pages'] = 'Manage pages';
-$string['manage_pages_here'] = 'Manage this page';
-$string['sequence'] = 'Seq';
-$string['pagetitle'] = 'Title';
-$string['pagecontents'] = 'Page content';
-$string['nextpage'] = 'Next';
-$string['prevpage'] = 'Previous';
-$string['home'] = 'Home';
-$string['actions'] = 'Page Actions';
-$string['move_up'] = 'Move up';
-$string['move_down'] = 'Move down';
-$string['showpage'] = 'Preview page';
-$string['autosequencelink'] = 'Auto-sequence pages';
-$string['sequence_updated'] = 'Page sequences updated';
-$string['hasquestion'] = 'Question';
-$string['exportpagelink'] = 'Export pages';
-$string['importpagelink'] = 'Import pages';
-$string['editing'] = 'Manage lesson:';
-$string['navigation'] = 'Navigation:';
-$string['lackpages'] = 'Need at least 2 pages to manage';
-$string['pagenotfound'] = 'Need at least 2 pages to manage';
-
-// Question management.
-$string['manage_questions'] = 'Manage questions';
-$string['question_editing'] = 'Editing questions';
-$string['qnumber'] = 'Question number';
-$string['qlinkheader'] = 'Find in bank';
-$string['qlink'] = 'Find';
-$string['question_name'] = 'Question name';
-$string['question_text'] = 'Question text';
-$string['setpage'] = 'Allocate';
-$string['add_question'] = 'Add question';
-$string['add_question_help'] = 'Select one question to add to the page, the question type is shown in brackets.  Use the Preview question link to view and test the question as it will appear on the page.  Set a score as required. Questions which have already been added to the Simplelesson are disabled.';
-$string['add'] = 'add';
-$string['remove'] = 'Remove';
-$string['delete_question'] = 'Delete question';
-$string['preview_question'] = 'Preview question';
-$string['no_question'] = 'No question found';
-$string['noquestions'] = 'There are no questions, select a category from Manage Pages on the Home screen.';
-$string['bad_question'] = 'Duplicate or no question selected';
-$string['question_adding'] = 'Select a category and a behaviour for questions.  You can use questions from more than one category by returning here and selecting another.  Selected behaviour applies to all questions in the Simple lesson.';
-$string['essay'] = 'Essay';
-$string['select_category'] = 'Select category';
-$string['select_question'] = 'Select question';
-$string['questions_added'] = 'Added questions';
-$string['question_added'] = 'Added question';
-$string['question_deleted'] = 'Deleted question';
-$string['question_placeholder'] = '[[There is a question on this page]]';
-$string['questionscore'] = "Score";
-
-// Page editing.
-$string['edit_page'] = 'Edit page';
-$string['page_editing'] = 'Use this page to organize your Simple lesson. You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. Click the Question number to preview the question (or add to add one). Remove to remove a question.';
-$string['edit_page_form'] = 'Edit the page contents';
-$string['add_page'] = 'Add page';
-$string['delete_page'] = 'Delete page';
-$string['page_adding'] = 'Add a new page';
-$string['page_saved'] = 'Page saved';
-$string['getprevpage'] = 'Previous page';
-$string['getnextpage'] = 'Next page';
-$string['nolink'] = 'none';
-$string['no_pages'] = 'There are no pages yet, add a page';
-$string['num_pages'] = 'Number of pages: {$a}';
-$string['gotoaddpage'] = 'Add page';
-$string['gotoeditpage'] = 'Edit page';
-$string['gotodeletepage'] = 'Delete page';
-$string['page_updated'] = 'Page updated';
-$string['page_deleted'] = 'Page deleted';
-
-// Page navigation.
-$string['firstpagelink'] = 'First page';
-$string['homelink'] = 'Home';
-$string['gotonextpage'] = 'Next';
-$string['gotoprevpage'] = 'Previous';
-$string['page_index_header'] = 'Index';
-$string['preview_completed'] = 'preview completed';
-
-// Reporting.
-$string['reportspage'] = 'Available reports';
-$string['reportsheader'] = 'Select required report, click the reports tab to return to the menu.';
-$string['moduleid'] = 'id';
-$string['viewtab'] = 'view';
-$string['reportstab'] = 'reports';
-$string['timecreated'] = 'Time created';
-$string['basic_report'] = 'Basic report';
-$string['answer_report'] = 'User responses';
-$string['attempt_report'] = 'User attempts';
+$string['clean_up_usages'] = 'Clean old question usages for Simple lesson';
+$string['completequestion'] = 'Please attempt this question to continue';
+$string['completiondetail:attemptcompleted'] = 'Student must attempt all questions in the lesson';
+$string['completiondetail:timetaken'] = 'Spend at least {$a} on this activity';
 $string['date'] = 'Attempt date';
-$string['lessonname'] = 'Lesson';
-$string['firstname'] = 'First name';
-$string['lastname'] = 'Last name';
-$string['status'] = 'Status';
-$string['sessionscore'] = 'Correct';
-$string['maxscore'] = 'Out of';
-$string['timetaken'] = 'Time taken (s)';
-$string['userreportdownload'] = 'Download user report (csv)';
-$string['attemptid'] = "Attempt";
-$string['questionsummary'] = 'Question';
-$string['action'] = 'Action';
-
-// Admin settings.
+$string['deferredcbm'] = 'Deferred feedback with cbm';
+$string['deferredfeedback'] = 'Deferred feedback';
+$string['delete'] = 'delete ';
+$string['delete_page'] = 'Delete page';
+$string['delete_question'] = 'Delete question';
+$string['deleteallattempts'] = 'Delete all attempts.';
+$string['deleteallsubmissions'] = 'Delete all submissions';
+$string['edit_page'] = 'Edit page';
+$string['edit_page_form'] = 'Edit the page contents';
+$string['editing'] = 'Manage lesson:';
 $string['enablereports'] = 'Show reports tab';
 $string['enablereports_desc'] = 'Check to allow teachers to see reports';
-
-// Attempts.
-$string['maxattempts'] = "Max attempts";
-$string['gotosummary'] = "Summary page";
 $string['end_lesson'] = "Exit lesson";
-$string['preview'] = "Preview";
-$string['attempt'] = "Attempt lesson";
-$string['starting_attempt'] = "Starting Attempt";
-$string['previewcompleted'] = "Preview completed";
-$string['summary_header'] = "Attempt summary";
-$string['summary_user'] = 'User report for {$a}';
-$string['summary_score'] = 'Score for this attempt: {$a}';
-$string['summary_time'] = 'Total time for this attempt: {$a} (Seconds)';
-$string['firstname'] = "First name";
-$string['lastname'] = "Last name";
-$string['question'] = "Question";
-$string['rightanswer'] = "Right answer";
-$string['youranswer'] = "Your answer";
-$string['mark'] = "Mark";
-$string['outof'] = "Out of";
-$string['timetaken'] = "Time (s)";
-$string['id'] = 'id';
-$string['max_attempts_exceeded'] = "No more attempts allowed";
-$string['numattempts'] = 'Attempts made: {$a} of';
-$string['unlimited_attempts'] = 'Unlimited attempts';
-$string['no_questions'] = 'There are no questions to attempt (use preview)';
+$string['essay'] = 'Essay';
+$string['essay_grading'] = 'Grade an essay';
+$string['essay_grading_page'] = 'Use this page to manually grade an essay submission.';
+$string['essaydate'] = 'Date submitted: {$a}';
+$string['exportpagelink'] = 'Export pages';
 $string['finishreview'] = 'Finish review';
-$string['answerquestions'] = 'Please answer all the questions';
-$string['saveanswer'] = 'Save essay';
-$string['save'] = 'Save';
-
-// Attempts management.
-$string['manage_attempts'] = 'Manage attempts';
-$string['delete'] = 'delete ';
-$string['attempt_deleted'] = 'Attempt deleted';
-$string['attempt_not_deleted'] = 'Attempt to delete record failed';
-$string['select_sort'] = 'Select column to sort on:';
-
-// Grading.
-$string['manual_grade'] = 'Manual grading';
-$string['graderinfo'] = 'Grader Information (if any)';
+$string['firstname'] = "First name";
+$string['firstpagelink'] = 'First page';
+$string['nextpage'] = 'Next page';
+$string['prevpage'] = 'Previous page';
+$string['gotoaddpage'] = 'Add page';
+$string['gotodeletepage'] = 'Delete page';
+$string['gotoeditpage'] = 'Edit page';
+$string['gotosummary'] = "Summary page";
+$string['grade_saved'] = 'Grade saved';
+$string['gradeaverage'] = 'Average of attempts';
+$string['graded'] = 'Graded';
+$string['gradehighest'] = 'Highest attempt';
+$string['gradelast'] = 'Last attempt';
 $string['gradelink'] = 'Grade essay';
 $string['gradelinkheader'] = 'Action';
-$string['requires_grading'] = 'Requires grading';
-$string['essay_grading'] = 'Grade an essay';
-$string['the_essay'] = 'The essay to grade';
-$string['essay_grading_page'] = 'Use this page to manually grade an essay submission.';
-$string['userdetail'] = 'User: {$a}';
-$string['essaydate'] = 'Date submitted: {$a}';
-$string['maxmark'] = 'Marks available: {$a}';
-$string['allocate_mark'] = 'Allocate a mark for the essay:';
-$string['grade_saved'] = 'Grade saved';
-$string['no_manual_grades'] = 'Nothing to grade';
-$string['ungraded'] = 'Not graded';
-$string['graded'] = 'Graded';
-
-// Grading method.
+$string['gradelowest'] = 'Lowest attempt';
 $string['grademethod'] = 'Attempts grading';
 $string['grademethod_help'] = 'If multiple attempts are made, this setting determines how the grade for the gradebook will be calculated.';
-$string['gradehighest'] = 'Highest attempt';
-$string['gradelowest'] = 'Lowest attempt';
-$string['gradeaverage'] = 'Average of attempts';
-$string['gradelast'] = 'Last attempt';
-
-// Privacy.
-$string['privacy:metadata:simplelesson_attempts'] = 'Information about users Simple lesson attempts including completion status, the number of correct responses (a score) and the time taken (seconds) for the attempt.';
-$string['privacy:metadata:simplelesson_attempts:userid'] = 'The id of the user taking the attempt.';
-$string['privacy:metadata:simplelesson_attempts:status'] = 'The completion status of the attempt.';
-$string['privacy:metadata:simplelesson_attempts:sessionscore'] = 'The score achieved on the attempt.';
-$string['privacy:metadata:simplelesson_attempts:timetaken'] = 'The time taken to complete the attempt (seconds).';
-
-$string['privacy:metadata:simplelesson_answers'] = 'Information about users Simple lesson attempts at individual questions including their response and a score.';
+$string['graderinfo'] = 'Grader Information (if any)';
+$string['hasquestion'] = 'Question';
+$string['home'] = 'Home';
+$string['id'] = 'id';
+$string['immediatecbm'] = 'Immediate feedback with CBM';
+$string['immediatefeedback'] = 'Immediate feedback';
+$string['importpagelink'] = 'Import pages';
+$string['lackpages'] = 'Need at least 2 pages to manage';
+$string['lastname'] = "Last name";
+$string['lessonname'] = 'Lesson';
+$string['manage_attempts'] = 'Manage attempts';
+$string['manage_pages'] = 'Manage pages';
+$string['manage_pages_here'] = 'Manage this page';
+$string['manage_questions'] = 'Manage questions';
+$string['managelesson'] = 'Manage Lesson: ';
+$string['manual_grade'] = 'Manual grading';
+$string['mark'] = "Mark";
+$string['max_attempts_exceeded'] = "No more attempts allowed";
+$string['maxattempts'] = "Max attempts";
+$string['maxmark'] = 'Marks available: {$a}';
+$string['maxscore'] = 'Out of';
+$string['moduleid'] = 'id';
+$string['modulename'] = 'Simple lesson';
+$string['modulename_help'] = 'Use the Simple lesson module for a simple sequential display of pages with an optional index. The simplelesson module allows the creation and addition of multiple pages of content. It allows the use of questions from a selected question bank. Valid question types that have been tested are true/false, multiple choice (one answer), match, gapselect and short answer.  Essay questions are allowed and need to be manually marked.  Question behaviours implemented are adaptive, immediate and deferred feedback (without CBM).User attempt data, including detailed question responses are recorded and marked.  Grading strategies used for multiple attempts are Highest, Average and Last attempt(s). Simplelessons and their content pages are backed up but questions are not.';
+$string['modulenameplural'] = 'Simple lessons';
+$string['move_down'] = 'Move down';
+$string['move_up'] = 'Move up';
+$string['navigation'] = 'Navigation:';
+$string['next'] = 'Next';
+$string['no_manual_grades'] = 'Nothing to grade';
+$string['no_pages'] = 'There are no pages yet, add a page';
+$string['no_question'] = 'No question found';
+$string['no_questions'] = 'There are no questions to attempt (use preview)';
+$string['none'] = 'none';
+$string['noquestions'] = 'There are no questions, select a category from Manage Pages on the Home screen.';
+$string['num_pages'] = 'Number of pages: {$a}';
+$string['numattempts'] = 'Attempts made: {$a} of';
+$string['outof'] = "Out of";
+$string['outofsequence'] = 'Something went wrong with the question engine, please try again';
+$string['page_adding'] = 'Add a new page';
+$string['page_created'] = 'New page created';
+$string['page_deleted'] = 'Page deleted';
+$string['page_editing'] = 'Use this page to organize your Simple lesson. You can edit, view, delete and move pages from here (use the icons under Actions).  Autosequencing will put the next and previous sequence numbers into a logical order. Click the Question number to preview the question (or add to add one). Remove to remove a question.';
+$string['page_index_header'] = 'Index';
+$string['page_saved'] = 'Page saved';
+$string['page_updated'] = 'Page updated';
+$string['pagecontents'] = 'Page content';
+$string['pagetitle'] = 'Title';
+$string['pageviewed'] = 'Simple lesson page viewed';
+$string['pluginadministration'] = 'Simple lesson administration';
+$string['pluginname'] = 'Simple lesson';
+$string['preview'] = 'Preview';
+$string['prev'] = 'Previous';
+$string['preview_completed'] = 'preview completed';
+$string['preview_question'] = 'Preview question';
 $string['privacy:metadata:simplelesson_answers:mark'] = 'The score of the user answering the question.';
 $string['privacy:metadata:simplelesson_answers:youranswer'] = 'The response of the user to the question.';
-
-// Task.
-$string['clean_up_usages'] = 'Clean old question usages for Simple lesson';
-
-// Reset.
-$string['deleteallattempts'] = 'Delete all attempts.';
-$string['outofsequence'] = 'Something went wrong with the question engine, please try again';
-
-// Completion rules.
-$string['attemptcompleted'] = 'Attempt completed';
-$string['attemptcompleted_desc'] = 'Require student to have attempted all question pages in the Simple lesson. Do not use if there are no questions included in the lesson.';
-$string['timetaken'] = 'Time spent on Simple lesson';
+$string['privacy:metadata:simplelesson_answers'] = 'Information about users Simple lesson attempts at individual questions including their response and a score.';
+$string['privacy:metadata:simplelesson_attempts:sessionscore'] = 'The score achieved on the attempt.';
+$string['privacy:metadata:simplelesson_attempts:status'] = 'The completion status of the attempt.';
+$string['privacy:metadata:simplelesson_attempts:timetaken'] = 'The time taken to complete the attempt (seconds).';
+$string['privacy:metadata:simplelesson_attempts:userid'] = 'The id of the user taking the attempt.';
+$string['privacy:metadata:simplelesson_attempts'] = 'Information about users Simple lesson attempts including completion status, the number of correct responses (a score) and the time taken (seconds) for the attempt.';
+$string['qlink'] = 'Find';
+$string['qlinkheader'] = 'Find in bank';
+$string['qnumber'] = 'Question number';
+$string['question'] = "Question";
+$string['question_added'] = 'Added question';
+$string['question_adding'] = 'Select a category and a behaviour for questions.  You can use questions from more than one category by returning here and selecting another.  Selected behaviour applies to all questions in the Simple lesson.';
+$string['question_deleted'] = 'Deleted question';
+$string['question_editing'] = 'Editing questions';
+$string['question_name'] = 'Question name';
+$string['question_placeholder'] = '[[There is a question on this page]]';
+$string['question_text'] = 'Question text';
+$string['questions_added'] = 'Added questions';
+$string['questionscore'] = "Score";
+$string['questionsummary'] = 'Question';
+$string['remove'] = 'Remove';
+$string['removeallgroupoverrides'] = 'Remove group overrides';
+$string['removealluseroverrides'] = 'Remove user overrides';
+$string['reportsheader'] = 'Select required report, click the reports tab to return to the menu.';
+$string['reportspage'] = 'Available reports';
+$string['reportstab'] = 'reports';
+$string['requires_grading'] = 'Requires grading';
+$string['rightanswer'] = "Right answer";
+$string['save'] = 'Save';
+$string['saveanswer'] = 'Save essay';
+$string['select_category'] = 'Select category';
+$string['select_question'] = 'Select question';
+$string['select_sort'] = 'Select column to sort on:';
+$string['sequence'] = 'Seq';
+$string['sequence_updated'] = 'Page sequences updated';
+$string['sessionscore'] = 'Correct';
+$string['setpage'] = 'Allocate';
+$string['showindex'] = 'Show the page index';
+$string['showindex_help'] = 'The page index is optional and will show on the top right of every content page in preview mode by default. This can be overriden by themes. ';
+$string['showpage'] = 'Preview page';
+$string['simplelesson:addinstance'] = 'Add a new Simple lesson';
+$string['simplelesson:exportpages'] = 'Export pages';
+$string['simplelesson:exportreportpages'] = 'Export report pages';
+$string['simplelesson:importpages'] = 'Import pages';
+$string['simplelesson:manage'] = 'Manage Simple lesson';
+$string['simplelesson:manageattempts'] = 'Manage attempt records';
+$string['simplelesson:managequestions'] = 'Manage questions';
+$string['simplelesson:view'] = 'View Simple lesson';
+$string['simplelesson:viewreportstab'] = 'View the reports tab';
+$string['simplelesson_editing'] = 'Editing Simple lesson';
+$string['simplelesson_settings'] = 'Simplelesson settings';
+$string['simplelesson_title'] = 'Title of this resource';
+$string['simplelessonfieldset'] = 'Custom example fieldset';
+$string['simplelessonname'] = 'Simple lesson name';
+$string['simplelessonname_help'] = 'Choose a suitable name for your Simple lesson.';
+$string['simplelessonviewed'] = 'Simple lesson viewed';
+$string['starting_attempt'] = "Starting Attempt";
+$string['status'] = 'Status';
+$string['summary_header'] = "Attempt summary";
+$string['summary_score'] = 'Score for this attempt: {$a}';
+$string['summary_time'] = 'Total time for this attempt: {$a} (Seconds)';
+$string['summary_user'] = 'User report for {$a}';
+$string['the_essay'] = 'The essay to grade';
+$string['timecreated'] = 'Time created';
+$string['timetaken'] = 'Time taken (s)';
 $string['timetakenenabled'] = 'Student must do this activity for at least: ';
 $string['timetakengroup'] = 'Require time spent';
-$string['completiondetail:timetaken'] = 'Spend at least {$a} on this activity';
-$string['completiondetail:attemptcompleted'] = 'Student must attempt all questions in the lesson';
+$string['ungraded'] = 'Not graded';
+$string['unlimited'] = 'Unlimited';
+$string['unlimited_attempts'] = 'Unlimited attempts';
+$string['userdetail'] = 'User: {$a}';
+$string['userreportdownload'] = 'Download user report (csv)';
+$string['viewtab'] = 'view';
+$string['welcome'] = 'Welcome user!';
+$string['youranswer'] = "Your answer";

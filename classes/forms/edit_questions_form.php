@@ -47,7 +47,7 @@ class edit_questions_form extends \moodleform {
             if ($questions > 0) {
                 $categories[$cat->id] = $cat->name . ' (' . $questions . ')';
             }
-            $categories[0] = get_string('nocategory', 'mod_simplelesson');
+            $categories[0] = get_string('none', 'mod_simplelesson');
 
         }
 

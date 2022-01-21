@@ -47,7 +47,7 @@ class page_created extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('pagecreated', 'mod_simplelesson');
+        return get_string('page_created', 'mod_simplelesson');
     }
     /**
      * Returns non-localised event description with id's for admin use only.

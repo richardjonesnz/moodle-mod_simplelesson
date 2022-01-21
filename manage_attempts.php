@@ -40,6 +40,8 @@ $coursecontext = context_course::instance($courseid);
 require_capability('mod/simplelesson:manageattempts', $coursecontext);
 
 $PAGE->set_heading(format_string($course->fullname));
+$PAGE->activityheader->set_description('');
+
 $simplelesson = $PAGE->cm;
 
 $returnmanage = new moodle_url('/mod/simplelesson/manage_attempts.php', ['courseid' => $courseid,

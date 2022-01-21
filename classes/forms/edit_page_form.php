@@ -57,10 +57,10 @@ class edit_page_form extends \moodleform {
 
         // Drop-down lists for page linking.
         $mform->addElement('select', 'prevpageid',
-                get_string('getprevpage', 'mod_simplelesson'),
+                get_string('prev', 'mod_simplelesson'),
                 $this->_customdata['pagetitles']);
         $mform->addElement('select', 'nextpageid',
-                get_string('getnextpage', 'mod_simplelesson'),
+                get_string('next', 'mod_simplelesson'),
                 $this->_customdata['pagetitles']);
 
         $mform->setType('nextpage', PARAM_TEXT);

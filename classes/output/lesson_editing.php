@@ -76,7 +76,7 @@ class lesson_editing implements renderable, templatable {
         // Set up table headers.
         $headerdata = array();
         $headerdata[] = get_string('pagetitle', 'mod_simplelesson');
-        $headerdata[] = get_string('prevpage', 'mod_simplelesson');
+        $headerdata[] = get_string('prev', 'mod_simplelesson');
         $headerdata[] = get_string('nextpage', 'mod_simplelesson');
         $headerdata[] = get_string('hasquestion', 'mod_simplelesson');
         $headerdata[] = get_string('remove', 'mod_simplelesson');

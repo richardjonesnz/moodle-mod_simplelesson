@@ -59,6 +59,7 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:manage', $modulecontext);
 $PAGE->set_context($modulecontext);
+$PAGE->activityheader->set_description('');
 
 $answerdata = reporting::fetch_essay_answer_record($answerid);
 

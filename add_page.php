@@ -51,6 +51,7 @@ $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:manage', $modulecontext);
 
 $PAGE->set_context($modulecontext);
+$PAGE->activityheader->set_description('');
 
 // For use with the re-direct.
 $returnview = new moodle_url('/mod/simplelesson/view.php',
@@ -116,7 +117,7 @@ if ($data = $mform->get_data()) {
             'pagecontents',
             $data->id);
 
-            // Update the record with full editor data.
+    // Update the record with full editor data.
     $DB->update_record('simplelesson_pages', $data);
 
     // Trigger the page created event.

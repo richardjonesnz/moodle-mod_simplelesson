@@ -49,7 +49,7 @@ class page_deleted extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('pagedeleted', 'mod_simplelesson');
+        return get_string('page_deleted', 'mod_simplelesson');
     }
     /**
      * Returns non-localised event description with id's for admin use only.

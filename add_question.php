@@ -53,6 +53,7 @@ $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:managequestions', $modulecontext);
 
 $PAGE->set_context($modulecontext);
+$PAGE->activityheader->set_description('');
 
 $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);

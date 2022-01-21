@@ -56,7 +56,9 @@ $PAGE->set_url('/mod/simplelesson/view.php', ['id' => $cm->id]);
 require_login($course, true, $cm);
 require_capability('mod/simplelesson:view', $modulecontext);
 
-$canmanage = has_capability('mod/simplelesson:manage', $modulecontext);
+// This object holds the options for the view page template.
+$options = new \stdClass();
+$options->canmanage = has_capability('mod/simplelesson:manage', $modulecontext);
 
 $PAGE->set_title(format_string($simplelesson->name));
 $PAGE->set_heading(format_string($course->fullname));
@@ -72,11 +74,8 @@ $event->trigger();
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
-// Set up first page options.
-$options = new \stdClass();
-
 // Show add page button if permitted.
-if ($canmanage) {
+if ($options->canmanage) {
 
     $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
             ['courseid' => $course->id,
@@ -97,12 +96,11 @@ if ($canmanage) {
     // Add button on home page.
     $addpageurl = new \moodle_url('/mod/simplelesson/add_page.php',
     ['courseid' => $course->id,
-     'simplelessonid' => $simplelessonid,
+     'simplelessonid' => $simplelesson->id,
      'sequence' => 0,
      'sesskey' => sesskey()]);
     $options->addpage = $addpageurl->out(false);
     $options->addpagehome = true;
-
 }
 
 // Are there any pages yet?
@@ -139,7 +137,6 @@ if ($options->pages === 0) {
     $options->attempturl = $nextlink->out(false);
 }
 $options->prev = false; // This the first page.
-$options->canmanage = $canmanage;
 
 // This form allows selection of category and behaviour within a modal.
 $mform = new edit_questions_form(null, ['id' => $id, 'simplelessonid' => $simplelesson->id]);

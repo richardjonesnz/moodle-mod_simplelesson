@@ -82,7 +82,7 @@ class lesson {
      */
     public function get_page_titles() {
         $pagetitles = array();
-        $pagetitles[0] = get_string('nolink', 'mod_simplelesson');
+        $pagetitles[0] = get_string('none', 'mod_simplelesson');
         foreach ($this->pages as $page) {
             $pagetitles[] = $page->pagetitle;
         }

@@ -46,6 +46,7 @@ require_capability('mod/simplelesson:viewreportstab', $modulecontext);
 
 $PAGE->set_context($modulecontext);
 $PAGE->set_heading(format_string($course->fullname));
+$PAGE->activityheader->set_description('');
 
 // Navigation options.
 $options = new stdClass();

@@ -246,7 +246,7 @@ class attempts  {
         $returndata->maxscore = 0.0;
         $returndata->stime = 0;
         foreach ($answerdata as $data) {
-            // An essay question has a score of -1, don't count it.
+            // An unmarked essay question has a score of -1, don't count it.
             $data->mark = ($data->mark < 0) ? 0 : $data->mark;
             $returndata->score += $data->mark;
             $returndata->maxscore += $data->maxmark;

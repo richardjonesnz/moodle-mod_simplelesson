@@ -55,17 +55,14 @@ $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:view', $modulecontext);
 
-// Get the question feedback type. Get display options.
-$feedback = $simplelesson->behaviour;
-$maxattempts = $simplelesson->maxattempts;
-$displayoptions = display_options::get_options();
-
 $PAGE->set_context($modulecontext);
 $PAGE->set_heading(format_string($course->fullname));
+$PAGE->activityheader->set_description('');
 
 // For use with the re-direct.
 $returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
 
+// Get the pages and the currently displayed page.
 $lesson = new lesson($simplelessonid);
 $pages = $lesson->get_pages();
 $page = $lesson->get_page_record($sequence);
@@ -81,7 +78,7 @@ if ( ($hasquestion) && ($mode == 'attempt') ) {
     $qtype = $record->qtype;
 }
 
-$actionurl = $actionurl = new moodle_url('/mod/simplelesson/showpage.php',
+$actionurl = new moodle_url('/mod/simplelesson/showpage.php',
         ['courseid' => $courseid,
          'simplelessonid' => $simplelessonid,
          'sequence' => $sequence,
@@ -128,14 +125,16 @@ if (data_submitted() && confirm_sesskey()) {
     $qscore = attempts::fetch_question_score($simplelessonid, $page->id);
 
     // Check if the user has allocated a specific mark from the question management page.
+    // How many decimals to use in calculations.
+    $markdp = display_options::get_options()->markdp;
+    
     if ($qscore == 0) {
         $qscore = $answerdata->maxmark;
     } else {
-        $answerdata->maxmark = round($qscore, $displayoptions->markdp);
+        $answerdata->maxmark = round($qscore, $markdp);
     }
     // Calculate a score for the question.
-    $mark = (float) $quba->get_question_fraction($slot);
-    $answerdata->mark = round($mark * $qscore, $displayoptions->markdp);
+    $answerdata->mark = round((float) $quba->get_question_fraction($slot) * $qscore, $markdp);
     $answerdata->questionsummary = $quba->get_question_summary($slot);
     $answerdata->qtype = $qtype; // For manual essay marking.
     $answerdata->rightanswer = $quba->get_right_answer_summary($slot);
@@ -167,14 +166,9 @@ if (data_submitted() && confirm_sesskey()) {
 
 /* ---------------- Prepare the page for display ------------------  */
 
-// Now get this record.
-$lesson = new lesson($simplelessonid);
-$page = $lesson->get_page_record($sequence);
-$pages = $lesson->get_pages();
-
 if (!$page) {
     // Page record was not found.
-    redirect($returnview, get_string('pagenotfound', 'mod_simplelesson'), 2);
+    redirect($returnview, get_string('lackpages', 'mod_simplelesson'), 2);
 }
 
 // Prepare page text, re-write urls.
@@ -199,11 +193,6 @@ $event = page_viewed::create([
 $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('simplelesson_pages', $page);
 $event->trigger();
-
-// Get lesson data.
-$lesson = new lesson($simplelessonid);
-$pages = $lesson->get_pages();
-$pagecount = count($pages);
 
 $baseurl = new \moodle_url('/mod/simplelesson/showpage.php', ['courseid' => $cm->course,
         'simplelessonid' => $simplelessonid, 'mode' => $mode, 'starttime' => $starttime,
@@ -303,7 +292,7 @@ if ( ($hasquestion) && ($options->isattempt) ) {
 
     $slot = $DB->get_field('simplelesson_questions', 'slot',
     ['simplelessonid' => $simplelessonid, 'pageid' => $page->id]);
-    $options->qform = $renderer->render_question_form($actionurl, $displayoptions,
+    $options->qform = $renderer->render_question_form($actionurl, display_options::get_options(),
             $slot, $quba, time(), $qtype);
 
     // Check if the question was answered.
@@ -314,7 +303,7 @@ if ( ($hasquestion) && ($options->isattempt) ) {
    are allowed or if this is not a question page or is a preview. */
 if ( ($answered) || ($simplelesson->allowincomplete) || (!$hasquestion) ||
         ($options->ispreview) ) {
-    $options->next = ($sequence < $pagecount);
+    $options->next = ($sequence < count($pages));
     $options->prev = ($sequence > 1);
 }
 
@@ -322,7 +311,7 @@ if ( ($answered) || ($simplelesson->allowincomplete) || (!$hasquestion) ||
 $options->home = true;
 
 // Special case of last page.
-if ($pagecount == $sequence) {
+if (count($pages) == $sequence) {
 
     if ($mode == 'attempt') {
         $url = new \moodle_url('/mod/simplelesson/summary.php',
@@ -344,11 +333,9 @@ if ($pagecount == $sequence) {
 if ( ($simplelesson->showindex) && ($mode != 'attempt') ) {
 
     $options->pagelinks = array();
-    $debug = array();
     foreach ($pages as $indexpage) {
         // Make link, but not to current page.
         if ($indexpage->sequence == $sequence) {
-
             $options->pagelinks[] = $indexpage->pagetitle;
         } else {
             $link = $baseurl->out(false, ['sequence' => $indexpage->sequence]);
