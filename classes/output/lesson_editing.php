@@ -157,6 +157,7 @@ class lesson_editing implements renderable, templatable {
                     get_string('gotodeletepage', 'mod_simplelesson')];
             $actions['delete'] = ['link' => $link->out(false,
                                  ['sequence' => $page->sequence,
+                                  'title' => $page->pagetitle,
                                   'returnto' => 'manage',
                                   'sesskey' => sesskey()]),
                                   'icon' => $icon];

@@ -232,6 +232,7 @@ if ($options->canmanage) {
             ['courseid' => $course->id,
              'simplelessonid' => $simplelesson->id,
              'sequence' => $page->sequence,
+             'title' => $page->pagetitle,
              'returnto' => 'view',
              'sesskey' => sesskey()]);
     $options->deletepage = $deletepageurl->out(false);

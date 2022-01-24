@@ -23,6 +23,8 @@
  */
 
 use \mod_simplelesson\local\lesson;
+use \mod_simplelesson\forms\confirm_delete_form;
+use \mod_simplelesson\output\delete_page;
 use \mod_simplelesson\event\page_deleted;
 
 require_once('../../config.php');
@@ -34,7 +36,7 @@ global $DB;
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 $sequence = required_param('sequence', PARAM_INT);
-$returnto = optional_param('returnto', 'view', PARAM_ALPHA);
+$title = optional_param('title', '', PARAM_ALPHA);
 
 // Set course related variables.
 $moduleinstance  = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', MUST_EXIST);
@@ -49,52 +51,63 @@ $PAGE->set_url('/mod/simplelesson/delete_page.php',
 require_login($course, true, $cm);
 require_sesskey();
 
+$PAGE->set_heading(format_string($course->fullname));
+
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 require_capability('mod/simplelesson:manage', $modulecontext);
 
 $PAGE->set_context($modulecontext);
+$PAGE->activityheader->set_description('');
 
-$returnview = new moodle_url('/mod/simplelesson/view.php', ['simplelessonid' => $simplelessonid]);
+$mform = new confirm_delete_form(null, ['courseid' => $courseid,
+                                        'simplelessonid' => $simplelessonid,
+                                        'sequence' => $sequence,
+                                        'title' => $title]);
 
-$returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
-        ['courseid' => $courseid,
-         'simplelessonid' => $simplelessonid,
-         'sesskey' => sesskey()]);
-
-// Get this page and the lastpage sequence number.
-$lesson = new lesson($simplelessonid);
-$page = $lesson->get_page_record($sequence);
-$lastpage = $lesson->count_pages();
-
-// Check if any other pages after this point to this page and fix their links.
-for ($p = $sequence + 1; $p <= $lastpage; $p++) {
-    $nextpage = $lesson->get_page_record($p);
-    $DB->set_field('simplelesson_pages', 'sequence', ($p - 1), ['id' => $nextpage->id]);
+// If the cancel button was pressed go back to the page.
+if ($mform->is_cancelled()) {
+    redirect(new moodle_url('/mod/simplelesson/showpage.php',['courseid' => $courseid, 
+            'simplelessonid' => $simplelessonid, 'sequence' => $sequence]), 
+            get_string('cancelled', 'mod_simplelesson'), 2);
 }
 
-// Log the page deleted event. Note: $page still holds the requested page tbd.
-$page = $DB->get_record('simplelesson_pages', ['simplelessonid' => $simplelessonid, 'id' => $page->id],
-        '*', MUST_EXIST);
-$event = page_deleted::create(['objectid' => $page->id, 'context' => $modulecontext]);
-$event->add_record_snapshot('course', $course);
-$event->add_record_snapshot('simplelesson_pages', $page);
-$event->trigger();
+if ($data = $mform->get_data()) {
+    // Get this page and the lastpage sequence number.
+    $lesson = new lesson($simplelessonid);
+    $page = $lesson->get_page_record($sequence);
+    $lastpage = $lesson->count_pages();
 
-// Delete the page.
-$DB->delete_records('simplelesson_pages', ['simplelessonid' => $simplelessonid, 'id' => $page->id]);
+    // Check if any other pages after this point to this page and fix their links.
+    for ($p = $sequence + 1; $p <= $lastpage; $p++) {
+        $nextpage = $lesson->get_page_record($p);
+        $DB->set_field('simplelesson_pages', 'sequence', ($p - 1), ['id' => $nextpage->id]);
+    }
 
-// Delete any question entry relating to the page.
-$result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
-        'pageid' => $page->id]);
-if ($result >= 1) {
-    $DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
+    // Log the page deleted event. Note: $page still holds the requested page tbd.
+    $page = $DB->get_record('simplelesson_pages', ['simplelessonid' => $simplelessonid, 'id' => $page->id],
+            '*', MUST_EXIST);
+    $event = page_deleted::create(['objectid' => $page->id, 'context' => $modulecontext]);
+    $event->add_record_snapshot('course', $course);
+    $event->add_record_snapshot('simplelesson_pages', $page);
+    $event->trigger();
+
+    // Delete the page.
+    $DB->delete_records('simplelesson_pages', ['simplelessonid' => $simplelessonid, 'id' => $page->id]);
+
+    // Delete any question entry relating to the page.
+    $result = $DB->count_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
             'pageid' => $page->id]);
+    if ($result >= 1) {
+        $DB->delete_records('simplelesson_questions', ['simplelessonid' => $simplelessonid,
+                'pageid' => $page->id]);
+    }
+    // Go back to Page Management.
+    redirect(new moodle_url('/mod/simplelesson/edit_lesson.php', ['courseid' => $courseid,
+            'simplelessonid' => $simplelessonid,'sesskey' => sesskey()]),
+            get_string('page_deleted', 'mod_simplelesson'), 2);
 }
 
-// Go back to page where request came from.
-if ($returnto == 'edit') {
-    redirect($returnedit, get_string('page_deleted', 'mod_simplelesson'), 2);
-}
-// Default.
-redirect($returnview, get_string('page_deleted', 'mod_simplelesson'), 2);
+echo $OUTPUT->header();
+echo $OUTPUT->render(new delete_page($mform, $title));
+echo $OUTPUT->footer();
