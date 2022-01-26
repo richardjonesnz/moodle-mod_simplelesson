@@ -53,8 +53,8 @@ function simplelesson_supports($feature) {
             return true;
         case FEATURE_USES_QUESTIONS:
             return true;
-        /*case FEATURE_MOD_PURPOSE:
-            return MOD_PURPOSE_ASSESSMENT; */
+        case FEATURE_MOD_PURPOSE:
+            return MOD_PURPOSE_ASSESSMENT;
         default:
             return null;
     }
@@ -671,85 +671,4 @@ function simplelesson_extend_settings_navigation(settings_navigation
             array('courseid' => $PAGE->course->id));
     $simplelessonnode->add(get_string('manage_attempts',
             'mod_simplelesson'), $attemptsurl);
-}
-
-// Stuff I didn' t previously know was important. 
-// Quite possibly to be deprecated in favour of new completion api.
-/**
- * Add a get_coursemodule_info function in case any lesson type wants to add 'extra' information
- * for the course (see resource).
- *
- * Given a course_module object, this function returns any "extra" information that may be needed
- * when printing this activity in a course listing.  See get_array_of_activities() in course/lib.php.
- * 
- * Apparently it also deals with custom completion information.
- *
- * @param stdClass $coursemodule The coursemodule object (record).
- * @return cached_cm_info An object on information that the courses
- *                        will know about (most noticeably, an icon).
- */
-function mod_simplelesson_get_coursemodule_info($coursemodule) {
-    global $DB;
-
-    $dbparams = ['id' => $coursemodule->instance];
-    $fields = 'id, name, intro, introformat, completionendreached, completiontimespent, available, deadline';
-    if (!$simplelesson = $DB->get_record('simplelesson', $dbparams, $fields)) {
-        return false;
-    }
-
-    $result = new cached_cm_info();
-    $result->name = $simplelesson->name;
-
-    if ($coursemodule->showdescription) {
-        // Convert intro to html. Do not filter cached version, filters run at display time.
-        $result->content = format_module_intro('simplelesson', $simplelesson, $coursemodule->id, false);
-    }
-
-    // Populate the custom completion rules as key => value pairs, but only if the completion mode is 'automatic'.
-    if ($coursemodule->completion == COMPLETION_TRACKING_AUTOMATIC) {
-        $result->customdata['customcompletionrules']['attemptcompleted'] = $simplelesson->attemptcompleted;
-        $result->customdata['customcompletionrules']['timetaken'] = $simplelesson->timetaken;
-    }
-
-    // Populate some other values that can be used in calendar or on dashboard.
-    if ($simplelesson->available) {
-        $result->customdata['available'] = $simplelesson->available;
-    }
-    if ($simplelesson->deadline) {
-        $result->customdata['deadline'] = $simplelesson->deadline;
-    }
-
-    return $result;
-}
-/**
- * Callback which returns human-readable strings describing the active completion custom rules for the module instance.
- *
- * @param cm_info|stdClass $cm object with fields ->completion and ->customdata['customcompletionrules']
- * @return array $descriptions the array of descriptions for the custom rules.
- */
-function mod_simplelesson_get_completion_active_rule_descriptions($cm) {
-    // Values will be present in cm_info, and we assume these are up to date.
-    if (empty($cm->customdata['customcompletionrules'])
-        || $cm->completion != COMPLETION_TRACKING_AUTOMATIC) {
-        return [];
-    }
-
-    $descriptions = [];
-    foreach ($cm->customdata['customcompletionrules'] as $key => $val) {
-        switch ($key) {
-            case 'attemptcompleted':
-                if (!empty($val)) {
-                    $descriptions[] = get_string('attemptcompleted_desc', 'simplelesson', $val);
-                }
-                break;
-            case 'timetaken':
-                if (!empty($val)) {
-                    $descriptions[] = get_string('timetaken_desc', 'simplelesson', format_time($val));
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    return $descriptions;
 }
