@@ -54,7 +54,7 @@ function simplelesson_supports($feature) {
         case FEATURE_USES_QUESTIONS:
             return true;
         case FEATURE_MOD_PURPOSE:
-            return MOD_PURPOSE_ASSESSMENT;
+            return MOD_PURPOSE_CONTENT;
         default:
             return null;
     }
