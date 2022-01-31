@@ -58,6 +58,7 @@ $PAGE->activityheader->set_description('');
 $lesson = new lesson($simplelessonid);
 $page = $lesson->get_page_record($sequence);
 
+// Set up the redirect url's to return to calling page.
 $returnshow = new moodle_url('/mod/simplelesson/showpage.php',
 ['courseid' => $courseid,
  'simplelessonid' => $simplelessonid,

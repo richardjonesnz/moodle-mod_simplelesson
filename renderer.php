@@ -35,53 +35,29 @@ class mod_simplelesson_renderer extends plugin_renderer_base {
      * @param string $qtype, the question type - to identify an essay
      * @return string, html representation of the question
      */
-    public function render_question_form(
-            $actionurl, $options, $slot, $quba,
-            $starttime, $qtype) {
+    public function render_question_form( $actionurl, $options, $slot, $quba, $starttime, $qtype) {
 
-        $html = html_writer::start_div('mod_simplelesson_question');
-        $headtags = '';
-        $headtags .= $quba->render_question_head_html($slot);
+        $data = new \stdClass();
 
-        // Start the question form.
-        $html .= html_writer::start_tag('form',
-                array('method' => 'post', 'action' => $actionurl,
-                'enctype' => 'multipart/form-data',
-                'accept-charset' => 'utf-8',
-                'id' => 'responseform'));
-        $html .= html_writer::start_tag('div');
-        $html .= html_writer::empty_tag('input',
-                array('type' => 'hidden',
-                'name' => 'sesskey', 'value' => sesskey()));
-        $html .= html_writer::empty_tag('input',
-                array('type' => 'hidden',
-                'name' => 'slots', 'value' => $slot));
-        $html .= html_writer::empty_tag('input',
-                array('type' => 'hidden',
-                'name' => 'starttime', 'value' => $starttime));
-        $html .= html_writer::end_tag('div');
-
-        // Output the question. slot = display number.
-        $html .= $quba->render_question($slot, $options);
-
-        // If it's an essay question, output a save button.
-        // If it's deferred feedback add a save button.
+        $data->headtags = $quba->render_question_head_html($slot);
+        $data->actionurl = $actionurl;
+        $data->slot = $slot;
+        $data->sesskey = sesskey();
+        $data->starttime = $starttime;
+        $data->question = $quba->render_question($slot, $options);
+        $data->hasbutton = false;
 
         if ( ($qtype == 'essay') || ($quba->get_preferred_behaviour()
                 == 'deferredfeedback') || ($quba->get_preferred_behaviour()
                 == 'deferredcbm') ) {
-            $html .= html_writer::start_div('container text-center');
-            $label = ($qtype == 'essay') ?
-                    get_string('saveanswer', 'mod_simplelesson') :
-                    get_string('save', 'mod_simplelesson');
-            $html .= $this->output->single_button($actionurl,
-                    $label);
-            $html .= html_writer::end_div();
+            $data->hasbutton = true;
+            $data->label = ($qtype == 'essay') ? get_string('saveessay', 'mod_simplelesson') :
+                    get_string('saveanswer', 'mod_simplelesson');
+            $data->button = $this->output->single_button($actionurl, $data->label);
+            $data->save_message = get_string('save_message', 'simplelesson');
         }
+        
+        return $this->output->render_from_template('mod_simplelesson/show_question', $data);
 
-        // Finish the question form.
-        $html .= html_writer::end_tag('form');
-        $html .= html_writer::end_div('div');
-        return $html;
     }
 }

@@ -1,0 +1,31 @@
+{{!
+    @template mod_simplelesson/render_question_form
+    Renders a summary of the pages in the lesson and editing functions.
+
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    * mform html string representing a moodleform
+
+    Example context (json):
+    {
+    }
+}}
+<div class="container-sm">
+  <form id="responseform" method="post", action="{{{actionurl}}}", enctype="multipart/form-data")>
+    <div>
+      <input type="hidden" name="sesskey" value="{{sesskey}}">
+      <input type="hidden" name="slots" value="{{slot}}">
+      <input type="hidden" name="starttime" value="{{starttime}}">
+    </div>
+    <div class="container-sm">
+      {{{question}}}
+      {{#hasbutton}}
+        <p class="text-primary">{{#str}}save_message, mod_simplelesson{{/str}}</p>
+        {{{button}}}
+      {{/hasbutton}}
+    </div>
+  </form>
+</div>
