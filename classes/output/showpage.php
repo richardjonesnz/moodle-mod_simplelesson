@@ -28,15 +28,22 @@ use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
+use moodle_url;
 
 class showpage implements renderable, templatable {
 
-    private $page;
+    private $simplelesson;
+    private $lessonpage;
+    private $attemptid;
+    private $returnurl;
     private $options;
 
-    public function __construct($page, $options) {
+    public function __construct($simplelesson, $lessonpage, $attemptid, $returnurl, $options) {
 
-        $this->page = $page;
+        $this->simplelesson = $simplelesson;
+        $this->lessonpage = $lessonpage;
+        $this->attemptid = $attemptid;
+        $this->returnurl = $returnurl;
         $this->options = $options;
     }
     /**
@@ -47,11 +54,52 @@ class showpage implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output) {
 
-        $data = new stdClass();
-        $data = $this->options;
+        $baseparams = ['courseid' => $this->simplelesson->course, 'simplelessonid' => $this->simplelesson->id];
+        
+        // Page actions.
+        if ($this->options->canmanage) {
 
-        $data->title = $this->page->pagetitle;
-        $data->content = $this->page->pagecontents;
-        return $data;
+            $url = new moodle_url('/mod/simplelesson/delete_page.php', $baseparams);
+            $this->options->deleteurl = $url->out(false, ['sequence' => $this->lessonpage->sequence, 
+                    'title' => $this->lessonpage->pagetitle, 'returnto' => 'view']);
+
+            $url = new moodle_url('/mod/simplelesson/add_page.php', $baseparams);
+            $this->options->editurl = $url->out(false, ['sequence' => $this->lessonpage->sequence]);
+        }
+
+        // Question actions.
+        if($this->options->canaddquestion) {
+            $url = new moodle_url('/mod/simplelesson/add_question.php', $baseparams);
+            $this->options->addquestionurl = $url->out(false, ['sequence' => $this->lessonpage->sequence, 
+                    'returnto' => 'show', 'sesskey' => sesskey()]);            
+        } else {
+            // Question could be deleted or previewed.
+            $url = new moodle_url('/mod/simplelesson/delete_question.php', $baseparams);
+            $this->options->deletequestionurl = $url->out(false, ['sequence' => $this->lessonpage->sequence, 
+                    'returnto' => 'show', 'sesskey' => sesskey()]);            
+            $this->options->deletequestion = true;
+            $this->options->previewquestion = true;
+            $this->options->questionpreviewurl = new moodle_url('/question/bank/previewquestion/preview.php', 
+                    ['id' => $this->options->qid, 'returnurl' => $this->returnurl]);
+
+        }
+
+        // Lesson actions
+        if($this->options->canmanage) {
+           $url = new moodle_url('/mod/simplelesson/edit_lesson.php', $baseparams);
+           $this->options->editlessonurl = $url->out(false);
+        }
+
+        // Last page attempt summary button.
+        if ($this->options->summary) {
+            $url = new moodle_url('/mod/simplelesson/summary.php', $baseparams);
+            $this->options->summaryurl = $url->out(false, ['mode' => 'attempt', 'sequence' => $this->lessonpage->sequence,
+                   'attemptid' => $this->attemptid]);
+        }
+
+        $this->options->title = $this->lessonpage->pagetitle;
+        $this->options->content = $this->lessonpage->pagecontents;
+        
+        return $this->options;
     }
 }

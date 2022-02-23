@@ -41,26 +41,20 @@
 <div class="card mt-2">
   <div class="card-body">
     <p class="text-info font-weight-bold">{{#str}}manage_pages_here, simplelesson{{/str}}</p>
-    {{#add}}
-      <a href="{{{addpage}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}add_page, simplelesson{{/str}}</a>
-    {{/add}}
-    {{#edit}}
-      <a href="{{{editpage}}}"button type="button" class="btn btn-primary btn-sm">
+    {{#canmanage}}
+      <a href="{{{editpageurl}}}"button type="button" class="btn btn-secondary btn-sm">
            {{#str}}edit_page, simplelesson{{/str}}</a>
-    {{/edit}}
-    {{#delete}}
-    <a href="{{{deletepage}}}"button type="button" class="btn btn-primary btn-sm">
-         {{#str}}delete_page, simplelesson{{/str}}</a>
-    {{/delete}}
+    <a href="{{{deletepageurl}}}"button type="button" class="btn btn-secondary btn-sm">
+         {{#str}}delete_page_button, simplelesson{{/str}}</a>
+    {{/canmanage}}
 
-    {{#addq}}
-    <a href="{{{addquestion}}}"button type="button" class="btn btn-success btn-sm">
+    {{#canaddquestion}}
+    <a href="{{{addquestionurl}}}"button type="button" class="btn btn-secondary btn-sm">
          {{#str}}add_question, simplelesson{{/str}}</a>
-    {{/addq}}
-    {{#deleteq}}
-    <a href="{{{deletequestion}}}"button type="button" class="btn btn-success btn-sm">
+    {{/canaddquestion}}
+    {{#deletequestion}}
+    <a href="{{{deletequestionurl}}}"button type="button" class="btn btn-secondary btn-sm">
          {{#str}}delete_question, simplelesson{{/str}}</a>
-    {{/deleteq}}
+    {{/deletequestion}}
   </div>
 </div>

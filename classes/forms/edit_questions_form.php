@@ -33,22 +33,21 @@ class edit_questions_form extends \moodleform {
      * Defines forms elements
      */
     public function definition() {
-        global $CFG, $DB;
+        global $DB;
 
-        $mform = $this->_form;
+        $mform = $this->_form; 
 
-        // Select the category for the questions that can be added.
-        $categories = array();
-        $cats = $DB->get_records('question_categories',
-                null, null, 'id, name');
+        // Set the category for questions that can be added to this Simple lesson.
+        $categories = [];
+        $cats = $DB->get_records('question_categories', null, null, 'id, name');
+
         foreach ($cats as $cat) {
-            $questions = $DB->count_records(
-                    'question', array('category' => $cat->id));
+            // Find the number of questions in each category.
+            $questions = $DB->count_records('question_bank_entries', ['questioncategoryid' => $cat->id]);
             if ($questions > 0) {
-                $categories[$cat->id] = $cat->name . ' (' . $questions . ')';
+                $categories[$cat->id] = $cat->id . ': ' . $cat->name . '(' . $questions . ')';
             }
             $categories[0] = get_string('none', 'mod_simplelesson');
-
         }
 
         $mform->addElement('select', 'categoryid', get_string('category_select', 'mod_simplelesson'), $categories);
@@ -76,9 +75,12 @@ class edit_questions_form extends \moodleform {
                 $this->_customdata['id']);
         $mform->addElement('hidden', 'simplelessonid',
                 $this->_customdata['simplelessonid']);
+        $mform->addElement('hidden', 'courseid',
+                $this->_customdata['courseid']);
 
         $mform->setType('id', PARAM_INT);
         $mform->setType('simplelessonid', PARAM_INT);
+        $mform->setType('courseid', PARAM_INT);
 
         $this->add_action_buttons($cancel = true);
     }

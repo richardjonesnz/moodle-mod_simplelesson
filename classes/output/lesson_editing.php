@@ -29,6 +29,7 @@ use renderer_base;
 use templatable;
 use stdClass;
 use moodle_url;
+use context_module;
 
 class lesson_editing implements renderable, templatable {
 
@@ -37,14 +38,16 @@ class lesson_editing implements renderable, templatable {
     private $pages;
     private $cm;
     private $pageurl;
+    private $mform;
 
-    public function __construct($courseid, $simplelessonid, $pages, $cm, $pageurl) {
+    public function __construct($courseid, $simplelessonid, $pages, $cm, $pageurl, $mform) {
 
         $this->courseid = $courseid;
         $this->simplelessonid = $simplelessonid;
         $this->pages = $pages;
         $this->cm = $cm;
         $this->pageurl = $pageurl;
+        $this->mform = $mform;
     }
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -57,12 +60,12 @@ class lesson_editing implements renderable, templatable {
 
         $lastpage = count($this->pages);
 
-        $table = new \stdClass();
+        $table = new stdClass();
         $table->caption = get_string('page_editing', 'mod_simplelesson');
         $table->home = true; // Show the home button.
         $table->homeurl = new moodle_url('/mod/simplelesson/view.php',
                 ['simplelessonid' => $this->simplelessonid]);
-        $table->auto = true; // Show the auto-sequence button.
+        $table->auto = ($lastpage >= 2); // Show the auto-sequence button (if enough pages).
         $table->autourl = new moodle_url('/mod/simplelesson/autosequence.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid]);
@@ -70,11 +73,23 @@ class lesson_editing implements renderable, templatable {
         $table->addurl = new moodle_url('/mod/simplelesson/add_page.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid,
-                 'returnto' => 'manage',
-                 'sesskey' => sesskey()]);
+                 'returnto' => 'manage']);
+        
+        // Show the Manage questions button if permitted.
+        $modulecontext = context_module::instance($this->cm->id);
+        $table->managequestions = has_capability('mod/simplelesson:managequestions', $modulecontext); 
+        $table->questionurl = new moodle_url('/mod/simplelesson/edit_questions.php',
+                ['courseid' => $this->courseid,
+                 'simplelessonid' => $this->simplelessonid]);
+        
+        // This form shows in a Bootstrap modal.
+        $table->mform = $this->mform->render();
+        $table->qlinkurl = new moodle_url('/question/edit.php', ['courseid' => $this->courseid]);
+
 
         // Set up table headers.
         $headerdata = array();
+        $headerdata[] = get_string('id', 'mod_simplelesson');
         $headerdata[] = get_string('pagetitle', 'mod_simplelesson');
         $headerdata[] = get_string('prev', 'mod_simplelesson');
         $headerdata[] = get_string('nextpage', 'mod_simplelesson');
@@ -189,6 +204,7 @@ class lesson_editing implements renderable, templatable {
             $data['actions'] = $actions;
             $table->tabledata[] = $data;
         }
+        
         return $table;
     }
 }

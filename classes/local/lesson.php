@@ -64,13 +64,13 @@ class lesson {
     }
     /**
      * Retrieve page record given it's sequence number.
-     * @param int $sid the sequence number of the wanted page.
+     * @param int $sequence the sequence number of the wanted page.
      * @return object representing a page in the simplelesson or null if not found.
      */
-    public function get_page_record($sid) {
+    public function get_page_record($sequence) {
 
         foreach ($this->pages as $page) {
-            if ($page->sequence == $sid) {
+            if ($page->sequence == $sequence) {
                 return $page;
             }
         }
@@ -84,8 +84,43 @@ class lesson {
         $pagetitles = array();
         $pagetitles[0] = get_string('none', 'mod_simplelesson');
         foreach ($this->pages as $page) {
-            $pagetitles[] = $page->pagetitle;
+            $pagetitles[$page->id] = $page->pagetitle;
         }
         return $pagetitles;
+    }
+
+    /**
+     * Given a sequence number, find that page record id.
+     *
+     * @param int $sequence, where the page is in the lesson sequence
+     * @return int the id of the page in the pages table
+     */
+    public function get_page_id_from_sequence($sequence) {
+        global $DB;
+        $data = $DB->get_record('simplelesson_pages', ['simplelessonid' => $this->id, 'sequence' => $sequence]);
+        return ($data) ? $data->id : 0;
+    }
+    /**
+     * Given a category id find the questions in that category.
+     *
+     * @param int $sequence, where the page is in the lesson sequence
+     * @return int the id of the page in the pages table
+     */
+    
+    public static function get_questions($catid) {
+        global $DB;
+
+        $sql = "SELECT q.id AS questionid, q.name, q.qtype, 
+                       c.id AS categoryid, 
+                       v.id AS versionid,
+                       v.version, 
+                       v.questionbankentryid AS entryid
+                  FROM {question} q
+                  LEFT JOIN {question_versions} v ON q.id = v.questionid
+                  LEFT JOIN {question_bank_entries} e on e.id = v.questionbankentryid
+                  LEFT JOIN {question_categories} c ON c.id = e.questioncategoryid
+                 WHERE c.id = :catid";
+
+        return $DB->get_records_sql($sql, ['catid' => $catid]);
     }
 }

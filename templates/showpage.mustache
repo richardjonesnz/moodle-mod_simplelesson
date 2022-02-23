@@ -56,15 +56,17 @@
     <h2 class="card-title">{{title}}</h2>
       {{{content}}}
   </div>
-  <div class="card-footer">
-    {{#ispreview}}
-      {{#str}}question_placeholder, simplelesson{{/str}}<br />
-      <a href="{{{previewurl}}}">{{#str}}preview_question, simplelesson{{/str}}</a>
-    {{/ispreview}}
-    {{#isattempt}}
+  {{#pagehasquestion}}
+    <div class="card-footer">
+      {{#ispreview}}
+        {{#str}}question_placeholder, simplelesson{{/str}}<br />
+        <a href="{{{questionpreviewurl}}}">{{#str}}preview_question, simplelesson{{/str}}</a>
+      {{/ispreview}}
+      {{^ispreview}}
         {{> mod_simplelesson/question_form}}
-    {{/isattempt}}
-  </div>
+      {{/ispreview}}
+    </div>
+  {{/pagehasquestion}}
   {{> mod_simplelesson/navigation}}
 </div>
 {{#canmanage}}

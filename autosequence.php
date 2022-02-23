@@ -31,13 +31,9 @@ global $DB;
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 
-$PAGE->set_url('/mod/simplelesson/autosequence.php', ['courseid' => $courseid,
-        'simplelessonid' => $simplelessonid]);
+$PAGE->set_url('/mod/simplelesson/autosequence.php', ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]);
 
 require_course_login($courseid);
-
-$returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
-        ['courseid' => $courseid, 'simplelessonid' => $simplelessonid, 'sesskey' => sesskey()]);
 
 $lesson = new lesson($simplelessonid);
 $pagecount = $lesson->count_pages();
@@ -47,11 +43,13 @@ if ($pagecount > 0) {
     for ($p = 1; $p <= $pagecount; $p++) {
 
         $thispage = $lesson->get_page_record($p);
-        $DB->set_field('simplelesson_pages', 'prevpageid', ($p - 1), ['id' => $thispage->id]);
-        $DB->set_field('simplelesson_pages', 'nextpageid', $p, ['id' => $thispage->id]);
+        $prevpageid = $lesson->get_page_id_from_sequence($p - 1);
+        $nextpageid = ($p < $pagecount) ? $lesson->get_page_id_from_sequence($p + 1) : 0;
+        $DB->set_field('simplelesson_pages', 'prevpageid', $prevpageid, ['id' => $thispage->id]);
+        $DB->set_field('simplelesson_pages', 'nextpageid', $nextpageid, ['id' => $thispage->id]);
     }
 }
 
 // Go back to page where request came from.
-redirect($returnedit, get_string('sequence_updated', 'mod_simplelesson'), 2,
-        notification::NOTIFY_SUCCESS);
+redirect(new moodle_url('/mod/simplelesson/edit_lesson.php', ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]), 
+        get_string('sequence_updated', 'mod_simplelesson'), 1, notification::NOTIFY_SUCCESS);

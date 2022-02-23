@@ -55,16 +55,13 @@ class edit_page_form extends \moodleform {
         $mform->addRule('pagecontents_editor', get_string('required'),
                 'required', null, 'client');
 
-        // Drop-down lists for page linking.
-        $mform->addElement('select', 'prevpageid',
-                get_string('prev', 'mod_simplelesson'),
-                $this->_customdata['pagetitles']);
-        $mform->addElement('select', 'nextpageid',
-                get_string('next', 'mod_simplelesson'),
-                $this->_customdata['pagetitles']);
+        // Drop-down lists for page linking - array has id numbers as the key.
+        // We have an array of page objects and we want to display the titles but select the id.
+        $mform->addElement('select', 'prevpageid', get_string('prev', 'mod_simplelesson'), $this->_customdata['pagetitles']);
+        $mform->addElement('select', 'nextpageid', get_string('next', 'mod_simplelesson'), $this->_customdata['pagetitles']);
 
-        $mform->setType('nextpage', PARAM_TEXT);
-        $mform->setType('prevpage', PARAM_TEXT);
+        $mform->setType('nextpage', PARAM_INT);
+        $mform->setType('prevpage', PARAM_INT);
 
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
         $mform->addElement('hidden', 'simplelessonid', $this->_customdata['simplelessonid']);

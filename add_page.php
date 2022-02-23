@@ -44,7 +44,6 @@ $simplelesson = $DB->get_record('simplelesson', ['id' => $simplelessonid], '*', 
 $PAGE->set_url('/mod/simplelesson/add_page.php', ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]);
 
 require_login($course, true, $cm);
-require_sesskey();
 
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
@@ -55,17 +54,15 @@ $PAGE->activityheader->set_description('');
 
 // For use with the re-direct.
 $returnview = new moodle_url('/mod/simplelesson/view.php',
-        ['simplelessonid' => $simplelessonid,
-         'sesskey' => sesskey()]);
+        ['simplelessonid' => $simplelessonid]);
 $returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
         ['courseid' => $courseid,
-         'simplelessonid' => $simplelessonid,
-         'sesskey' => sesskey()]);
+         'simplelessonid' => $simplelessonid]);
 
 // Set up the lesson object.
 $lesson = new lesson($simplelessonid);
 
-// Page data for link dropdown.
+// Page data for link dropdown (array keyed by page id).
 $pagetitles = $lesson->get_page_titles();
 
 // Get the page editing form.
@@ -91,7 +88,7 @@ if ($mform->is_cancelled()) {
  * elsewhere.
  */
 if ($data = $mform->get_data()) {
-
+    
     $lastpage = $lesson->count_pages();
     $data->sequence = $lastpage + 1;
     $data->simplelessonid = $simplelessonid;

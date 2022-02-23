@@ -131,5 +131,5 @@ $page = file_prepare_standard_editor(
 
 $mform->set_data($page);
 echo $OUTPUT->header();
-echo $OUTPUT->render(new edit_page($mform));
+echo $mform->display();
 echo $OUTPUT->footer();

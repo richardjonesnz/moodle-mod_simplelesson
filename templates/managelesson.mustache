@@ -34,21 +34,9 @@
 }}
 <div class="card mt-2">
   <div class="card-body">
-    <p class="text-info font-weight-bold">{{#str}}managelesson, simplelesson{{/str}}</p>
-    {{#addpagehome}}
-        <a href="{{{addpage}}}"button type="button" class="btn btn-primary btn-sm">
-             {{#str}}add_page, simplelesson{{/str}}</a>
-    {{/addpagehome}}
-    {{#editlesson}}
-      <a href="{{{editlesson}}}"button type="button" class="btn btn-primary btn-sm">
-           {{#str}}manage_pages, simplelesson{{/str}}</a>
-    {{/editlesson}}
-    {{#managequestions}}
-      <a href="{{{editquestions}}}"button type="button" class="btn btn-success btn-sm"
-              data-toggle="modal" data-target="#simplelesson_edit_questions_modal">
-              {{#str}}manage_questions, simplelesson{{/str}}</button>
-      </a>
-    {{/managequestions}}
+    {{#canmanage}}
+      <a href="{{{editlessonurl}}}"button type="button" class="btn btn-secondary btn-sm">
+           {{#str}}edit_lesson, simplelesson{{/str}}</a>
+    {{/canmanage}}
   </div>
-</div
-{{> simplelesson/edit_questions}}
+</div>

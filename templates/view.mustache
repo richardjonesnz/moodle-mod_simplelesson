@@ -47,18 +47,16 @@
   </ul>
 {{/reports}}
 <div class="card">
-    <div class="card-body">
-        <h2 class="card-title">{{title}}</h2>
-        {{{body}}}
-        {{^pages}}
-          <p class="text-info font-weight-bold">{{#str}}no_pages, simplelesson{{/str}}</p>
-        {{/pages}}
-        {{#pages}}
-          <p class="text-info font-weight-bold">{{#str}}num_pages, simplelesson, {{pages}} {{/str}}</p>
-        {{/pages}}
-    </div>
-     {{> mod_simplelesson/navigation}}
-</div>
-{{#canmanage}}
+  <div class="card-body">
+    <h2 class="card-title">{{title}}</h2>
+    {{{body}}}
+      {{^pages}}
+        <p class="text-info font-weight-bold">{{#str}}no_pages, simplelesson{{/str}}</p>
+      {{/pages}}
+      {{#pages}}
+        <p class="text-info font-weight-bold">{{#str}}num_pages, simplelesson, {{pages}} {{/str}}</p>
+      {{/pages}}
+   </div>
+  {{> mod_simplelesson/navigation}}
   {{> mod_simplelesson/managelesson}}
-{{/canmanage}}
+</div>

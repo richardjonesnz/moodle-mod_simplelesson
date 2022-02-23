@@ -22,8 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 use \mod_simplelesson\local\lesson;
-use \mod_simplelesson\forms\add_question_form;
-use \mod_simplelesson\output\add_question;
+use \mod_simplelesson\forms\select_question_form;
 use \core\output\notification;
 
 require_once('../../config.php');
@@ -34,6 +33,7 @@ $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 $sequence = required_param('sequence', PARAM_INT);
 $returnto = optional_param('returnto', 'show', PARAM_ALPHA);
+
 
 // Set course related variables.
 $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
@@ -60,57 +60,37 @@ $page = $lesson->get_page_record($sequence);
 
 // Set up the redirect url's to return to calling page.
 $returnshow = new moodle_url('/mod/simplelesson/showpage.php',
-['courseid' => $courseid,
- 'simplelessonid' => $simplelessonid,
- 'sequence' => $sequence]);
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'sequence' => $sequence]);
 
 $returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
-['courseid' => $courseid,
- 'simplelessonid' => $simplelessonid,
- 'sequence' => $sequence,
- 'sesskey' => sesskey()]);
+        ['courseid' => $courseid,
+         'simplelessonid' => $simplelessonid,
+         'sequence' => $sequence]);
 
 $returnurl = ($returnto == 'show') ? $returnshow : $returnmanage;
 
 // Get the available questions and check there are some.
-$questions = $DB->get_records('question', ['category' => $simplelesson->categoryid]);
+$questions = $lesson::get_questions($simplelesson->categoryid);
+
+if (count($questions) == 0) {
+    // Back to where we came from.
+    redirect($returnurl, get_string('noquestions', 'mod_simplelesson'), 2, notification::NOTIFY_WARNING);
+}
 
 // Check if a question has already been used in this Simple lesson.
 foreach ($questions as $question) {
-    $records = $DB->count_records('simplelesson_questions', ['qid' => $question->id,
+    $records = $DB->count_records('simplelesson_questions', ['qid' => $question->questionid,
                 'simplelessonid' => $simplelessonid]);
-    $question->marked = ($records != 0);
-}
-if (count($questions) == 0) {
-    // Back to where we came from.
-    if ($returnto == 'manage') {
-        redirect($returnmanage, get_string('noquestions', 'mod_simplelesson'), 2,
-                notification::NOTIFY_WARNING);
-    } else {
-        redirect($returnshow, get_string('noquestions', 'mod_simplelesson'), 2,
-                notification::NOTIFY_WARNING);
-    }
-}
-$returnpageurl = $thispageurl->out(false, ['sequence' => $sequence, 'sesskey' => sesskey()]);
-
-// Instantiate the form.
-$mform = new add_question_form(null,
-        ['courseid' => $courseid,
-              'simplelessonid' => $simplelessonid,
-              'sequence' => $sequence,
-              'returnto' => $returnto,
-              'questions' => $questions,
-              'returnpageurl' => $returnpageurl,
-              'sesskey' => sesskey()]);
-
-// If the cancel button was pressed.
-if ($mform->is_cancelled()) {
-    // Back to where we came from.
-    redirect($returnurl, get_string('cancelled'), 2);
+    // Will be used in the template to disable radio.
+    $question->disabled = ($records == 0) ? '' : 'disabled';
 }
 
-// Save the question data.
-if ($data = $mform->get_data()) {
+$actionurl = $thispageurl->out(false, ['sequence' => $sequence, 'sesskey' => sesskey()]);
+
+// process the form data.
+if ($data = data_submitted()) {
 
     $qdata = new stdClass;
 
@@ -133,5 +113,5 @@ if ($data = $mform->get_data()) {
 }
 
 echo $OUTPUT->header();
-echo $OUTPUT->render(new add_question($mform));
+echo $OUTPUT->render(new select_question_form($simplelesson, $sequence, $questions, $actionurl));
 echo $OUTPUT->footer();

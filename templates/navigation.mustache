@@ -63,43 +63,46 @@
 }}
 <div class="container ml-2 mb-2 mt-2">
   {{#home}}
-    <a href="{{{homeurl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{homeurl}}}"button type="button" class="btn btn-secondary btn-sm">
         {{#str}}home, simplelesson{{/str}}</a>
   {{/home}}
   {{#review}}
-    <a href="{{{homeurl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{homeurl}}}"button type="button" class="btn btn-secondary btn-sm">
         {{#str}}finishreview, simplelesson{{/str}}</a>
   {{/review}}
   <!-- for the lesson editing page normally add page is part of managepage template -->
   {{#addpagelesson}}
-    <a href="{{{addurl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{addurl}}}"button type="button" class="btn btn-primary btn-sm">
         {{#str}}add_page, simplelesson{{/str}}</a>
   {{/addpagelesson}}
   {{#auto}}
-    <a href="{{{autourl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{autourl}}}"button type="button" class="btn btn-secondary btn-sm">
         {{#str}}autosequencelink, simplelesson{{/str}}</a>
   {{/auto}}
+  {{#managequestions}}
+    <a href="{{{editquestions}}}"button type="button" class="btn btn-secondary btn-sm"
+              data-toggle="modal" action="post" data-target="#simplelesson_edit_questions_modal">
+              {{#str}}manage_questions, simplelesson{{/str}}</button>
+    </a>
+  {{/managequestions}}
   <!-- standard navigation links -->
   {{#prev}}
-    <a href="{{{prevurl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{prevurl}}}"button type="button" class="btn btn-secondary btn-sm">
         {{#str}}prevpage, simplelesson{{/str}}</a>
   {{/prev}}
   {{#next}}
-    <a href="{{{nexturl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{nexturl}}}"button type="button" class="btn btn-secondary btn-sm">
         {{#str}}nextpage, simplelesson{{/str}}</a>
   {{/next}}
   <!-- Page after attempt completed -->
   {{#summary}}
-    <a href="{{{summaryurl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{summaryurl}}}"button type="button" class="btn btn-secondary btn-sm">
         {{#str}}end_lesson, simplelesson{{/str}}</a>
   {{/summary}}
-  <!-- Buttons on home page -->
-  {{#preview}}
-    <a href="{{{previewurl}}}"button type="button" class="btn btn-info btn-sm">
-        {{#str}}preview, simplelesson{{/str}}</a>
-  {{/preview}}
+  <!-- Button on home page -->
   {{#attempt}}
-    <a href="{{{attempturl}}}"button type="button" class="btn btn-info btn-sm">
+    <a href="{{{attempturl}}}"button type="button" class="btn btn-primary btn-sm">
         {{#str}}attempt, simplelesson{{/str}}</a>
   {{/attempt}}
 </div>
+{{> simplelesson/edit_questions}}

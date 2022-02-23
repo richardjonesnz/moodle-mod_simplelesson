@@ -24,6 +24,7 @@
 
  use mod_simplelesson\local\lesson;
  use mod_simplelesson\output\lesson_editing;
+ use mod_simplelesson\forms\edit_questions_form;
 
 require_once('../../config.php');
 
@@ -47,7 +48,7 @@ $PAGE->set_url('/mod/simplelesson/edit_lesson.php',
          'sesskey' => sesskey()]);
 
 require_login($course, true, $cm);
-require_sesskey();
+
 $coursecontext = context_course::instance($courseid);
 $modulecontext = context_module::instance($cm->id);
 
@@ -56,22 +57,15 @@ require_capability('mod/simplelesson:manage', $modulecontext);
 $PAGE->set_context($modulecontext);
 $PAGE->activityheader->set_description('');
 
+// Return here after moving pages or adding a new page.
 $returnedit = new moodle_url('/mod/simplelesson/edit_lesson.php',
         ['courseid' => $courseid,
-        'simplelessonid' => $simplelessonid,
-        'sesskey' => sesskey()]);
-
-$returnview = new moodle_url('/mod/simplelesson/view.php',
-        ['simplelessonid' => $simplelessonid,
-         'sesskey' => sesskey()]);
+         'simplelessonid' => $simplelessonid]);
 
 $lesson = new lesson($simplelessonid);
 $pages = $lesson->get_pages();
 
-// Need at least 2 pages.
-if (count($pages) < 2) {
-        redirect($returnview, get_string('lackpages', 'mod_simplelesson'), 2);
-}
+
 /*
  * Check the action:
  * The up and down arrows are only shown for the relevant
@@ -113,6 +107,14 @@ if ( ($sequence != 0) && ($action != 'none') ) {
     redirect($returnedit);
 }
 
+$mform = new edit_questions_form(null, ['id' => $cm->id, 'simplelessonid' => $simplelesson->id, 'courseid' => $courseid]);
+
+if ($data = $mform->get_data()) {
+        $simplelesson->categoryid = $data->categoryid;
+        $simplelesson->behaviour = $data->behaviour;
+        $DB->update_record('simplelesson', $simplelesson);
+}
+
 echo $OUTPUT->header();
-echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm, $PAGE->url));
+echo $OUTPUT->render(new lesson_editing($courseid, $simplelessonid, $pages, $cm, $PAGE->url, $mform));
 echo $OUTPUT->footer();

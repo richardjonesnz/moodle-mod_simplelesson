@@ -1,0 +1,45 @@
+{{!
+    @template mod_simplelesson/select_question_form
+    Renders a list of available questions and returns the selected one.
+
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    * mform html string representing a moodleform
+
+    Example context (json):
+    {
+    }
+}}
+<div class="container-sm">
+  <form id="simplelesson_select_question_form" method="post" action="{{{actionurl}}}" enctype="multipart/form-data")>
+    <div>
+      <input type="hidden" name="courseid" value="{{courseid}}">
+      <input type="hidden" name="simplelessonid" value="{{simplelessonid}}">
+      <input type="hidden" name="sequence" value="{{sequence}}">
+      <input type="hidden" name="sesskey" value="{{sesskey}}">
+    </div>
+    <h3>{{#str}} add_question, mod_simplelesson {{/str}}</h3>
+    <p>{{#str}} add_question_help, mod_simplelesson {{/str}}</p>
+    <table class="table table-striped table-sm">
+      <thead>
+        {{#headers}}
+          <th>{{.}}</th>
+        {{/headers}}
+      </thead>
+      <tbody>
+        {{#tabledata}}
+          {{> mod_simplelesson/question_row}}
+        {{/tabledata}}
+      </tbody>
+    </table>
+    <p>{{#str}} questionscore_help, mod_simplelesson {{/str}}</p>
+    <div class="form-group">
+      <label for="score">Score:</label>
+      <input type="text" class="form-control" value="1" name="score" id="score">
+    </div>
+    <button type="submit" class="btn btn-primary">{{#str}}select_question, mod_simplelesson{{/str}}</button>
+  </form>
+</div>

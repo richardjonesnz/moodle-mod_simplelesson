@@ -25,7 +25,7 @@
 use mod_simplelesson\event\course_module_viewed;
 use mod_simplelesson\output\view;
 use mod_simplelesson\local\lesson;
-use mod_simplelesson\forms\edit_questions_form;
+use stdClass;
 
 require_once('../../config.php');
 require_once(dirname(__FILE__).'/lib.php');
@@ -56,12 +56,10 @@ $PAGE->set_url('/mod/simplelesson/view.php', ['id' => $cm->id]);
 require_login($course, true, $cm);
 require_capability('mod/simplelesson:view', $modulecontext);
 
-// This object holds the options for the view page template.
-$options = new \stdClass();
-$options->canmanage = has_capability('mod/simplelesson:manage', $modulecontext);
-
+// Set up the page (supress the activity header).
 $PAGE->set_title(format_string($simplelesson->name));
 $PAGE->set_heading(format_string($course->fullname));
+$PAGE->activityheader->set_description('');
 
 // Log the module viewed event.
 $event = course_module_viewed::create(['objectid' => $cm->id, 'context' => $modulecontext]);
@@ -74,96 +72,31 @@ $event->trigger();
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
-// Show add page button if permitted.
-if ($options->canmanage) {
+// Holds options for the first page and its template.
+$options = new stdClass();
 
-    $editlessonurl = new \moodle_url('/mod/simplelesson/edit_lesson.php',
-            ['courseid' => $course->id,
-             'simplelessonid' => $simplelesson->id,
-             'sesskey' => sesskey()]);
-    $options->editlesson = $editlessonurl->out(false);
-
-    // If can add a question.
-    if (has_capability('mod/simplelesson:managequestions', $modulecontext)) {
-        $editquestionsurl = new \moodle_url('/mod/simplelesson/edit_questions.php',
-                ['courseid' => $course->id,
-                 'simplelessonid' => $simplelesson->id,
-                 'sesskey' => sesskey()]);
-        $options->editquestions = $editquestionsurl->out(false);
-        $options->managequestions = true;
-    }
-
-    // Add button on home page.
-    $addpageurl = new \moodle_url('/mod/simplelesson/add_page.php',
-    ['courseid' => $course->id,
-     'simplelessonid' => $simplelesson->id,
-     'sequence' => 0,
-     'sesskey' => sesskey()]);
-    $options->addpage = $addpageurl->out(false);
-    $options->addpagehome = true;
-}
+// Edit lesson shown to users with permission.
+$options->canmanage =  has_capability('mod/simplelesson:manage', $modulecontext);
 
 // Are there any pages yet?
 $lesson = new lesson($simplelesson->id);
-$options->pages = count($lesson->get_pages());
-
-$options->addq = false; // Can't add a question from here.
-
-if ($options->pages === 0) {
-    // No  pages, no next or manage pages, just an add button.
-    // Can use the Manage questions interface to set up category though.
+$options->pages = $lesson->count_pages(); 
+if ( $options->pages === 0) {
+    // No  pages, no next or manage pages, just an edit button.
     $options->next = false;
-    $options->addpagelesson = true;
-    $options->addurl = new \moodle_url('/mod/simplelesson/add_page.php',
-            ['courseid' => $course->id,
-             'simplelessonid' => $simplelesson->id,
-             'sesskey' => sesskey()]);
+    $options->attempt = false;
 } else {
-    // Setup the first page.
+    $options->next = true;
+    // User can preview or attempt this lesson.
     $options->preview = true;
-    $nextlink = new \moodle_url('/mod/simplelesson/showpage.php',
-            ['courseid' => $course->id,
-             'simplelessonid' => $simplelesson->id,
-             'sequence' => 1,
-             'mode' => 'preview']);
-    $options->previewurl = $nextlink->out(false);
-
-    // Start attempt button.
     $options->attempt = true;
-    $nextlink = new \moodle_url('/mod/simplelesson/start_attempt.php',
-            ['courseid' => $course->id,
-             'simplelessonid' => $simplelesson->id,
-             'sequence' => 1]);
-    $options->attempturl = $nextlink->out(false);
-}
-$options->prev = false; // This the first page.
-
-// This form allows selection of category and behaviour within a modal.
-$mform = new edit_questions_form(null, ['id' => $id, 'simplelessonid' => $simplelesson->id]);
-if ($data = $mform->get_data()) {
-     $simplelesson->categoryid = $data->categoryid;
-     $simplelesson->behaviour = $data->behaviour;
-     $DB->update_record('simplelesson', $simplelesson);
 }
 
-// Reports tab, if permitted in admin settings.
-$config = get_config('mod_simplelesson');
-if ($config->enablereports) {
-    if (has_capability('mod/simplelesson:viewreportstab', $modulecontext)) {
-        $reportslink = new \moodle_url('/mod/simplelesson/reports.php',
-                ['courseid' => $course->id, 'simplelessonid' => $simplelesson->id]);
-        $options->reportsurl = $reportslink->out(false);
-
-        $viewlink = new \moodle_url('/mod/simplelesson/view.php',
-                ['simplelessonid' => $simplelesson->id]);
-        $options->viewsurl = $viewlink->out(false);
-        $options->reports = true;
-    } else {
-        $options->reports = false;
-    }
-}
+// Reports tab, if permitted in admin settings and has permission.
+$options->reports = ( (get_config('mod_simplelesson')->enablereports) &&
+                    (has_capability('mod/simplelesson:viewreportstab', $modulecontext)) );
 
 // Start output to browser.
 echo $OUTPUT->header();
-echo $OUTPUT->render(new view($simplelesson, $cm->id, $options, $mform));
+echo $OUTPUT->render(new view($simplelesson, $cm->id, $options));
 echo $OUTPUT->footer();

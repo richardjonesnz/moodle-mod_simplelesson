@@ -45,14 +45,12 @@ class view implements renderable, templatable {
     private $simplelesson;
     private $cmid;
     private $options;
-    private $mform;
 
-    public function __construct($simplelesson, $cmid, $options, $mform) {
+    public function __construct($simplelesson, $cmid, $options) {
 
         $this->simplelesson = $simplelesson;
         $this->cmid = $cmid;
         $this->options = $options;
-        $this->mform = $mform;
     }
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -62,20 +60,31 @@ class view implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output) {
 
-        $data = new stdClass();
-        $data = $this->options;
-
-        $data->title = $this->simplelesson->title;
+        $this->options->title = $this->simplelesson->title;
 
         // Moodle handles processing of std intro field.
-        // $data->body = format_module_intro('simplelesson', $this->simplelesson, $this->cmid);
-        // $data->message = get_string('welcome', 'mod_simplelesson');
+        $this->options->body = format_module_intro('simplelesson', $this->simplelesson, $this->cmid);
 
-        // This form shows in a Bootstrap modal.
-        $data->mform = $this->mform->render();
+        // Options from view page tell us which buttons to show here.
+        $baseparams = ['courseid' => $this->simplelesson->course, 'simplelessonid' => $this->simplelesson->id];
 
-        $data->qlinkurl = new moodle_url('/question/edit.php', ['courseid' => $this->simplelesson->course]);
+        if ($this->options->canmanage) {
+            $url = new moodle_url('/mod/simplelesson/edit_lesson.php', $baseparams);
+            $this->options->editlessonurl = $url->out(false);
+        }
 
-        return $data;
+        // Setup the first page.
+        if ($this->options->next) {
+            $url = new moodle_url('/mod/simplelesson/showpage.php', $baseparams);
+            $this->options->nexturl = $url->out(false, ['sequence' => 1, 'mode' => 'preview']);
+        }
+        
+        // Start attempt button.
+        if ($this->options->attempt) {
+            $url = new moodle_url('/mod/simplelesson/start_attempt.php', $baseparams);
+            $this->options->attempturl = $url->out(false, ['sequence' => 1]);
+        }
+
+        return $this->options;
     }
 }
