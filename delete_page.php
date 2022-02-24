@@ -67,8 +67,8 @@ $mform = new confirm_delete_form(null, ['courseid' => $courseid,
 
 // If the cancel button was pressed go back to the page.
 if ($mform->is_cancelled()) {
-    redirect(new moodle_url('/mod/simplelesson/showpage.php',['courseid' => $courseid, 
-            'simplelessonid' => $simplelessonid, 'sequence' => $sequence]), 
+    redirect(new moodle_url('/mod/simplelesson/showpage.php', ['courseid' => $courseid,
+            'simplelessonid' => $simplelessonid, 'sequence' => $sequence]),
             get_string('cancelled', 'mod_simplelesson'), 2);
 }
 
@@ -104,7 +104,7 @@ if ($data = $mform->get_data()) {
     }
     // Go back to Page Management.
     redirect(new moodle_url('/mod/simplelesson/edit_lesson.php', ['courseid' => $courseid,
-            'simplelessonid' => $simplelessonid,'sesskey' => sesskey()]),
+            'simplelessonid' => $simplelessonid, 'sesskey' => sesskey()]),
             get_string('page_deleted', 'mod_simplelesson'), 2);
 }
 

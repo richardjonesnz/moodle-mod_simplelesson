@@ -127,7 +127,7 @@ if (data_submitted() && confirm_sesskey()) {
     // Check if the user has allocated a specific mark from the question management page.
     // How many decimals to use in calculations.
     $markdp = display_options::get_options()->markdp;
-    
+
     if ($qscore == 0) {
         $qscore = $answerdata->maxmark;
     } else {
@@ -223,9 +223,9 @@ $renderer = $PAGE->get_renderer('mod_simplelesson');
 // If there is a question and this is an attempt, show the question.
 if ( ($options->pagehasquestion) && !($options->ispreview) ) {
 
-    $slot = $DB->get_field('simplelesson_questions', 'slot', ['simplelessonid' => $simplelessonid, 
+    $slot = $DB->get_field('simplelesson_questions', 'slot', ['simplelessonid' => $simplelessonid,
             'pageid' => $page->id]);
-    
+
     $options->qform = $renderer->render_question_form($actionurl, display_options::get_options(),
             $slot, $quba, time(), $qtype);
 

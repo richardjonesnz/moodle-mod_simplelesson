@@ -1,13 +1,15 @@
 {{!
     @template mod_simplelesson/render_question_form
-    Renders a summary of the pages in the lesson and editing functions.
-
-
-    Data attributes required for JS:
-    * none
+    Renders a question on a simplelesson page.
 
     Context variables required for this template:
-    * mform html string representing a moodleform
+    *actionurl string the script to post form data to
+    *sesskey string the session key
+    *slot int the current question slot in the question usage
+    *starttime int the UNIX time the question was started
+    *question string of HTML representing the question
+    *hasbutton boolean flag representing whether a save button needs to be shown
+    *button string of HTML code representing an action button.
 
     Example context (json):
     {

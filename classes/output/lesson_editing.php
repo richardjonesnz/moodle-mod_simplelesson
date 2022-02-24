@@ -40,6 +40,16 @@ class lesson_editing implements renderable, templatable {
     private $pageurl;
     private $mform;
 
+    /**
+     * Data required to construct the lesson editing table.
+     *
+     * @param int courseid the course id
+     * @param int simplelessonid the Simple lesson id
+     * @param array pages objects representing pages in the Simplelesson
+     * @param object cm the course module object
+     * @param string pageurl the url of the current page
+     * @param string mform string of html representing a Moodle form
+     */
     public function __construct($courseid, $simplelessonid, $pages, $cm, $pageurl, $mform) {
 
         $this->courseid = $courseid;
@@ -74,18 +84,17 @@ class lesson_editing implements renderable, templatable {
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid,
                  'returnto' => 'manage']);
-        
+
         // Show the Manage questions button if permitted.
         $modulecontext = context_module::instance($this->cm->id);
-        $table->managequestions = has_capability('mod/simplelesson:managequestions', $modulecontext); 
+        $table->managequestions = has_capability('mod/simplelesson:managequestions', $modulecontext);
         $table->questionurl = new moodle_url('/mod/simplelesson/edit_questions.php',
                 ['courseid' => $this->courseid,
                  'simplelessonid' => $this->simplelessonid]);
-        
+
         // This form shows in a Bootstrap modal.
         $table->mform = $this->mform->render();
         $table->qlinkurl = new moodle_url('/question/edit.php', ['courseid' => $this->courseid]);
-
 
         // Set up table headers.
         $headerdata = array();
@@ -204,7 +213,7 @@ class lesson_editing implements renderable, templatable {
             $data['actions'] = $actions;
             $table->tabledata[] = $data;
         }
-        
+
         return $table;
     }
 }

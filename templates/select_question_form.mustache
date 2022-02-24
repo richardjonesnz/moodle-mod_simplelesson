@@ -2,15 +2,24 @@
     @template mod_simplelesson/select_question_form
     Renders a list of available questions and returns the selected one.
 
-
-    Data attributes required for JS:
-    * none
-
     Context variables required for this template:
-    * mform html string representing a moodleform
+    *actionurl string representing url of page to post form response to
+    *courseid int the course id
+    *simplelessonid int the simplelesson ind
+    *sequence int the sequence number of the page
+    *sesskey string the session key
+    *headers string array of table headers
+    *tabledata 2D string array of records for the table body
 
     Example context (json):
     {
+      "actionurl": "/simplelesson/add_question.php",
+      "courseid" : "1",
+      "simplelessonid" : "1",
+      "sequence" : "1",
+      "sesskey": "XYZ9_",
+      "headers": "["header1", "headers2"]",
+      "tabledata": "[["row1", "row1"], ["row2", "row2"]]"
     }
 }}
 <div class="container-sm">

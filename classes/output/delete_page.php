@@ -30,9 +30,9 @@ use templatable;
 use stdClass;
 
 /**
- * Create a new view page renderable object
+ * Create a confirm delete page renderable object
  *
- * @param object mform - page editing form.
+ * @param object mform confirmation form.
  */
 
 class delete_page implements renderable, templatable {
@@ -40,6 +40,12 @@ class delete_page implements renderable, templatable {
     private $mform;
     private $title;
 
+    /**
+     * Data required to construct the template.
+     *
+     * @param object mform - page editing form.
+     * @param string title - page title.
+     */
     public function __construct($mform, $title) {
 
         $this->mform = $mform;

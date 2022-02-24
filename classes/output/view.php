@@ -78,7 +78,7 @@ class view implements renderable, templatable {
             $url = new moodle_url('/mod/simplelesson/showpage.php', $baseparams);
             $this->options->nexturl = $url->out(false, ['sequence' => 1, 'mode' => 'preview']);
         }
-        
+
         // Start attempt button.
         if ($this->options->attempt) {
             $url = new moodle_url('/mod/simplelesson/start_attempt.php', $baseparams);

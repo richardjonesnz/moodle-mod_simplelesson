@@ -26,13 +26,13 @@
 namespace mod_simplelesson\local;
 use \mod_simplelesson\output\display_options;
 use \mod_simplelesson\utility\constants;
-defined('MOODLE_INTERNAL') || die;
+
 /*
  * A collection of static functions relating to reporting.
  *
  */
 class reporting  {
-    /*
+    /**
      * Basic Report - get the module records for this course
      *
      * @param $courseid - course to get records for
@@ -355,7 +355,7 @@ class reporting  {
 
         return $fields;
     }
-    /*
+    /**
      * Attempts management- get all user attempt records
      *
      * @param $courseid - Course to get records for

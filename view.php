@@ -76,11 +76,11 @@ $completion->set_module_viewed($cm);
 $options = new stdClass();
 
 // Edit lesson shown to users with permission.
-$options->canmanage =  has_capability('mod/simplelesson:manage', $modulecontext);
+$options->canmanage = has_capability('mod/simplelesson:manage', $modulecontext);
 
 // Are there any pages yet?
 $lesson = new lesson($simplelesson->id);
-$options->pages = $lesson->count_pages(); 
+$options->pages = $lesson->count_pages();
 if ( $options->pages === 0) {
     // No  pages, no next or manage pages, just an edit button.
     $options->next = false;

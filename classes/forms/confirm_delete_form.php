@@ -21,13 +21,17 @@
  * @copyright 2018 Richard Jones https://richardnz.net
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace mod_simplelesson\forms;
+
 defined('MOODLE_INTERNAL') || die();
+
 require_once('../../lib/formslib.php');
 /**
  * Define the edit page form elements.
  */
-class confirm_delete_form extends \moodleform {
+class confirm_delete_form extends \moodleform
+{
 
     /**
      * Defines forms elements

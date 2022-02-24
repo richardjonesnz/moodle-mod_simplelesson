@@ -14,25 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Collection of utilities.
- *
- * @package    mod_simplelesson
- * @copyright  2021 Richard Jones richardnz@outlook.com
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 namespace mod_simplelesson\utility;
 defined('MOODLE_INTERNAL') || die();
+
 /**
- * This class provides useful methods for Moodle.
+ * This class provides methods relating to Moodle editors and formatting.
  *
  * @package    mod_simplelesson
  * @copyright  2021 Richard Jones richardnz@outlook.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class utility {
-
+    /**
+     * Returns the editor options for html editor areas.
+     *
+     * @param object $context object the module context.
+     * @return array
+     */
     public static function get_editor_options($context) {
         global $CFG;
         return ['subdirs' => true,
@@ -43,7 +41,12 @@ class utility {
                 'noclean' => true,
                 'trusttext' => false];
     }
-
+    /**
+     * Returns the formatting options for html editor area text.
+     *
+     * @param object $context object the module context.
+     * @return object
+     */
     public static function get_formatting_options($context) {
         $formatoptions = new \stdClass;
         $formatoptions->noclean = true;

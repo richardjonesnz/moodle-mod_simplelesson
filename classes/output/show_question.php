@@ -52,13 +52,13 @@ class show_question implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
 
         $data = new stdClass();
-        
+
         $data->question = $this->question;
         $data->actionurl = $this->actionurl;
         $data->slot = $this->slot;
         $data->starttime = time();
         $data->canfinish = $this->canfinish;
-        
+
         return $data;
     }
 }

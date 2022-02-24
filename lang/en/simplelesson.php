@@ -23,9 +23,7 @@
  * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
-
 defined('MOODLE_INTERNAL') || die();
-
 
 $string['action'] = 'Action';
 $string['actions'] = 'Page Actions';

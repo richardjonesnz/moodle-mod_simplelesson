@@ -16,26 +16,24 @@
     @template mod_simplelesson/managepage
     Renders the simplelesson page editing buttons
 
-    Classes required for JS:
-    * none
-
-    Data attributes required for JS:
-    * none
-
     Context variables required for this template:
-    * addpage string of formatted html representing a url
-    * editpage string of formatted html representing a url
-    * deletepage string of formatted html representing a url
-    * addquestion string of formatted html representing a url
-    * deletequestion string of formatted html representing a url
+    * canmanage boolean flag indicating page editing buttons can be shown.
+    * editpageurl string of formatted html representing a url
+    * deletepageurl string of formatted html representing a url
+    * canaddquestion boolean flag indicating question adding button can be shown.
+    * addquestionurl string of formatted html representing a url
+    * deletequestion boolean flag indicating delete page button can be shown.
+    * deletequestionurl string of formatted html representing a url
 
     Example context (json):
      {
-      "addpage": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
-      "editpage": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
-      "deletepage": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
-      "addquestion": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
-      "deletequestion": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "canmanage": true,
+      "editpageurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1",
+      "deletepageurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1",
+      "canaddquestion": true,
+      "addquestionurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1",
+      "deletequestion": true,
+      "deletequestionurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1",
      }
 }}
 <div class="card mt-2">

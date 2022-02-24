@@ -35,7 +35,7 @@ class edit_questions_form extends \moodleform {
     public function definition() {
         global $DB;
 
-        $mform = $this->_form; 
+        $mform = $this->_form;
 
         // Set the category for questions that can be added to this Simple lesson.
         $categories = [];

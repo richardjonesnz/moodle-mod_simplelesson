@@ -89,7 +89,7 @@ foreach ($questions as $question) {
 
 $actionurl = $thispageurl->out(false, ['sequence' => $sequence, 'sesskey' => sesskey()]);
 
-// process the form data.
+// Process the form data.
 if ($data = data_submitted()) {
 
     $qdata = new stdClass;

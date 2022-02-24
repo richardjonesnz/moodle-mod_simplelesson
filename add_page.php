@@ -88,7 +88,7 @@ if ($mform->is_cancelled()) {
  * elsewhere.
  */
 if ($data = $mform->get_data()) {
-    
+
     $lastpage = $lesson->count_pages();
     $data->sequence = $lastpage + 1;
     $data->simplelessonid = $simplelessonid;

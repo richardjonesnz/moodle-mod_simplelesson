@@ -39,7 +39,7 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
     /**
      * Defines structure of path elements to be processed during the restore
      *
-     * @return array of {@link restore_path_element}
+     * @return array restore_path_element objects
      */
     protected function define_structure() {
         $userinfo = $this->get_setting_value('userinfo');
@@ -88,7 +88,11 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
         $newitemid = $DB->insert_record('simplelesson', $data);
         $this->apply_activity_instance($newitemid);
     }
-
+    /**
+     * Process the given restore path element data
+     *
+     * @param array $data parsed element data
+     */
     protected function process_simplelesson_page($data) {
         global $DB;
         $data = (object)$data;
@@ -100,6 +104,11 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
         $this->set_mapping('simplelesson_page', $oldid, $newitemid, true);
 
     }
+    /**
+     * Process the given restore path element data
+     *
+     * @param array $data parsed element data
+     */
     protected function process_simplelesson_attempt($data) {
         global $DB;
         $data = (object)$data;
@@ -114,6 +123,11 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
                 true);
 
     }
+    /**
+     * Process the given restore path element data
+     *
+     * @param array $data parsed element data
+     */
     protected function process_simplelesson_answer($data) {
         global $DB;
         $data = (object)$data;
@@ -127,7 +141,7 @@ class restore_simplelesson_activity_structure_step extends restore_activity_stru
     }
 
     /**
-     * Post-execution actions
+     * Post-execution actions - add files and fix up page links.
      */
     protected function after_execute() {
         global $DB;

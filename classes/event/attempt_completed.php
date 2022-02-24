@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines the attempt started event.
+ * Defines the attempt completed event.
  *
  * @package    mod_simplelesson
  * @copyright  2018 Richard Jones <richardnz@outlook.com>

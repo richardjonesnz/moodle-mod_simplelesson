@@ -13,16 +13,10 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-/**
- * Question attempt and related utilities for simplelesson
- *
- * @package    mod_simplelesson
- * @copyright  2018 Richard Jones https://richardnz.net
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+
 namespace mod_simplelesson\local;
 use \mod_simplelesson\utility\constants;
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/questionlib.php');
 
 /**

@@ -89,7 +89,7 @@ if ($mode == 'attempt') {
             $navoptions->home = true;
         }
         $navoptions->homeurl = $returnview;
-        echo $OUTPUT->render(new lesson_summary($navoptions, $user, $answerdata, 
+        echo $OUTPUT->render(new lesson_summary($navoptions, $user, $answerdata,
                 display_options::get_options()->markdp, $sessiondata));
     }
 

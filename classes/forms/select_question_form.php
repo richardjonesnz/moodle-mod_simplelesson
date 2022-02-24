@@ -34,12 +34,15 @@ defined('MOODLE_INTERNAL') || die();
  * Prepare data for add_question form.
  */
 class select_question_form implements renderable, templatable {
-    
+
     private $simplelesson;
     private $sequence;
     private $questions;
     private $actionurl;
 
+    /**
+     * Data required to construct the template.
+     */
     public function __construct($simplelesson, $sequence, $questions, $actionurl) {
 
         $this->simplelesson = $simplelesson;
@@ -66,25 +69,24 @@ class select_question_form implements renderable, templatable {
         $headers[] = get_string('preview_question', 'mod_simplelesson');
         $data->headers = $headers;
 
-        // Hidden fields
+        // Hidden fields.
         $data->courseid = $this->simplelesson->course;
         $data->simplelessonid = $this->simplelesson->id;
         $data->sequence = $this->sequence;
         $data->actionurl = $this->actionurl;
         $data->sesskey = sesskey();
 
-
-        foreach($this->questions as $question) {
-          $row = [];
-          $row['id'] = $question->questionid;
-          $row['name'] = $question->name;
-          $row['qtype'] = $question->qtype;
-          $row['disabled'] = $question->disabled;
-          $row['previewurl'] = new moodle_url('/question/bank/previewquestion/preview.php', 
-                  ['id' => $question->questionid, 'returnurl' => $this->actionurl]);
-          $data->tabledata[] = $row;
+        foreach ($this->questions as $question) {
+            $row = [];
+            $row['id'] = $question->questionid;
+            $row['name'] = $question->name;
+            $row['qtype'] = $question->qtype;
+            $row['disabled'] = $question->disabled;
+            $row['previewurl'] = new moodle_url('/question/bank/previewquestion/preview.php',
+                    ['id' => $question->questionid, 'returnurl' => $this->actionurl]);
+            $data->tabledata[] = $row;
         }
-        
+
         return $data;
     }
 }

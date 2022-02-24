@@ -47,7 +47,10 @@ class course_module_viewed extends \core\event\course_module_viewed {
         $this->data['objecttable'] = 'simplelesson';
         parent::init();
     }
-
+    /**
+     * Returns the localized event name.
+     * @return string
+     */
     public static function get_name() {
         return get_string('simplelessonviewed',
                 'mod_simplelesson');

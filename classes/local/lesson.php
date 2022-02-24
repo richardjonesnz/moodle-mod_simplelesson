@@ -14,18 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Class show: The lesson object.
- *
- * @package    mod_simplelesson
- * @copyright  2021 Richard Jones richardnz@outlook.com
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace mod_simplelesson\local;
-use mod_simplelesson\utility\utility;
 
-defined('MOODLE_INTERNAL') || die();
 /**
  * This class describes a simplelesson object.
  *
@@ -33,18 +23,26 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2021 Richard Jones richardnz@outlook.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class lesson {
 
-    protected $id;      // The simple lesson id.
+    /**
+     * id int of this simplelesson
+     */
+    protected $id;
+    /**
+     * pages array of objects representing content pages
+     */
     protected $pages;   // An array of page objects in the lesson.
 
+    /**
+     * Construct a Simple lesson object
+     * @param int the simplelesson id.
+     */
     public function __construct($id) {
 
         $this->id = $id;
         $this->pages = self::get_pages();
     }
-
     /**
      * Retrieve all the pages in a given simplelesson sorted by sequence number.
      *
@@ -88,7 +86,6 @@ class lesson {
         }
         return $pagetitles;
     }
-
     /**
      * Given a sequence number, find that page record id.
      *
@@ -103,17 +100,16 @@ class lesson {
     /**
      * Given a category id find the questions in that category.
      *
-     * @param int $sequence, where the page is in the lesson sequence
-     * @return int the id of the page in the pages table
+     * @param int $catid the question category.
+     * @return array a hashed array of question objects.
      */
-    
     public static function get_questions($catid) {
         global $DB;
 
-        $sql = "SELECT q.id AS questionid, q.name, q.qtype, 
-                       c.id AS categoryid, 
+        $sql = "SELECT q.id AS questionid, q.name, q.qtype,
+                       c.id AS categoryid,
                        v.id AS versionid,
-                       v.version, 
+                       v.version,
                        v.questionbankentryid AS entryid
                   FROM {question} q
                   LEFT JOIN {question_versions} v ON q.id = v.questionid

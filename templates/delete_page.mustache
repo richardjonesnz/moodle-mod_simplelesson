@@ -16,18 +16,14 @@
     @template mod_simplelesson/delete_page
     Moodle renders the delete page and form
 
-    Classes required for JS:
-    * none
-
-    Data attributes required for JS:
-    * none
-
     Context variables required for this template:
+    * title string page title
     * mform string of html representing a Moodle form
 
     Example context (json):
     {
-      "mform": "<form action="post"> ... </form>"
+      "title": "Delete page",
+      "mform": "<form></form>"
     }
 }}
 <h3>{{#str}}delete_page, mod_simplelesson, {{title}}{{/str}}</h3>

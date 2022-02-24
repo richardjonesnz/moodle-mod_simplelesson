@@ -15,8 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Puts page sequence numbers in logical order according to
- * placement on page management screen.
+ * Puts page sequence numbers in logical order according to placement on page management screen.
  *
  * @package   mod_simplelesson
  * @copyright 2018 Richard Jones https://richardnz.net
@@ -28,6 +27,7 @@ use \core\output\notification;
 require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die();
 global $DB;
+
 $courseid = required_param('courseid', PARAM_INT);
 $simplelessonid = required_param('simplelessonid', PARAM_INT);
 
@@ -51,5 +51,5 @@ if ($pagecount > 0) {
 }
 
 // Go back to page where request came from.
-redirect(new moodle_url('/mod/simplelesson/edit_lesson.php', ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]), 
+redirect(new moodle_url('/mod/simplelesson/edit_lesson.php', ['courseid' => $courseid, 'simplelessonid' => $simplelessonid]),
         get_string('sequence_updated', 'mod_simplelesson'), 1, notification::NOTIFY_SUCCESS);

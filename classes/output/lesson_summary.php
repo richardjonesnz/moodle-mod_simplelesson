@@ -32,12 +32,6 @@ use stdClass;
 /**
  *
  * Output the details of the attempt
- *
- * @param object array $answerdata an array of data
- *        relating to user responses to questions.
- * @param int $markdp - numer of decimal places in mark
- * @param object $sessiondata - score, maxscore and time
- * @return $html table with summary data on user's attempt
  */
 
 class lesson_summary implements renderable, templatable {
@@ -47,6 +41,16 @@ class lesson_summary implements renderable, templatable {
     private $answerdata;
     private $markdp;
     private $sessiondata;
+
+    /**
+     * The data required to build the template
+     *
+     * @param object data detailing the options for the summary display
+     * @param string user the user name
+     * @param object array $answerdata an array of data relating to user responses to questions.
+     * @param int $markdp - numer of decimal places in mark
+     * @param object $sessiondata - score, maxscore and time
+     */
 
     public function __construct($options, $user, $answerdata, $markdp, $sessiondata) {
 

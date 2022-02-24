@@ -17,19 +17,24 @@
 
 {{!
     @template mod_simplelesson/page_row
-    Moodle table row rendering template for lesson page management
-
-    Classes required for JS:
-    * none
-
-    Data attributes required for JS:
-    * none
+    Renders radio buttons and question details for select_question_form.mustache
 
     Context variables required for this template:
-    
+     *disabled string indicating this choice is disabled or null
+     *id int question id
+     *name string question name
+     *qtype string question type
+     *previewurl string representing url of question preview page
 
-    Example data (json):
-       
+    Example context (json):
+    {
+      "disabled": "disabled",
+      "id": "1",
+      "name": "To be or not to be",
+      "qtype": "multichoice",
+      "previewurl": "/question/preview.php"
+    }
+
 }}
 <tr class="danger">
   <td>
@@ -39,7 +44,7 @@
     <td>
       <span class="text-muted">{{id}}</span>
     </td>
-    <td>  
+    <td>
       <span class="text-muted">{{name}} ({{qtype}}) </span>
     </td>
     <td>

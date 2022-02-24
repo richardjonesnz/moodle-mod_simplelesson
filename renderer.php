@@ -56,7 +56,7 @@ class mod_simplelesson_renderer extends plugin_renderer_base {
             $data->button = $this->output->single_button($actionurl, $data->label);
             $data->save_message = get_string('save_message', 'simplelesson');
         }
-        
+
         return $this->output->render_from_template('mod_simplelesson/show_question', $data);
 
     }

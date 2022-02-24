@@ -73,6 +73,6 @@ function xmldb_simplelesson_upgrade($oldversion) {
 
         upgrade_mod_savepoint(true, 2018090400, 'simplelesson');
     }
-    
+
     return true;
 }
