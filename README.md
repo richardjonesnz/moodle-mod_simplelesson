@@ -19,7 +19,9 @@ Simple lesson is a content presentation system similar to Book or Lesson but wit
 6.  Implements a Page Management console allowing easy setup of pages and questions
 7.  Designed for Moodle 4.0
 
-It is designed primarily as a formative assessment tool but can be used as a simple type of quiz.
+It is designed primarily as a formative assessment tool but can be used as a simple type of quiz.  
+
+For further information and screenshots, please see the documentation files.
 
 Richard Jones
 richardnz@outlook.com
