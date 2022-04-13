@@ -248,7 +248,7 @@ $options->home = true;
 $options->summary = ( (count($pages) == $sequence) && !($options->ispreview) );
 
 // Show the page index if required (but not during an attempt).
-if ( ($simplelesson->showindex) && !($options->ispreview) ) {
+if ( ($simplelesson->showindex) && ($options->ispreview) ) {
 
     $options->pagelinks = array();
     foreach ($pages as $indexpage) {
