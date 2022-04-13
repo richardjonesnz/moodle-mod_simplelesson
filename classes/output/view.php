@@ -85,6 +85,12 @@ class view implements renderable, templatable {
             $this->options->attempturl = $url->out(false, ['sequence' => 1]);
         }
 
+        // Reports tab link
+        if ($this->options->reports) {
+            $url = new moodle_url('/mod/simplelesson/reports.php', $baseparams);
+            $this->options->reportsurl = $url->out(false);
+        }
+
         return $this->options;
     }
 }
