@@ -56,5 +56,7 @@ if ($type == 'answers') {
 
 // Consider adding a form here to allow choice of filename and download format.
 $dataformat = 'csv';
+ob_clean();
 dataformat::download_data($filename, $dataformat, $fields, $iterator);
+ob_start();
 exit;

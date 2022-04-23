@@ -175,6 +175,7 @@ $string['question_editing'] = 'Editing questions';
 $string['question_name'] = 'Question name';
 $string['question_placeholder'] = '[[There is a question on this page]]';
 $string['question_text'] = 'Question text';
+$string['question_version'] = 'Question version';
 $string['questions_added'] = 'Added questions';
 $string['questionscore'] = 'Score';
 $string['questionscore_help'] = 'Optionally input a score for this question (default 1)';

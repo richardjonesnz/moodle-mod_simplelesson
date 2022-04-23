@@ -60,7 +60,9 @@
     <div class="card-footer">
       {{#ispreview}}
         {{#str}}question_placeholder, simplelesson{{/str}}<br />
-        <a href="{{{questionpreviewurl}}}">{{#str}}preview_question, simplelesson{{/str}}</a>
+        {{#canmanage}}
+          <a href="{{{questionpreviewurl}}}">{{#str}}preview_question, simplelesson{{/str}}</a>
+        {{/canmanage}}
       {{/ispreview}}
       {{^ispreview}}
         {{> mod_simplelesson/question_form}}

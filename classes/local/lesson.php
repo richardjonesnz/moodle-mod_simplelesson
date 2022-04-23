@@ -112,11 +112,25 @@ class lesson {
                        v.version,
                        v.questionbankentryid AS entryid
                   FROM {question} q
-                  LEFT JOIN {question_versions} v ON q.id = v.questionid
-                  LEFT JOIN {question_bank_entries} e on e.id = v.questionbankentryid
-                  LEFT JOIN {question_categories} c ON c.id = e.questioncategoryid
-                 WHERE c.id = :catid";
+                  JOIN {question_versions} v ON q.id = v.questionid
+                  JOIN {question_bank_entries} e on e.id = v.questionbankentryid
+                  JOIN {question_categories} c ON c.id = e.questioncategoryid
+                 WHERE c.id = :catid
+                 order by entryid, v.version desc";
 
-        return $DB->get_records_sql($sql, ['catid' => $catid]);
+        $records = $DB->get_records_sql($sql, ['catid' => $catid]);
+
+        // This depends on the above SQL returning appropriately ordered data.
+        // Yes it's a hack because the SQL is too hard.
+        $questions = [];
+        $entryid = 0;
+        foreach ($records as $record) {
+            // Check if this entry id has been added already.
+            if ($record->entryid != $entryid) {
+                $questions[] = $record;
+                $entryid = $record->entryid;
+            }
+        }
+        return $questions;
     }
 }

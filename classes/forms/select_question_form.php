@@ -66,6 +66,7 @@ class select_question_form implements renderable, templatable {
         $headers[] = get_string('select_question', 'mod_simplelesson');
         $headers[] = get_string('id', 'mod_simplelesson');
         $headers[] = get_string('question_name', 'mod_simplelesson');
+        $headers[] = get_string('question_version', 'mod_simplelesson');
         $headers[] = get_string('preview_question', 'mod_simplelesson');
         $data->headers = $headers;
 
@@ -80,6 +81,7 @@ class select_question_form implements renderable, templatable {
             $row = [];
             $row['id'] = $question->questionid;
             $row['name'] = $question->name;
+            $row['version'] = $question->version;
             $row['qtype'] = $question->qtype;
             $row['disabled'] = $question->disabled;
             $row['previewurl'] = new moodle_url('/question/bank/previewquestion/preview.php',
