@@ -27,8 +27,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_simplelesson';
-$plugin->version = 2022012601;
-$plugin->release = 'v2.00.2';
+$plugin->version = 2022042400;
+$plugin->release = 'v2.00.3';
 $plugin->requires = 2022011800;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->cron = 0;
