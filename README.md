@@ -1,11 +1,19 @@
 IMPORTANT
 =========
-Simple Lesson new version for Moodle 4.  Beta software.
+Simple Lesson new version for Moodle 4 ONLY.
 
 NOTE: If you are using Moodle 3.5 to 3.11 this may not be the droid you are looking for.
 Please use the repo marked moodle_mod_simplelesson. Apologies for any confusion.
 
-For testing only you would need to upgrade to Moodle 4 before upgrading this plugin as it uses some new features of the re-written question bank.
+To upgrade 
+==========
+If you have an existing installation then:
+
+1. Upgrade to Moodle 4 and do not copy the existing plugin code to Moodle 4.
+2. Install this code to moodle/mod/simplelesson.
+3. If you made backups of courses/simplelessons in Moodle 3, restore them.
+
+Your pages should be restored correctly but you will have to import the questions and add them manually.
 
 Brief description
 =================
