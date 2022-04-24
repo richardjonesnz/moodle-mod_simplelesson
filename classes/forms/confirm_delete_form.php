@@ -30,8 +30,7 @@ require_once('../../lib/formslib.php');
 /**
  * Define the edit page form elements.
  */
-class confirm_delete_form extends \moodleform
-{
+class confirm_delete_form extends \moodleform {
 
     /**
      * Defines forms elements

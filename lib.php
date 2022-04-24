@@ -29,7 +29,6 @@
  * @see https://github.com/justinhunt/moodle-mod_pairwork
  */
 
-defined('MOODLE_INTERNAL') || die();
 /**
  * Returns the information on whether the module supports a feature
  *
@@ -296,8 +295,6 @@ function simplelesson_reset_course_form_defaults($course) {
  * Actual implementation of the reset course functionality,
  * delete all the Simple lesson attempts for course $data->courseid.
  *
- * @global stdClass
- * @global object
  * @param object $data the data submitted from the reset course.
  * @return array status array
  */
@@ -345,8 +342,7 @@ function simplelesson_grade_item_delete($simplelesson) {
 
 /**
  * Update simplelesson grades in the gradebook
- *
- * Needed by {@link grade_update_mod_grades()}.
+ * Needed by grade_update_mod_grades().
  *
  * @param stdClass $simplelesson instance object
  * @param int $userid update grade of specific user only, 0 means all participants
@@ -373,8 +369,7 @@ function simplelesson_update_grades(stdClass $simplelesson,
 
 /**
  * Creates or updates grade item for the given simplelesson instance
- *
- * Needed by {@link grade_update_mod_grades()}.
+ * Needed by grade_update_mod_grades().
  *
  * @param stdClass $mod_simplelesson record with extra cmidnumber
  * @param array $grades optional array/object of grade(s): 'reset' means reset grades in gradebook.
@@ -413,8 +408,6 @@ function simplelesson_grade_item_update(stdClass $simplelesson, $grades=null) {
 /**
  * Return grade for given user or all users.
  *
- * @global stdClass
- * @global object
  * @param stdClass $simplelesson instance
  * @param int $userid optional user id, 0 means all users
  * @return array array of grades, false if none
@@ -534,7 +527,7 @@ function simplelesson_rescale_activity_grades($course, $cm, $oldmin, $oldmax, $n
  * Returns the lists of all browsable file areas within the given module context
  *
  * The file area 'intro' for the activity introduction field is added automatically
- * by {@link file_browser::get_file_info_context_module()}
+ * by get_file_info_context_module().
  *
  * @param stdClass $course
  * @param stdClass $cm
@@ -600,14 +593,13 @@ function simplelesson_pluginfile($course, $cm, $context, $filearea, array $args,
 }
 /**
  *
+ * Modified for use in mod_simplelesson by Richard Jones http://richardnz/net
+ * This is used for images within pages that are in questions.
+ *
  * @package    mod_simplelesson
  * @see package mod_qpractice
  * @copyright  2013 Jayesh Anandani
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * Modified for use in mod_simplelesson by Richard Jones http://richardnz/net
- * This is used for images within pages that are in questions.
- * Apparently it will be magically called by simplelesson_pluginfile above.
  *
  * @package  mod_simplelesson
  * @category files
@@ -622,7 +614,6 @@ function simplelesson_pluginfile($course, $cm, $context, $filearea, array $args,
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - justsend the file
  */
-
 function simplelesson_question_pluginfile($course, $context, $component,
          $filearea, $qubaid, $slot, $args,
          $forcedownload, array $options = array()) {

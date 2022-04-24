@@ -26,12 +26,11 @@
  * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
-defined('MOODLE_INTERNAL') || die();
-/**
- * Post installation procedure
- *
- * @see upgrade_plugins_modules()
- */
+
+ /** Post installation procedure
+  *
+  * @see upgrade_plugins_modules()
+  */
 function xmldb_simplelesson_install() {
 }
 

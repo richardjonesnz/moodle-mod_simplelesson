@@ -24,7 +24,6 @@
  *
  */
 use \mod_simplelesson\local\lesson;
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Structure step to restore one simplelesson activity

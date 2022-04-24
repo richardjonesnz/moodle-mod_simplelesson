@@ -31,8 +31,6 @@
  *
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Execute simplelesson upgrade from the given old version
  *

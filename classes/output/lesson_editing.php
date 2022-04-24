@@ -118,7 +118,7 @@ class lesson_editing implements renderable, templatable {
             $data['pagetitle'] = $page->pagetitle;
             $data['previous'] = $page->prevpageid;
             $data['next'] = $page->nextpageid;
-            $data[ 'question'] = false;
+            $data['question'] = false;
 
             // Is there a question on the page?
             $result = $DB->get_record('simplelesson_questions',

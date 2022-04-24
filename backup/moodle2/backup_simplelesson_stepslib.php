@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+defined('MOODLE_INTERNAL') || die();
 /**
  * Define all the backup steps that will be used by the backup_simplelesson_activity_task
  *
@@ -23,7 +23,6 @@
  *
  */
 
-defined('MOODLE_INTERNAL') || die;
 require_once($CFG->dirroot . '/mod/simplelesson/lib.php');
 
 /**

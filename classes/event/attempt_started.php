@@ -23,7 +23,6 @@
  *
  */
 namespace mod_simplelesson\event;
-defined('MOODLE_INTERNAL') || die();
 /**
  * Attempt started event for Simple lesson.
  *

@@ -28,8 +28,6 @@ use templatable;
 use stdClass;
 use moodle_url;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Prepare data for add_question form.
  */

@@ -26,7 +26,7 @@ require_once($CFG->libdir . '/questionlib.php');
  * @copyright  2018 Richard Jones https://richardnz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class attempts  {
+class attempts {
     /**
      * Handles data relating to attempts, including question usages
      *

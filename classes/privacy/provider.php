@@ -29,8 +29,6 @@ use core_privacy\local\request\deletion_criteria;
 use core_privacy\local\request\helper;
 use core_privacy\local\request\writer;
 
-defined('MOODLE_INTERNAL') || die();
-
 class provider implements
         \core_privacy\local\metadata\provider,
         \core_privacy\local\request\plugin\provider {

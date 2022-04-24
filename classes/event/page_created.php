@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_simplelesson\event;
-defined('MOODLE_INTERNAL') || die();
+
 /**
  * A page created event for Simple lesson.
  *

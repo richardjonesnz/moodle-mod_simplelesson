@@ -24,7 +24,6 @@
  * @see https://github.com/justinhunt/moodle-mod_pairwork
  */
 namespace mod_simplelesson\task;
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * The scheduled task.

@@ -31,7 +31,7 @@ use \mod_simplelesson\utility\constants;
  * A collection of static functions relating to reporting.
  *
  */
-class reporting  {
+class reporting {
     /**
      * Basic Report - get the module records for this course
      *
