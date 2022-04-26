@@ -110,18 +110,19 @@ class lesson {
                        c.id AS categoryid,
                        v.id AS versionid,
                        v.version,
+                       v.status,
                        v.questionbankentryid AS entryid
                   FROM {question} q
                   JOIN {question_versions} v ON q.id = v.questionid
                   JOIN {question_bank_entries} e on e.id = v.questionbankentryid
                   JOIN {question_categories} c ON c.id = e.questioncategoryid
                  WHERE c.id = :catid
+                   AND v.status = :vstatus
                  order by entryid, v.version desc";
 
-        $records = $DB->get_records_sql($sql, ['catid' => $catid]);
+        $records = $DB->get_records_sql($sql, ['catid' => $catid, 'vstatus' => 'ready']);
 
         // This depends on the above SQL returning appropriately ordered data.
-        // Yes it's a hack because the SQL is too hard.
         $questions = [];
         $entryid = 0;
         foreach ($records as $record) {
