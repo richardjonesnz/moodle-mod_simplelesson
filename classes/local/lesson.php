@@ -101,9 +101,10 @@ class lesson {
      * Given a category id find the questions in that category.
      *
      * @param int $catid the question category.
+     * @param int $allversions whether or not to return all versions of a given question.
      * @return array a hashed array of question objects.
      */
-    public static function get_questions($catid) {
+    public static function get_questions($catid, $allversions) {
         global $DB;
 
         $sql = "SELECT q.id AS questionid, q.name, q.qtype,
@@ -120,18 +121,24 @@ class lesson {
                    AND v.status = :vstatus
                  order by entryid, v.version desc";
 
-        $records = $DB->get_records_sql($sql, ['catid' => $catid, 'vstatus' => 'ready']);
+        $records = $DB->get_records_sql($sql, ['catid' => $catid,
+                'vstatus' => \core_question\local\bank\question_version_status::QUESTION_STATUS_READY]);
 
-        // This depends on the above SQL returning appropriately ordered data.
-        $questions = [];
-        $entryid = 0;
-        foreach ($records as $record) {
-            // Check if this entry id has been added already.
-            if ($record->entryid != $entryid) {
-                $questions[] = $record;
-                $entryid = $record->entryid;
+        // Return one or more versions (checkbox option in settings).
+        if ($allversions) {
+            return $records;
+        } else {
+            // This depends on the above SQL returning appropriately ordered data.
+            $questions = [];
+            $entryid = 0;
+            foreach ($records as $record) {
+                // Check if this entry id has been added already.
+                if ($record->entryid != $entryid) {
+                    $questions[] = $record;
+                    $entryid = $record->entryid;
+                }
             }
+            return $questions;
         }
-        return $questions;
     }
 }

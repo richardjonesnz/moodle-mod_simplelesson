@@ -1,5 +1,8 @@
 CHANGELOG.txt
 =============
+2.0.4 - 02/05/22
+Added option to show all question versions that have 'ready' status.
+
 2.0.3 - 24/04/22
 Further changes to account for question versions and related tables in question bank. 
 Fixed export to csv bug.

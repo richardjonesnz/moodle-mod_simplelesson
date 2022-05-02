@@ -72,7 +72,7 @@ $returnmanage = new moodle_url('/mod/simplelesson/edit_lesson.php',
 $returnurl = ($returnto == 'show') ? $returnshow : $returnmanage;
 
 // Get the available questions and check there are some.
-$questions = $lesson::get_questions($simplelesson->categoryid);
+$questions = $lesson::get_questions($simplelesson->categoryid, $simplelesson->allversions);
 
 if (count($questions) == 0) {
     // Back to where we came from.

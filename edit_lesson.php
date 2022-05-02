@@ -106,8 +106,9 @@ if ( ($sequence != 0) && ($action != 'none') ) {
     }
     redirect($returnedit);
 }
-
-$mform = new edit_questions_form(null, ['id' => $cm->id, 'simplelessonid' => $simplelesson->id, 'courseid' => $courseid]);
+$allversions = $simplelesson->allversions;
+$mform = new edit_questions_form(null, ['id' => $cm->id, 'simplelessonid' => $simplelesson->id,
+                                        'courseid' => $courseid, 'allversions' => $allversions]);
 
 if ($data = $mform->get_data()) {
         $simplelesson->categoryid = $data->categoryid;

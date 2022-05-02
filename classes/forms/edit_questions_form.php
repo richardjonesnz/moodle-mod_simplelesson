@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_simplelesson\forms;
+
 defined('MOODLE_INTERNAL') || die();
 require_once('../../lib/formslib.php');
 /**
@@ -38,9 +39,8 @@ class edit_questions_form extends \moodleform {
         $mform = $this->_form;
 
         // Set the category for questions that can be added to this Simple lesson.
-        $categories = [];
         $cats = $DB->get_records('question_categories', null, null, 'id, name');
-
+        $categories = [];
         foreach ($cats as $cat) {
             // Find the number of questions in each category.
             $questions = $DB->count_records('question_bank_entries', ['questioncategoryid' => $cat->id]);

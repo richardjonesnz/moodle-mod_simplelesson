@@ -85,6 +85,11 @@ class mod_simplelesson_mod_form extends moodleform_mod {
         $mform->setDefault('allowincomplete', 1);
         $mform->addHelpButton('allowincomplete', 'allowincomplete', 'simplelesson');
 
+        // Show all ready question versions.
+        $mform->addElement('advcheckbox', 'allversions', get_string('allversions', 'mod_simplelesson'));
+        $mform->setDefault('allversions', 0);
+        $mform->addHelpButton('allversions', 'allversions', 'simplelesson');
+
         // Attempts.
         $attemptoptions = array(0 => get_string('unlimited', 'mod_simplelesson'),
             1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5');
