@@ -136,6 +136,7 @@ $string['no_question'] = 'No question found';
 $string['no_questions'] = 'There are no questions to attempt (use preview)';
 $string['none'] = 'none';
 $string['noquestions'] = 'There are no questions, select a category from Manage questions on the Edit Simple lesson screen.';
+$string['noreview'] = 'You are not allowed to review - ask your teacher';
 $string['num_pages'] = 'Number of pages: {$a}';
 $string['numattempts'] = 'Attempts made: {$a} of';
 $string['outof'] = "Out of";

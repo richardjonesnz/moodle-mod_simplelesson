@@ -212,6 +212,18 @@ class attempts {
         return $DB->get_record('user', ['id' => $data->userid], '*', MUST_EXIST);
     }
     /**
+     * Get the user record for all their attempts
+     *
+     * @param int $simplelessonid the simplelesson id
+     * @return object - attempt data from the attempts table for the simple lesson
+     */
+    public static function get_all_attempts_user($simplelessonid) {
+        global $DB, $USER;
+        $data = $DB->get_records('simplelesson_attempts', ['simplelessonid' => $simplelessonid,
+                                                           'userid' => $USER->id]);
+        return $data;
+    }
+    /**
      * Set status the attempts table
      *
      * Need some constants here: 0, 1 (started), 2 (complete).
