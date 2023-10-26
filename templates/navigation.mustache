@@ -91,8 +91,14 @@
         {{#str}}prevpage, simplelesson{{/str}}</a>
   {{/prev}}
   {{#next}}
+    {{^home}}
+    <a href="{{{nexturl}}}"button type="button" class="btn btn-primary btn-sm">
+        {{#str}}preview, simplelesson{{/str}}</a>
+    {{/home}}
+    {{#home}}
     <a href="{{{nexturl}}}"button type="button" class="btn btn-secondary btn-sm">
-        {{#str}}nextpage, simplelesson{{/str}}</a>
+        {{#str}}next, simplelesson{{/str}}</a>
+    {{/home}}
   {{/next}}
   <!-- Page after attempt completed -->
   {{#summary}}
