@@ -75,10 +75,15 @@ class mod_simplelesson_mod_form extends moodleform_mod {
         $mform->setDefault('showindex', 1);
         $mform->addHelpButton('showindex', 'showindex', 'simplelesson');
 
-        // Allow student review.
+        // Allow student review immediately after attempt.
         $mform->addElement('advcheckbox', 'allowreview', get_string('allowreview', 'mod_simplelesson'));
         $mform->setDefault('allowreview', 1);
         $mform->addHelpButton('allowreview', 'allowreview', 'simplelesson');
+
+        // Allow student review any time, any attempt.
+        $mform->addElement('advcheckbox', 'allowreports', get_string('allowreports', 'mod_simplelesson'));
+        $mform->setDefault('allowreports', 0);
+        $mform->addHelpButton('allowreports', 'allowreports', 'simplelesson');
 
         // Allow incomplete attempts.
         $mform->addElement('advcheckbox', 'allowincomplete', get_string('allowincomplete', 'mod_simplelesson'));

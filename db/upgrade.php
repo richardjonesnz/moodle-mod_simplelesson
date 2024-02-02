@@ -86,10 +86,20 @@ function xmldb_simplelesson_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2022050201, 'simplelesson');
     }
 
+    if ($oldversion < 2024020100) {
 
+        // Define field for all question versions.
+        $table = new xmldb_table('simplelesson');
+        $field = new xmldb_field('allowreports', XMLDB_TYPE_INTEGER, 10,
+                null, null, null, null, 'allversions');
 
+        // Add field.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
 
-
+        upgrade_mod_savepoint(true, 2024020100, 'simplelesson');
+    }
 
     return true;
 }

@@ -90,6 +90,8 @@ if ( $options->pages === 0) {
     // User can preview or attempt this lesson.
     $options->preview = true;
     $options->attempt = true;
+    // If set they can review their previous attempts.
+    $options->reviewall = $simplelesson->allowreports;
 }
 
 // Reports tab, if permitted in admin settings and has permission.

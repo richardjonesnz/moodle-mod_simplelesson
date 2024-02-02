@@ -85,6 +85,12 @@ class view implements renderable, templatable {
             $this->options->attempturl = $url->out(false, ['sequence' => 1]);
         }
 
+        // Review attempts button.
+        if ($this->options->reviewall) {
+            $url = new moodle_url('/mod/simplelesson/review.php', $baseparams);
+            $this->options->reviewallurl = $url->out(false);
+        }
+
         // Reports tab link.
         if ($this->options->reports) {
             $url = new moodle_url('/mod/simplelesson/reports.php', $baseparams);

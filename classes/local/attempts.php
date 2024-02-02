@@ -215,13 +215,23 @@ class attempts {
      * Get the user record for all their attempts
      *
      * @param int $simplelessonid the simplelesson id
-     * @return object - attempt data from the attempts table for the simple lesson
+     * @return object - question answers for attempts by current user for the current simple lesson
      */
     public static function get_all_attempts_user($simplelessonid) {
         global $DB, $USER;
-        $data = $DB->get_records('simplelesson_attempts', ['simplelessonid' => $simplelessonid,
-                                                           'userid' => $USER->id]);
-        return $data;
+
+        $sql = "SELECT n.id, n.attemptid, n.pageid, n.maxmark, n.mark, n.questionsummary,
+                       n.rightanswer, n.youranswer, n.timetaken,
+                       t.userid, p.id, p.pagetitle
+                  FROM {simplelesson_answers} n
+                  JOIN {simplelesson_attempts} t ON n.attemptid = t.id
+                  JOIN {simplelesson_pages} p ON n.pageid = p.id
+                 WHERE t.simplelessonid = :slid
+                   AND t.userid = :usid
+                   AND n.pageid <> 0";
+
+        $entries = $DB->get_records_sql($sql, ['slid' => $simplelessonid, 'usid' => $USER->id]);
+        return $entries;
     }
     /**
      * Set status the attempts table

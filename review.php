@@ -22,7 +22,7 @@
  */
 use \mod_simplelesson\local\attempts;
 use \mod_simplelesson\output\display_options;
-use \mod_simplelesson\output\lesson_summary;
+use \mod_simplelesson\output\attempt_summary;
 use \mod_simplelesson\event\attempt_completed;
 
 require_once('../../config.php');
@@ -59,13 +59,15 @@ echo $OUTPUT->header();
 if ($simplelesson->allowreview) {
     $records = attempts::get_all_attempts_user($simplelessonid);
 
-    // Navigation.
+    var_dump($records);
+    /* Navigation.
     $navoptions = new \stdClass();
     $navoptions->review = true;
     $navoptions->home = false;
     $navoptions->homeurl = $returnview;
     echo $OUTPUT->render(new attempt_summary($navoptions, $records,
             display_options::get_options()->markdp, $sessiondata));
+    */
 } else {
     redirect($returnview, get_string('noreview', $simplelesson), 2);
 }

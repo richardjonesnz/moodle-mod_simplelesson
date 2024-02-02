@@ -57,6 +57,8 @@
       "summaryurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
       "preview": "true"
       "previewurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
+      "reviewall": "true"
+      "reviewallurl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
       "attempt": "true"
       "attempturl": "https://yourmoodle/mod/yourmod/somepage.php?id=1"
     }
@@ -105,7 +107,11 @@
     <a href="{{{summaryurl}}}"button type="button" class="btn btn-secondary btn-sm">
         {{#str}}end_lesson, simplelesson{{/str}}</a>
   {{/summary}}
-  <!-- Button on home page -->
+  <!-- Buttons on home page -->
+  {{#reviewall}}
+    <a href="{{{reviewallurl}}}"button type="button" class="btn btn-primary btn-sm">
+        {{#str}}reviewall, simplelesson{{/str}}</a>
+  {{/reviewall}}
   {{#attempt}}
     <a href="{{{attempturl}}}"button type="button" class="btn btn-primary btn-sm">
         {{#str}}attempt, simplelesson{{/str}}</a>
