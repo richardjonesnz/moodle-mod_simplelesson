@@ -23,7 +23,7 @@
  * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
-use \mod_simplelesson\local\lesson;
+use mod_simplelesson\local\lesson;
 
 /**
  * Structure step to restore one simplelesson activity

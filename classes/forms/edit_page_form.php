@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_simplelesson\forms;
-use \mod_simplelesson\utility\utility;
+use mod_simplelesson\utility\utility;
 defined('MOODLE_INTERNAL') || die();
 require_once('../../lib/formslib.php');
 /**

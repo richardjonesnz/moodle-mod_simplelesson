@@ -1,5 +1,11 @@
 CHANGELOG.txt
 =============
+2.0.6 06/02/24 - Waitangi Day
+Added field allowreports to install.xml
+Option to allow student review of their previous answers to a simplelesson
+CodeChecker generates a load of array() style errors, ignoring them. when
+Moodle fixes its own legacy code I might have a look.
+
 2.0.5 - 03/08/22
 Added field allversions to install.xml.
 Removed parameter allversions not needed by edit_lesson.php.

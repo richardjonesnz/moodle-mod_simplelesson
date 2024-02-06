@@ -220,7 +220,7 @@ function simplelesson_get_extra_capabilities() {
 function simplelesson_scale_used($simplelessonid, $scaleid) {
     global $DB;
 
-    if ($scaleid and $DB->record_exists('simplelesson',
+    if ($scaleid && $DB->record_exists('simplelesson',
             ['id' => $simplelessonid, 'grade' => -$scaleid])) {
         return true;
     } else {
@@ -239,7 +239,7 @@ function simplelesson_scale_used($simplelessonid, $scaleid) {
 function simplelesson_scale_used_anywhere($scaleid) {
     global $DB;
 
-    if ($scaleid and $DB->record_exists('simplelesson', ['grade' => -$scaleid])) {
+    if ($scaleid && $DB->record_exists('simplelesson', ['grade' => -$scaleid])) {
         return true;
     } else {
         return false;
@@ -623,7 +623,7 @@ function simplelesson_question_pluginfile($course, $context, $component,
     $fs = get_file_storage();
     $relativepath = implode('/', $args);
     $fullpath = "/$context->id/$component/$filearea/$relativepath";
-    if (!$file = $fs->get_file_by_hash(sha1($fullpath)) or $file->is_directory()) {
+    if (!$file = $fs->get_file_by_hash(sha1($fullpath)) || $file->is_directory()) {
         send_file_not_found();
     }
 

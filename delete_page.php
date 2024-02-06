@@ -22,10 +22,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use \mod_simplelesson\local\lesson;
-use \mod_simplelesson\forms\confirm_delete_form;
-use \mod_simplelesson\output\delete_page;
-use \mod_simplelesson\event\page_deleted;
+use mod_simplelesson\local\lesson;
+use mod_simplelesson\forms\confirm_delete_form;
+use mod_simplelesson\output\delete_page;
+use mod_simplelesson\event\page_deleted;
 
 require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die();

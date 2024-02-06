@@ -5,9 +5,9 @@ Simple Lesson new version for Moodle 4 ONLY.
 NOTE: If you are using Moodle 3.5 to 3.11 this may not be the droid you are looking for.
 Please use the repo marked moodle_mod_simplelesson. Apologies for any confusion.
 
-To upgrade 
+To upgrade
 ==========
-If you have an existing installation then:
+If you have an existing installation of Simple Lesson v 1 then:
 
 1. Upgrade to Moodle 4 and do not copy the existing plugin code to Moodle 4.
 2. Install this code to moodle/mod/simplelesson.
@@ -27,7 +27,7 @@ Simple lesson is a content presentation system similar to Book or Lesson but wit
 6.  Implements a Page Management console allowing easy setup of pages and questions
 7.  Designed for Moodle 4.0
 
-It is designed primarily as a formative assessment tool but can be used as a simple type of quiz.  
+It is designed primarily as a formative assessment tool but can be used as a simple type of quiz.
 
 For further information and screenshots, please see the documentation files.
 

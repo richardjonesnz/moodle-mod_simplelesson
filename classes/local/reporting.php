@@ -24,8 +24,8 @@
  * @see https://github.com/justinhunt/moodle-mod_pairwork
  */
 namespace mod_simplelesson\local;
-use \mod_simplelesson\output\display_options;
-use \mod_simplelesson\utility\constants;
+use mod_simplelesson\output\display_options;
+use mod_simplelesson\utility\constants;
 
 /*
  * A collection of static functions relating to reporting.
@@ -283,10 +283,11 @@ class reporting {
      * User Report - get the user answer records for a lesson
      *
      * @param $simplelessonid - lesson to get records for
+     * @param $allusers flag to indicate all users or just current user data required.
      * @return array of objects
      */
-    public static function fetch_answer_data($simplelessonid) {
-        global $DB;
+    public static function fetch_answer_data($simplelessonid, $allusers) {
+        global $DB, $USER;
 
         $sql = "SELECT a.id, a.attemptid, a.maxmark,
                        a.mark, a.questionsummary, a.rightanswer,
@@ -301,6 +302,8 @@ class reporting {
                     ON u.id = t.userid
                  WHERE a.simplelessonid = :slid
                    AND u.deleted <> 1";
+
+        $sql = ($allusers) ? $sql : $sql . " AND u.id = $USER->id";
 
         $records = $DB->get_records_sql($sql,
                 array('slid' => $simplelessonid));

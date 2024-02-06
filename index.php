@@ -21,7 +21,7 @@
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \mod_simplelesson\event\course_module_instance_list_viewed;
+use mod_simplelesson\event\course_module_instance_list_viewed;
 require_once('../../config.php');
 
 $id = required_param('id', PARAM_INT); // Course.

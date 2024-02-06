@@ -21,11 +21,11 @@
  * @copyright 2018 Richard Jones https://richardnz.net
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \mod_simplelesson\local\lesson;
-use \mod_simplelesson\utility\utility;
-use \mod_simplelesson\forms\edit_page_form;
-use \mod_simplelesson\event\page_created;
-use \core\output\notification;
+use mod_simplelesson\local\lesson;
+use mod_simplelesson\utility\utility;
+use mod_simplelesson\forms\edit_page_form;
+use mod_simplelesson\event\page_created;
+use core\output\notification;
 
 require_once('../../config.php');
 global $DB;

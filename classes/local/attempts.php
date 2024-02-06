@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace mod_simplelesson\local;
-use \mod_simplelesson\utility\constants;
+use mod_simplelesson\utility\constants;
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/questionlib.php');
 
@@ -211,28 +211,7 @@ class attempts {
         $data = $DB->get_record('simplelesson_attempts', ['id' => $attemptid], 'userid', MUST_EXIST);
         return $DB->get_record('user', ['id' => $data->userid], '*', MUST_EXIST);
     }
-    /**
-     * Get the user record for all their attempts
-     *
-     * @param int $simplelessonid the simplelesson id
-     * @return object - question answers for attempts by current user for the current simple lesson
-     */
-    public static function get_all_attempts_user($simplelessonid) {
-        global $DB, $USER;
 
-        $sql = "SELECT n.id, n.attemptid, n.pageid, n.maxmark, n.mark, n.questionsummary,
-                       n.rightanswer, n.youranswer, n.timetaken,
-                       t.userid, p.id, p.pagetitle
-                  FROM {simplelesson_answers} n
-                  JOIN {simplelesson_attempts} t ON n.attemptid = t.id
-                  JOIN {simplelesson_pages} p ON n.pageid = p.id
-                 WHERE t.simplelessonid = :slid
-                   AND t.userid = :usid
-                   AND n.pageid <> 0";
-
-        $entries = $DB->get_records_sql($sql, ['slid' => $simplelessonid, 'usid' => $USER->id]);
-        return $entries;
-    }
     /**
      * Set status the attempts table
      *

@@ -22,8 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
-use \mod_simplelesson\event\page_viewed;
-use \mod_simplelesson\utility\utility;
+use mod_simplelesson\event\page_viewed;
+use mod_simplelesson\utility\utility;
 use mod_simplelesson\local\lesson;
 use mod_simplelesson\local\attempts;
 use mod_simplelesson\output\display_options;

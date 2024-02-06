@@ -21,9 +21,9 @@
  * @copyright  2018 Richard Jones <richardnz@outlook.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \mod_simplelesson\local\reporting;
-use \mod_simplelesson\local\attempts;
-use \mod_simplelesson\forms\manage_attempts_select;
+use mod_simplelesson\local\reporting;
+use mod_simplelesson\local\attempts;
+use mod_simplelesson\forms\manage_attempts_select;
 require_once('../../config.php');
 
 $courseid = required_param('courseid', PARAM_INT);

@@ -20,10 +20,11 @@
  * @copyright 2018 Richard Jones https://richardnz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \mod_simplelesson\local\attempts;
-use \mod_simplelesson\output\display_options;
-use \mod_simplelesson\output\attempt_summary;
-use \mod_simplelesson\event\attempt_completed;
+use mod_simplelesson\local\reporting;
+use mod_simplelesson\output\review;
+use mod_simplelesson\output\display_options;
+use mod_simplelesson\output\attempt_summary;
+use mod_simplelesson\event\attempt_completed;
 
 require_once('../../config.php');
 global $DB;
@@ -53,23 +54,17 @@ $PAGE->set_heading(format_string($course->fullname));
 // This option supresses the Description field (module intro).
 $PAGE->activityheader->set_description('');
 
-echo $OUTPUT->header();
-
-// Get all the attempts by the current user.
-if ($simplelesson->allowreview) {
-    $records = attempts::get_all_attempts_user($simplelessonid);
-
-    var_dump($records);
-    /* Navigation.
-    $navoptions = new \stdClass();
-    $navoptions->review = true;
-    $navoptions->home = false;
-    $navoptions->homeurl = $returnview;
-    echo $OUTPUT->render(new attempt_summary($navoptions, $records,
-            display_options::get_options()->markdp, $sessiondata));
-    */
-} else {
-    redirect($returnview, get_string('noreview', $simplelesson), 2);
+// Get all the attempts by the current user, if permitted.
+if (!$simplelesson->allowreports) {
+    redirect($returnview, get_string('noreview', 'mod_simplelesson'), 2);
 }
 
+$options = new stdClass();
+$options->home = $returnview;
+// Second parameter is false for current user answers, true for all answers.
+$options->records = reporting::fetch_answer_data($simplelessonid, false);
+$options->headers = reporting::fetch_answer_report_headers();
+
+echo $OUTPUT->header();
+echo $OUTPUT->render(new review($options));
 echo $OUTPUT->footer();

@@ -70,7 +70,7 @@ switch ($report) {
 
     case 'answers':
         $options->answers = true;
-        $options->records = reporting::fetch_answer_data($simplelessonid);
+        $options->records = reporting::fetch_answer_data($simplelessonid, true);
         $options->headers = reporting::fetch_answer_report_headers();
         $options->export = true;
         $options->exportlink = get_string('userreportdownload', 'mod_simplelesson');

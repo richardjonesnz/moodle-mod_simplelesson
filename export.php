@@ -23,7 +23,7 @@
  * @see https://github.com/moodlehq/moodle-mod_newmodule
  *
  */
-use \mod_simplelesson\local\reporting;
+use mod_simplelesson\local\reporting;
 use core\dataformat;
 require_once('../../config.php');
 require_once($CFG->libdir.'/adminlib.php');

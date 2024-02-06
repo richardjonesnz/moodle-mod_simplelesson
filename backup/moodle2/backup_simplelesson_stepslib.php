@@ -51,33 +51,33 @@ class backup_simplelesson_activity_structure_step extends backup_activity_struct
 
         // Define the root element describing the simplelesson instance.
         $simplelesson = new backup_nested_element('simplelesson',
-                array('id'),
-                array('course', 'name', 'intro', 'introformat',
+                ['id'],
+                ['course', 'name', 'intro', 'introformat',
                 'title', 'showindex', 'allowreview', 'allowincomplete',
                 'categoryid', 'behaviour', 'maxattempts', 'grademethod',
-                'grade', 'timecreated', 'timemodified'));
+                'grade', 'timecreated', 'timemodified']);
 
         // Define the child elements.
         $pages = new backup_nested_element('pages');
-        $page = new backup_nested_element('page', array('id'),
-                array('simplelessonid', 'sequence', 'prevpageid',
+        $page = new backup_nested_element('page', ['id'],
+                ['simplelessonid', 'sequence', 'prevpageid',
                 'nextpageid', 'pagetitle', 'pagecontents',
                 'pagecontentsformat', 'showindex', 'timecreated',
-                'timemodified'));
+                'timemodified']);
 
         $attempts = new backup_nested_element('attempts');
         $attempt = new backup_nested_element('attempt',
-                array('id'),
-                array('simplelessonid', 'qubaid', 'userid', 'status',
+                ['id'],
+                []'simplelessonid', 'qubaid', 'userid', 'status',
                 'sessionscore', 'maxscore', 'timetaken', 'timecreated',
-                'timemodified'));
+                'timemodified']);
 
         $answers = new backup_nested_element('answers');
         $answer = new backup_nested_element('answer',
-                array('id'),
-                array('simplelessonid', 'qatid', 'attemptid', 'pageid',
+                ['id'],
+                ['simplelessonid', 'qatid', 'attemptid', 'pageid',
                 'maxmark', 'mark', 'questionsummary', 'qtype', 'rightanswer',
-                'youranswer', 'timetaken', 'timestarted', 'timecompleted'));
+                'youranswer', 'timetaken', 'timestarted', 'timecompleted']);
 
         // Build the tree.
         $simplelesson->add_child($pages);
@@ -90,26 +90,21 @@ class backup_simplelesson_activity_structure_step extends backup_activity_struct
         $answers->add_child($answer);
 
         // Define data sources.
-        $simplelesson->set_source_table('simplelesson', array('id' => backup::VAR_ACTIVITYID));
+        $simplelesson->set_source_table('simplelesson', ['id' => backup::VAR_ACTIVITYID]);
 
         // Backup pages.
-        $page->set_source_table('simplelesson_pages',
-                array('simplelessonid' => backup::VAR_PARENTID));
+        $page->set_source_table('simplelesson_pages', ['simplelessonid' => backup::VAR_PARENTID]);
 
         // If there is no user data, don't back up attempts
         // or answers.
 
         if ($userinfo) {
             // Backup attempts - table has a userid.
-            $attempt->set_source_table('simplelesson_attempts',
-                    array('simplelessonid' =>
-                    backup::VAR_PARENTID));
+            $attempt->set_source_table('simplelesson_attempts', ['simplelessonid' => backup::VAR_PARENTID]);
             $attempt->annotate_ids('user', 'userid');
 
             // Backup answers.
-            $answer->set_source_table('simplelesson_answers',
-                    array('simplelessonid' =>
-                    backup::VAR_PARENTID));
+            $answer->set_source_table('simplelesson_answers', ['simplelessonid' => backup::VAR_PARENTID]);
         }
 
         // Define file annotations.

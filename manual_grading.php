@@ -20,11 +20,11 @@
  * @copyright 2018 Richard Jones https://richardnz.net
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \mod_simplelesson\forms\essay_grading_form;
-use \mod_simplelesson\local\reporting;
-use \mod_simplelesson\local\attempts;
-use \mod_simplelesson\output\manual_grading;
-use \core\output\notification;
+use mod_simplelesson\forms\essay_grading_form;
+use mod_simplelesson\local\reporting;
+use mod_simplelesson\local\attempts;
+use mod_simplelesson\output\manual_grading;
+use core\output\notification;
 require_once('../../config.php');
 require_once($CFG->libdir . '/formslib.php');
 
