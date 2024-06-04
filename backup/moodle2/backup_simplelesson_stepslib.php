@@ -59,21 +59,22 @@ class backup_simplelesson_activity_structure_step extends backup_activity_struct
 
         // Define the child elements.
         $pages = new backup_nested_element('pages');
-        $page = new backup_nested_element('page', ['id'],
+        $page = new backup_nested_element('page', 
+                ['id'],
                 ['simplelessonid', 'sequence', 'prevpageid',
                 'nextpageid', 'pagetitle', 'pagecontents',
                 'pagecontentsformat', 'showindex', 'timecreated',
                 'timemodified']);
 
         $attempts = new backup_nested_element('attempts');
-        $attempt = new backup_nested_element('attempt',
+        $attempt = new backup_nested_element('attempt', 
                 ['id'],
-                []'simplelessonid', 'qubaid', 'userid', 'status',
+                ['simplelessonid', 'qubaid', 'userid', 'status',
                 'sessionscore', 'maxscore', 'timetaken', 'timecreated',
                 'timemodified']);
 
         $answers = new backup_nested_element('answers');
-        $answer = new backup_nested_element('answer',
+        $answer = new backup_nested_element('answer', 
                 ['id'],
                 ['simplelessonid', 'qatid', 'attemptid', 'pageid',
                 'maxmark', 'mark', 'questionsummary', 'qtype', 'rightanswer',

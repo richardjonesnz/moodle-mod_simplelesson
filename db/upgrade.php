@@ -88,7 +88,7 @@ function xmldb_simplelesson_upgrade($oldversion) {
 
     if ($oldversion < 2024020100) {
 
-        // Define field for all question versions.
+        // Define field for student review.
         $table = new xmldb_table('simplelesson');
         $field = new xmldb_field('allowreports', XMLDB_TYPE_INTEGER, 10,
                 null, null, null, null, 'allversions');
