@@ -4,6 +4,10 @@ CHANGELOG.txt
 Corrected allowreview to work regardless of number of pages in simplelesson
 Corrected syntax error in backup_stepslib that prevented course copy (thanks adamfortnam)
 
+2.07 04/06/24 Bug fixes
+Corrected allowreview to work regardless of number of pages in simplelesson
+Corrected syntax error in backup_stepslib that prevented course copy (thanks adamfortnam)
+
 2.0.6 06/02/24 - Waitangi Day
 Added field allowreports to install.xml
 Option to allow student review of their previous answers to a simplelesson
